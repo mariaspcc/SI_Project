@@ -1,6 +1,8 @@
 #fundo {
     position: fixed;
-    width: 100%;
+    top:-10px;
+    left:-10px;
+    width: 105%;
     height: auto;
     z-index:-1;
 }
