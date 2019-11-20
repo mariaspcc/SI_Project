@@ -4,15 +4,49 @@
     left:-10px;
     width: 105%;
     height: auto;
-    z-index:-1;
+    z-index: -1;
 }
 
 .fundo_quadrado {
     background-color: black;
-    opacity: 50%;
+    opacity: 100%;
 }
 
 .formulario {
+    padding-top:8%;
     color: white;
-    align-content: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    text-align: center;
+}
+
+input[type=text], input[type=password] {
+    width: 15%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    border: none;
+    border-radius: 15px;
+    opacity: 75%;
+}
+
+input[type=submit] {
+    color: white;
+    background: 0;
+    padding:10px;
+    border-radius: 15px;
+}
+
+input[type=button]{
+    color: white;
+    background: 0;
+    padding-top:30px;
+    padding-bottom: 30px;
+    border-radius: 15px;
+    width:12%;
+
+
 }

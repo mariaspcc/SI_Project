@@ -13,18 +13,20 @@ session_start();
 
 <body>
 
-<img id="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
-<div class="fundo_quadrado">
-
-</div>
+<img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
+<div class="fundo_quadrado"></div>
 <main>
     <div class="formulario">
+        <p> SIGN UP</p>
         <form action="registoCode.php" method="POST">
-            <label>Nome <input type="text" name="username" required></label>
+            <label> <br>Nome</br>
+                <input type="text" name="username" required></label>
             <br>
-            <label>Username <input type="text" name="email" required></label>
+            <label> <br>Username</br>
+                <input type="text" name="email" required></label>
             <br>
-            <label>Password <input type="password" name="password" required></label>
+            <label> <br>Password</br>
+                <input type="password" name="password" required></label>
             <br>
             <input type="submit">
             <p>Já tem uma conta? Faça login <a href="login.php">aqui</a>.</p>
