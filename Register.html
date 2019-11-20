@@ -1,0 +1,40 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<img id="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
+<div class="fundo_quadrado">
+
+</div>
+<main>
+    <div class="formulario">
+        <form action="registoCode.php" method="POST">
+            <label>Nome <input type="text" name="username" required></label>
+            <br>
+            <label>Username <input type="text" name="email" required></label>
+            <br>
+            <label>Password <input type="password" name="password" required></label>
+            <br>
+            <input type="submit">
+            <p>Já tem uma conta? Faça login <a href="login.php">aqui</a>.</p>
+        </form>
+    </div>
+</main>
+
+<hr>
+<?php include 'footer.php'; ?>
+<script src="JavaScript/todas.js"></script>
+</body>
+
+</html>

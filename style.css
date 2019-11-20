@@ -1,0 +1,16 @@
+#fundo {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    z-index:-1;
+}
+
+.fundo_quadrado {
+    background-color: black;
+    opacity: 50%;
+}
+
+.formulario {
+    color: white;
+    align-content: center;
+}
