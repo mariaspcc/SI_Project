@@ -9,7 +9,13 @@
 
 .fundo_quadrado {
     background-color: black;
-    opacity: 100%;
+    position: fixed;
+    top:-10px;
+    left:-10px;
+    width: 1500px;
+    height: 1200px;
+    opacity:50%;
+    z-index:-1;
 }
 
 .formulario {
