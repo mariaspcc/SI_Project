@@ -1,3 +1,7 @@
+main{
+    font-family: 'Cabin', sans-serif;
+}
+
 #fundo {
     position: fixed;
     top:-10px;
