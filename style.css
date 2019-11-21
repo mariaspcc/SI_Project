@@ -40,11 +40,12 @@ input[type=text], input[type=password] {
     opacity: 75%;
 }
 
-input[type=submit] {
+input[type=submit], #botão_entrar {
     color: white;
     background: 0;
     padding:10px;
     border-radius: 15px;
+    width:100px;
 }
 
 input[type=button]{
