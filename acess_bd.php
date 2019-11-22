@@ -1,5 +1,4 @@
 <?php
-echo "tentar ligar";
 
 $str = "dbname=postgres user=postgres password=POSTGRES host=localhost port=5432";
 $connection = pg_connect($str);
