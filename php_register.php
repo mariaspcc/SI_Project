@@ -1,17 +1,14 @@
 <?php
+echo "tentar chamar"
+include_once("acess_bd.php");
 
-$str = "dbname=postgres user=postgres password=postgres host=localhost port=5432";
-$connection = pg_connect($str);
-if (!$connection) {
-    die("Erro na ligacao"); }
-echo "Ligacao estabelecida!";
 
-$username
-$password
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// do something here
+    $query = "INSERT INTO utilizador_administrador_cliente (Username, Password) VALUES ('$username', '$password')";
+    $result = pg_query($connection, $query);
+
 pg_close($connection);
-
-
 
 ?>
