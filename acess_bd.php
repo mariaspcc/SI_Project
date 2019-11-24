@@ -5,4 +5,5 @@ $connection = pg_connect($str);
 if (!$connection) {
     die("Erro na ligacao"); }
 echo "Ligacao estabelecida!";
+
 ?>
