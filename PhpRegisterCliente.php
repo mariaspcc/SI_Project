@@ -1,10 +1,8 @@
 <?php
 
-echo "entra";
 //chama acess_bd.php para ligar à BD
 include_once "acess_bd.php";
 
-echo "depois";
 //buscar dados
 $username = $_POST['username'];
 $password = $_POST['password'];

@@ -18,6 +18,7 @@ session_start();
     <div class="formulario">
         <p> REGISTAR </p>
         <p>ADMINISTRADOR</p>
+
         <form action="PhpRegisterAdministrador.php" method="POST">
             <label> <br>Username
                 <input type="text" name="username" required></label>
@@ -25,7 +26,9 @@ session_start();
             <label> <br>Password
                 <input type="password" name="password" required></label>
             <br>
-            <input type="submit">
+            <a href="Homepage_cliente.html">
+                <input type="submit">
+            </a>
             <p>Já tem uma conta? Faça login <a href="Login.html">aqui</a>.</p>
         </form>
     </div>
