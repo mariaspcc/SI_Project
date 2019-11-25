@@ -9,7 +9,7 @@ $password = $_POST['password'];
 
 
 $query1 = "SELECT * FROM administrador WHERE ('$username' = user_username)";
-$query2= "SELECT * FROM cliente WHERE ('$username' = user_username)";
+$query2 = "SELECT * FROM cliente WHERE ('$username' = user_username)";
 
 $result1 = pg_query($connection, $query1);
 $result2 = pg_query($connection, $query2);
