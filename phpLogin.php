@@ -35,6 +35,7 @@ if(isset($_POST['login'])) {
 
 }
 
+//FUNCIONA
 function isLoggedIn()
 {
     if (isset($_SESSION['user_username'])) {
