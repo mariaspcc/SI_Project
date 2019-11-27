@@ -54,7 +54,7 @@ input[type=submit], #botão_entrar {
 }
 
 .escolha {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-40%, -50%);
@@ -68,11 +68,29 @@ input[type=submit], #botão_entrar {
     padding-bottom: 30px;
     border-radius: 15px;
     width:30%;
-    /*margin-left:10%;*/
 
 }
+#administradorbutton{
+    margin-left: 20%;
+}
 
-.escolha input[type=button]:last-child{
-    margin-left:25%;
+#registar{
+    align-content: center;
+    position: absolute;
+    padding-top: 20%;
+    color: white;
+    font-size: 20px;
+    background: 0;
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    width: 70%;
+    padding-bottom: 30px;
+}
 
+.homepage_geral{
+    padding-top: 10%;
+    color: white;
+    font-size: 20px;
 }

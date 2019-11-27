@@ -18,7 +18,7 @@
                     <input type='button' value='Cliente' name='B_cliente' >
                 </a>
                 <a href="RegisterAdministrador.php">
-                    <input type='button' value='Administrador' name='B_admin'>
+                    <input id="administradorbutton" type='button' value='Administrador' name='B_admin'>
                 </a>
             </label>
         </form>
