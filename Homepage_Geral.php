@@ -12,7 +12,7 @@
 
 <main>
     <div class="homepage_geral">
-        <p>Bem-vindo ao LDMEATS.</p>
+        <p>Bem-vindo ao LDMEats.</p>
         <p>Nesta plataforma poderá encomendar a sua comida de uma forma mais rápida e segura.
         <p>Se ainda não tem conta, registe-se!</p>
         <div>

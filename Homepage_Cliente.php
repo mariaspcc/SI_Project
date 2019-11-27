@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
 <main>
-    <p>Cliente</p>
-
+    <p>RESTAURANTES</p>
 </main>
 </body>
 </html>
