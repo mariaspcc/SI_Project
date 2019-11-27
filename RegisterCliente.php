@@ -19,7 +19,7 @@
         <form action="RegisterCliente.php" method="POST" id="register_form">
             <label> <br>Username
                 <div class="erro">
-                    <input type="text" name="username" required>
+                    <input type="text" name="c_username" required>
                     <?php if(isset($name_error)){?>
                         <span><?php echo $name_error;?></span>
                     <?php }?>
@@ -27,7 +27,7 @@
             </label>
             <br>
             <label> <br>Password
-                <input type="password" name="password" required></label>
+                <input type="password" name="c_password" required></label>
             <br>
             <input type="submit" name="register">
             <p>Já tem uma conta? Faça login <a href="login.php">aqui</a>.</p>

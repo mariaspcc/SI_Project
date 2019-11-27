@@ -3,9 +3,9 @@ include_once "acess_bd.php";
 
 //buscar dados
 if(isset($_POST['register'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $submit = $_POST ['submit'];
+    $username = $_POST['a_username'];
+    $password = $_POST['a_password'];
+
 
     $query1 = "SELECT * FROM administrador WHERE ('$username' = user_username)";
     $query2 = "SELECT * FROM cliente WHERE ('$username' = user_username)";
