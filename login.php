@@ -1,27 +1,35 @@
 <?php
-
-include_once "acess_bd.php";
-
-//buscar dados
-$username = $_POST['username'];
-$password = $_POST['password'];
-
-$query1 = "SELECT * FROM administrador WHERE ('$username' = user_username)";
-$query2 = "SELECT * FROM cliente WHERE ('$username' = user_username)";
-
-$result1 = pg_query($connection, $query1);
-$result2 = pg_query($connection, $query2);
-
-$row1 = pg_fetch_array($result1);
-$row2 = pg_fetch_array($result2);
-
-if($row1['user_username'] == $username && $row1['user_password'] == $password || $row2['user_username'] == $username && $row2['user_password'] == $password){
-    echo "LOGADO!";
-}
-else {
-    echo "NOT LOGADO!";
-}
-
-pg_close($connection);
-
+session_start();
 ?>
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
+<div class="fundo_quadrado"></div>
+<main>
+    <div class="formulario">
+        <p> ENTRAR</p>
+        <form action="login.php" method="POST">
+            <label> <br>Username</br>
+                <input type="text" name="username" required></label>
+            <br>
+            <label> <br>Password</br>
+                <input type="password" name="password" required></label>
+            <br>
+            <input id="botão_entrar" type="submit" value="Entrar">
+            <br>
+            <p>Não tem conta? Crie <a href="Choose.html">aqui</a>.</p>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>
