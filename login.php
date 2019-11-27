@@ -1,6 +1,5 @@
-<?php
-session_start();
-?>
+<?php include('phpLogin.php')?>
+
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -17,14 +16,19 @@ session_start();
 <main>
     <div class="formulario">
         <p> ENTRAR</p>
-        <form action="login.php" method="POST">
-            <label> <br>Username</br>
-                <input type="text" name="username" required></label>
+        <?php if(isset($name_error)){?>
+            <span><?php echo $name_error;?></span>
+        <?php }?>
+        <form action="login.php" method="POST" >
+            <label> <br>Username
+                <div class="erro">
+                    <input type="text" name="username" required>
+                </div>
             <br>
             <label> <br>Password</br>
                 <input type="password" name="password" required></label>
             <br>
-            <input id="botão_entrar" type="submit" value="Entrar">
+            <input type="submit" value="Entrar" name="login" id="botão_entrar" >
             <br>
             <p>Não tem conta? Crie <a href="Choose.html">aqui</a>.</p>
         </form>

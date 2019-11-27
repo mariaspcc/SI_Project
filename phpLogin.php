@@ -3,25 +3,37 @@
 include_once "acess_bd.php";
 
 //buscar dados
-$username = $_POST['username'];
-$password = $_POST['password'];
+if(isset($_POST['login'])) {
+    session_start();
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-$query1 = "SELECT * FROM administrador WHERE ('$username' = user_username)";
-$query2 = "SELECT * FROM cliente WHERE ('$username' = user_username)";
+    $query1 = "SELECT * FROM administrador WHERE '$username' = user_username AND '$password'= user_password";
+    $query2 = "SELECT * FROM cliente WHERE '$username' = user_username AND '$password'= user_password";
 
-$result1 = pg_query($connection, $query1);
-$result2 = pg_query($connection, $query2);
+    $result1 = pg_query($connection, $query1);
+    $result2 = pg_query($connection, $query2);
 
-$row1 = pg_fetch_array($result1);
-$row2 = pg_fetch_array($result2);
+    $name_error = "Username ou password incorretos.";
 
-if($row1['user_username'] == $username && $row1['user_password'] == $password || $row2['user_username'] == $username && $row2['user_password'] == $password){
-    echo "LOGADO!";
+    if(pg_num_rows($result1)==1 && pg_num_rows($result2)==0){
+        $_SESSION['username']=$username;
+        $_SESSION['sucess']="Entrou!";
+        header('location: Homepage_Administrador.php');
+    } else if(pg_num_rows($result1)==0 && pg_num_rows($result2)==1){
+        $_SESSION['username']=$username;
+        $_SESSION['sucess']="Entrou!";
+        header('location: Homepage_Cliente.php');
+    }
+    else if(pg_num_rows($result1)==0 && pg_num_rows($result2)==0){
+        $name_error = "Username não existe";
+    }
+    else {
+        $name_error = "Username ou password incorretos.";
+    }
+
+
 }
-else {
-    echo "NOT LOGADO!";
-}
-
 pg_close($connection);
 
 ?>
