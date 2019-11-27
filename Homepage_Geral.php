@@ -12,13 +12,9 @@
 
 <main>
     <div class="escolha">
-        <form action='PhpRegisterAdministrador.php' method='POST'>
             <label>
-                <a href="RegisterCliente.php">
-                    <input type='button' value='Cliente' name='B_cliente' >
-                </a>
                 <a href="RegisterAdministrador.php">
-                    <input type='button' value='Administrador' name='B_admin'>
+                    <input type='button' value='Registar' name='B_admin'>
                 </a>
             </label>
         </form>
