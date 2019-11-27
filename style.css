@@ -75,22 +75,21 @@ input[type=submit], #botão_entrar {
 }
 
 #registar{
-    align-content: center;
-    position: absolute;
-    padding-top: 20%;
+    position: fixed;
     color: white;
     font-size: 20px;
     background: 0;
+    margin-top:5%;
+    padding-top:20px;
+    padding-bottom: 20px;
     border-radius: 15px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-    width: 70%;
-    padding-bottom: 30px;
+    width:20%;
+    margin-left: 40%;
+    margin-right: 50%;
 }
 
 .homepage_geral{
-    padding-top: 10%;
     color: white;
     font-size: 20px;
+    margin-top:10%;
 }
