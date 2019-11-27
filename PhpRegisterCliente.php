@@ -1,4 +1,3 @@
-
 <?php
 include_once "acess_bd.php";
 
