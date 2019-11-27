@@ -22,6 +22,15 @@ main{
     z-index:-1;
 }
 
+.barra {
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    font-size:27px;
+    text-align: left;
+}
+
+
+
 .formulario {
     width:20%;
     color: white;
@@ -31,8 +40,13 @@ main{
     transform: translate(-50%, -50%);
 }
 
-p {
+#form { /*not working*/
     text-align: center;
+    text-size: 25px;
+
+}
+
+p {
     color: white;
 }
 
@@ -84,12 +98,12 @@ input[type=submit], #botão_entrar {
     padding-bottom: 20px;
     border-radius: 15px;
     width:20%;
-    margin-left: 40%;
-    margin-right: 50%;
+    margin-left: -10%;
 }
 
 .homepage_geral{
     color: white;
     font-size: 20px;
     margin-top:10%;
+    text-align: center;
 }

@@ -34,6 +34,16 @@ if(isset($_POST['login'])) {
 
 
 }
+
+function isLoggedIn()
+{
+    if (isset($_SESSION['user_username'])) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
 pg_close($connection);
 
 ?>

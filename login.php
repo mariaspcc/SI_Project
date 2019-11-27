@@ -29,7 +29,7 @@
             <br>
             <input type="submit" value="Entrar" name="login" id="botão_entrar" >
             <br>
-            <p>Não tem conta? Crie <a href="Choose.html">aqui</a>.</p>
+            <p>Não tem conta? Crie <a href="Choose.php">aqui</a>.</p>
         </form>
     </div>
 </main>

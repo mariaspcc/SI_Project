@@ -13,8 +13,10 @@
 <div class="fundo_quadrado"></div>
 <main>
     <div class="formulario">
+        <div id="form">
         <p> REGISTAR</p>
         <p> CLIENTE</p>
+        </div>
         <?php if(isset($name_error)){?>
             <span><?php echo $name_error;?></span>
         <?php }?>

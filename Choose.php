@@ -9,7 +9,6 @@
 <body>
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
-
 <main>
     <div class="escolha">
         <form action='PhpRegisterAdministrador.php' method='POST'>
