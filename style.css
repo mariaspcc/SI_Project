@@ -98,7 +98,7 @@ input[type=submit], #botão_entrar {
 }
 
 /*CRIAR PRATO*/
-.FormPrato {
+#form_prato{
     width:20%;
     color: white;
     position: fixed;

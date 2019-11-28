@@ -28,7 +28,6 @@ if (!isLoggedIn()) {
 <div class="fundo_quadrado"></div>
 <?php include('header_in.php'); ?>
 <main>
-    <div class="FormPrato">
         <p> CRIAR PRATO </p>
         <form action="CriarPrato.php" method="POST" id="form_prato">
             <label> <br>Nome do Prato
@@ -44,7 +43,6 @@ if (!isLoggedIn()) {
             <br>
             <input type="submit" name="register" value="Guardar">
         </form>
-    </div>
 </main>
 </body>
 </html>
