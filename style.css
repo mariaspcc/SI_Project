@@ -29,8 +29,19 @@ main{
     text-align: left;
 }
 
+p {
+    color: white;
+}
 
+/*HOMEPAGE_GERAL*/
+.homepage_geral{
+    color: white;
+    font-size: 20px;
+    margin-top:10%;
+    text-align: center;
+}
 
+/*REGISTAR E LOGIN*/
 .formulario {
     width:20%;
     color: white;
@@ -44,10 +55,6 @@ main{
     text-align: center;
     text-size: 25px;
 
-}
-
-p {
-    color: white;
 }
 
 input[type=text], input[type=password] {
@@ -67,6 +74,20 @@ input[type=submit], #botão_entrar {
     width:100px;
 }
 
+
+#registar{
+    position: fixed;
+    color: white;
+    font-size: 20px;
+    background: 0;
+    margin-top:5%;
+    padding-top:20px;
+    padding-bottom: 20px;
+    border-radius: 15px;
+    width:20%;
+    margin-left: -10%;
+}
+/*CHOOSE*/
 .escolha {
     position: absolute;
     top: 50%;
@@ -84,26 +105,8 @@ input[type=submit], #botão_entrar {
     width:30%;
 
 }
+
 #administradorbutton{
     margin-left: 20%;
 }
 
-#registar{
-    position: fixed;
-    color: white;
-    font-size: 20px;
-    background: 0;
-    margin-top:5%;
-    padding-top:20px;
-    padding-bottom: 20px;
-    border-radius: 15px;
-    width:20%;
-    margin-left: -10%;
-}
-
-.homepage_geral{
-    color: white;
-    font-size: 20px;
-    margin-top:10%;
-    text-align: center;
-}
