@@ -74,19 +74,6 @@ input[type=submit], #botão_entrar {
     width:100px;
 }
 
-
-#registar{
-    position: fixed;
-    color: white;
-    font-size: 20px;
-    background: 0;
-    margin-top:5%;
-    padding-top:20px;
-    padding-bottom: 20px;
-    border-radius: 15px;
-    width:20%;
-    margin-left: -10%;
-}
 /*CHOOSE*/
 .escolha {
     position: absolute;
@@ -108,5 +95,31 @@ input[type=submit], #botão_entrar {
 
 #administradorbutton{
     margin-left: 20%;
+}
+
+/*CRIAR PRATO*/
+.FormPrato {
+    width:20%;
+    color: white;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+input[type=text], input[type=number] {
+    width:100%;
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    border: none;
+    border-radius: 10px;
+    opacity: 75%;
+}
+
+input[type=submit] {
+    color: white;
+    background: 0;
+    padding:10px;
+    border-radius: 15px;
+    width:100px;
 }
 
