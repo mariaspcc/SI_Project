@@ -1,6 +1,19 @@
 main{
     font-family: 'Cabin', sans-serif;
 }
+#botaoheader{
+  display:inline;
+    float: right;
+}
+#logo{
+    width: 50%;
+    margin: 0;
+    display: inline-block;
+}
+#logo>p{
+    margin: 0;
+    width: 50%;
+}
 
 #fundo {
     position: fixed;
@@ -106,4 +119,12 @@ input[type=submit], #botão_entrar {
     font-size: 20px;
     margin-top:10%;
     text-align: center;
+}
+
+#form_restaurante{
+    color: white;
+
+}
+#form_restaurante>input{
+    width: 50vw;
 }
