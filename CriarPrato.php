@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include('phpCriarPrato.php');
+
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['user']);
@@ -35,10 +37,10 @@ if (!isLoggedIn()) {
             </label>
             <br>
             <label> <br>Preço
-                <input type="number" name="prato_preço" required></label>
+                <input type="number" name="preço_prato" required></label>
             <br>
-            <label> <br>Detalhes
-                <input type="text" name="detalhes_prato" required>
+            <label> <br>Descrição
+                <input type="text" name="descrição_prato" required>
             </label>
             <br>
             <input type="submit" name="register" value="Guardar">
