@@ -3,7 +3,7 @@
     <div id="logo">
         <p>LDMEats</p>
     </div>
-    <div>
+    <div  id="botaoheader">
         <?php
         if ( isset($_SESSION['sucess']) && $_SESSION['sucess'] ) { ?>
             <a href="login.php">
