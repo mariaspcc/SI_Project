@@ -33,36 +33,6 @@ if(isset($_POST['login'])) {
     }
 }
 
-        /*
-            if(pg_num_rows($result1)==1 && pg_num_rows($result2)==0){
-                $_SESSION['username']=$username;
-                $_SESSION['sucess']="Entrou!";
-                header('location: Homepage_Administrador.php');
-            } else if(pg_num_rows($result1)==0 && pg_num_rows($result2)==1){
-                $_SESSION['username']=$username;
-                $_SESSION['sucess']="Entrou!";
-                header('location: Homepage_Cliente.php');
-            }
-            else if(pg_num_rows($result1)==0 && pg_num_rows($result2)==0){
-                $name_error = "Username não existe";
-            }
-            else {
-                $name_error = "Username ou password incorretos.";
-            }
-        */
-
-
-
-//FUNCIONA
-function isLoggedIn()
-{
-    if (isset($_SESSION['user_username'])) {
-        return true;
-    }else{
-        return false;
-    }
-}
-
 pg_close($connection);
 
 ?>

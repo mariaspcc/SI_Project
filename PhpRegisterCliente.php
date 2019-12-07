@@ -6,12 +6,10 @@ if(isset($_POST['register'])) {
     $username = $_POST['c_username'];
     $password = $_POST['c_password'];
 
-
-
     $query1="SELECT * FROM usergeral WHERE ('$username' = username)";
     $result1 = pg_query($connection, $query1);
-    $name_error = "O username já existe.";
 
+    $name_error = "O username já existe.";
 
     //caso não exista, insere registo na BD
     if (pg_affected_rows($result1) > 0) {
