@@ -6,8 +6,6 @@ if(isset($_POST['register'])) {
     $username = $_POST['a_username'];
     $password = $_POST['a_password'];
 
-
-
     $query1="SELECT * FROM usergeral WHERE ('$username' = username)";
 
     $result1 = pg_query($connection, $query1);
