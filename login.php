@@ -1,4 +1,6 @@
-<?php include('phpLogin.php')?>
+<?php
+include('phpLogin.php')
+?>
 
 <!DOCTYPE html>
 <html lang="pt">

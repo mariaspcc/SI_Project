@@ -1,12 +1,5 @@
 <?php
 session_start();
-
-/*FUNCIONA - ATIVAR NA ENTREGA*/
-/*include('login.php');
-if (!isLoggedIn()) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}*/
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +17,15 @@ if (!isLoggedIn()) {
 <?php include('header_in.php'); ?>
 
 <main>
-    <p>RESTAURANTES</p>
+    <a href="CriarPrato.php">Criar Prato</a>
+    <div>
+        <?php echo $_SESSION['nome_restaurante']; ?>
+    </div>
+    <div>
+        <?php echo $_SESSION['localizacao_restaurante']; ?>
+    </div>
+
 </main>
+
 </body>
 </html>

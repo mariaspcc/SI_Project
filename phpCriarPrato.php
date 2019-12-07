@@ -5,7 +5,7 @@ include_once "acess_bd.php";
 session_start();
 
 //para registar - método post
-if(isset($_POST['register'])) {
+if(isset($_POST['register']) && ($_SESSION['sucess'])) {
 
     $comprado=false;
 
@@ -13,6 +13,7 @@ if(isset($_POST['register'])) {
     $tipo_prato=$_POST['tipo_prato'];
     $preco = $_POST['preço_prato'];
     $descricao = $_POST['descrição_prato'];
+    $restaurante_id=$_SESSION['nome_restaurante'];
     $administrador_usergeral_username=$_SESSION['username'];
 
     $query1="SELECT * FROM prato WHERE ('$nome_prato' = nome_prato)";
@@ -25,7 +26,7 @@ if(isset($_POST['register'])) {
         $name_error ="Já foi criado um prato com esse nome";
     } else {
         //insere dados inseridos pelo administrador na tabela prato
-        $query = "INSERT INTO prato (id,nome,tipo,descricao, preco,comprado, restaurante_id, administrador_usergeral_username) VALUES ('','$nome_prato', '$tipo','$descricao','$preco','$comprado', '$restaurante_id', '$administrador_usergeral_username')";
+        $query = "INSERT INTO prato (nome,tipo,descricao, preco,comprado, restaurante_id, administrador_usergeral_username) VALUES ($nome_prato', '$tipo','$descricao','$preco','$comprado', '$restaurante_id', '$administrador_usergeral_username')";
         $result1 = pg_query($connection, $query);
         //echo "SAVED";
         //exit();

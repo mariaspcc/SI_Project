@@ -1,7 +1,5 @@
 <?php
-
 include('phpCriarRestaurante.php');
-
 ?>
 
 <!DOCTYPE html>
