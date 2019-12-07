@@ -1,12 +1,5 @@
 <?php
 session_start();
-
-/*FUNCIONA - ATIVAR NA ENTREGA*/
-/*include('login.php');
-if (!isLoggedIn()) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}*/
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +15,7 @@ if (!isLoggedIn()) {
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
 
-<a href="CriarPrato.php">Criar Prato</a>
+<a href="CriarRestaurante.php">Criar Restaurante</a>
 
 <?php include('header_in.php'); ?>
 <main>

@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+include('phpCriarRestaurante.php');
 
 ?>
 
@@ -7,7 +8,7 @@ session_start();
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Register_Restaurante</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,15 +20,18 @@ session_start();
 <main>
     <div>
         <p> CRIAR RESTAURANTE</p>
-        <form action="RegisterCliente.php" method="POST" id="form_restaurante">
+        <?php if(isset($name_error)){?>
+            <span><?php echo $name_error;?></span>
+        <?php }?>
+        <form action="CriarRestaurante.php" method="POST" id="form_restaurante">
             <label> <br>Nome
-                <input type="text" name="nome" required>
+                <input type="text" name="nome_restaurante" required>
             </label>
             <br>
             <label> <br>Localização
-                <input type="text" name="localizacao" required></label>
+                <input type="text" name="localizacao_restaurante" required></label>
             <br>
-            <input type="submit" name="criar_restaurante">
+            <input type="submit" name="register_restaurante" value="Guardar">
         </form>
     </div>
 </main>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include('phpCriarPrato.php');
 
@@ -20,9 +19,20 @@ include('phpCriarPrato.php');
 <?php include('header_in.php'); ?>
 <main>
         <p> CRIAR PRATO </p>
+    <?php if(isset($name_error)){?>
+        <span><?php echo $name_error;?></span>
+    <?php }?>
         <form action="CriarPrato.php" method="POST" id="form_prato">
             <label> <br>Nome do Prato
                     <input type="text" name="nome_prato" required>
+            </label>
+            <br>
+            <label> <br>Tipo de prato
+                <select name="tipo_prato">
+                    <option value="Carne">Carne</option>
+                    <option value="Peixe">Peixe</option>
+                    <option value="Vegetariano">Vegetariano</option>
+                </select>
             </label>
             <br>
             <label> <br>Preço

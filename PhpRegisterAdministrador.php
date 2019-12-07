@@ -7,7 +7,6 @@ if(isset($_POST['register'])) {
     $password = $_POST['a_password'];
 
     $query1="SELECT * FROM usergeral WHERE ('$username' = username)";
-
     $result1 = pg_query($connection, $query1);
 
     $name_error = "O username já existe.";
