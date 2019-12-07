@@ -15,10 +15,10 @@ if(isset($_POST['register'])) {
     $name_error = "O username já existe.";
 
     //caso não exista, insere registo na BD
-    if (pg_affected_rows($result1)> 0) {
+    if (pg_num_rows($result1) > 0) {
         $name_error = "O username já existe.";
     } else {
-        $query = "INSERT INTO usergeral (username, password, administrador) VALUES ('$username', '$password', true)";
+        $query = "INSERT INTO usergeral (username, password) VALUES ('$username', '$password')";
         $result = pg_query($connection, $query);
         $query2 = "INSERT INTO administrador (usergeral_username) VALUES ('$username')";
         $result2 = pg_query($connection, $query2);
