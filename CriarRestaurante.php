@@ -29,6 +29,7 @@ include('phpCriarRestaurante.php');
             <label> <br>Localização
                 <input type="text" name="localizacao_restaurante" required></label>
             <br>
+
             <input type="submit" name="register_restaurante" value="Guardar">
         </form>
     </div>

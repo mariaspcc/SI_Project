@@ -31,7 +31,10 @@ session_start();
         $administrador_usergeral_username = $_SESSION['username'];
         $query1 = "SELECT * FROM restaurante WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
         $result1 = pg_query($connection, $query1);
-        if (pg_affected_rows($result1) > 0) { ?>
+        $query2 = "SELECT * FROM prato WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
+        $result2 = pg_query($connection, $query2);?>
+        <h1>Os meus Restaurantes</h1>
+        <?php if (pg_affected_rows($result1) > 0) { ?>
             <ul class="listaMeusRestaurantes">
                 <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
                     $arr = pg_fetch_array($result1);
@@ -42,6 +45,20 @@ session_start();
         <?php } else {
             $name_error = "Não tem restaurantes para mostrar";
             echo $name_error;
+        }?>
+
+        <h1>Os meus Pratos</h1>
+        <?php if (pg_affected_rows($result2) > 0) { ?>
+            <ul class="listaMeusRestaurantes">
+                <?php for ($i = 0; $i < pg_affected_rows($result2); $i++) {
+                    $arr2 = pg_fetch_array($result2);
+                    ?>
+                    <li> <?php echo $arr2['nome']; ?></li>
+                <?php } ?>
+            </ul>
+        <?php } else {
+            $prato_error = "Não tem pratos para mostrar";
+            echo $prato_error;
         }
     } ?>
 
