@@ -83,7 +83,6 @@ if (isset($_POST['register'])) {
             <input type="submit" name="register" value="Guardar">
         </form>
         <?php
-
     }
     pg_close($connection);
     ?>

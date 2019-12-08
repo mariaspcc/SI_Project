@@ -50,7 +50,7 @@ session_start();
         <h1>Os meus Pratos</h1>
         <?php if (pg_affected_rows($result2) > 0) { ?>
             <ul class="listaMeusRestaurantes">
-                <?php for ($i = 0; $i < pg_affected_rows($result2); $i++) {
+                <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
                     $arr2 = pg_fetch_array($result2);
                     ?>
                     <li> <?php echo $arr2['nome']; ?></li>
