@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once "acess_bd.php";
-if (isset($_POST['register'])) {
+if (isset($_POST['register_prato'])) {
     $comprado = "false";
     $nome_prato = $_POST['nome_prato'];
     $tipo_prato = $_POST['tipo_prato'];
@@ -10,7 +10,7 @@ if (isset($_POST['register'])) {
     $restaurante_nome = $_POST['restaurante'];
     $administrador_usergeral_username = $_SESSION['username'];
 
-    $query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome_prato)";
+    $query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome)";
     $result1 = pg_query($connection, $query1);
     if (pg_affected_rows($result1) > 0) {
         $name_error = "Já foi criado um prato com esse nome";
@@ -80,7 +80,7 @@ if (isset($_POST['register'])) {
                 <input type="text" name="descricao_prato" required>
             </label>
             <br>
-            <input type="submit" name="register" value="Guardar">
+            <input type="submit" name="register_prato" value="Guardar">
         </form>
         <?php
     }
