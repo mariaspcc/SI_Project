@@ -5,11 +5,11 @@
     </div>
     <div  id="botaoheader">
         <?php
-        if ( isset($_SESSION['sucess']) && $_SESSION['sucess'] ) {?>
+        if ( isset($_SESSION['success']) && $_SESSION['success'] ) {?>
             <div id="user_atual">
             <?php echo $_SESSION['username']; ?>
             </div>
-            <a href="login.php">
+            <a href="logout.php">
                 <input type="submit" value="Sair" name="logout">
             </a>
         <?php }

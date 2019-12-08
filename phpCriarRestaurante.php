@@ -5,7 +5,7 @@ include_once "acess_bd.php";
 session_start();
 
 //para registar - método post
-if(isset($_POST['register_restaurante']) && ($_SESSION['sucess'])) {
+if(isset($_POST['register_restaurante']) && ($_SESSION['success'])) {
 
     $nome_restaurante = $_POST['nome_restaurante'];
     $localizacao_restaurante=$_POST['localizacao_restaurante'];

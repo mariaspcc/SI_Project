@@ -20,12 +20,12 @@ if(isset($_POST['login'])) {
 
     if (pg_affected_rows($result1) == 1 && pg_affected_rows($result2) == 0 ) {
         $_SESSION['username'] = $username;
-        $_SESSION['sucess'] = "Entrou!";
+        $_SESSION['success'] = "Entrou!";
         header('location: Homepage_Administrador.php');
 
     } else if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
         $_SESSION['username'] = $username;
-        $_SESSION['sucess'] = "Entrou!";
+        $_SESSION['success'] = "Entrou!";
         header('location: Homepage_Cliente.php');
     }
     else if(pg_affected_rows($result1)==0 && pg_affected_rows($result2) == 0){

@@ -1,29 +1,32 @@
-main{
+main {
     font-family: 'Cabin', sans-serif;
 }
-#botaoheader{
-  display:inline;
+
+#botaoheader {
+    display: inline;
     float: right;
 }
-#logo{
+
+#logo {
     width: 50%;
     margin: 0;
     display: inline-block;
 }
-#logo>p{
+
+#logo > p {
     margin: 0;
     width: 50%;
 }
 
-#user_atual{
+#user_atual {
     color: white;
     font-size: 20px;
 }
 
 #fundo {
     position: fixed;
-    top:-10px;
-    left:-10px;
+    top: -10px;
+    left: -10px;
     width: 105%;
     height: auto;
     z-index: -1;
@@ -32,18 +35,18 @@ main{
 .fundo_quadrado {
     background-color: black;
     position: fixed;
-    top:-10px;
-    left:-10px;
+    top: -10px;
+    left: -10px;
     width: 1500px;
     height: 1200px;
-    opacity:40%;
-    z-index:-1;
+    opacity: 40%;
+    z-index: -1;
 }
 
 .barra {
     position: relative;
     font-family: 'Cabin', sans-serif;
-    font-size:27px;
+    font-size: 27px;
     text-align: left;
 }
 
@@ -52,16 +55,16 @@ p {
 }
 
 /*HOMEPAGE_GERAL*/
-.homepage_geral{
+.homepage_geral {
     color: white;
     font-size: 20px;
-    margin-top:10%;
+    margin-top: 10%;
     text-align: center;
 }
 
 /*REGISTAR E LOGIN*/
 .formulario {
-    width:20%;
+    width: 20%;
     color: white;
     position: fixed;
     top: 50%;
@@ -76,7 +79,7 @@ p {
 }
 
 input[type=text], input[type=password] {
-    width:100%;
+    width: 100%;
     padding: 10px;
     margin: 5px 0 20px 0;
     border: none;
@@ -87,9 +90,9 @@ input[type=text], input[type=password] {
 input[type=submit], #botão_entrar {
     color: white;
     background: 0;
-    padding:10px;
+    padding: 10px;
     border-radius: 15px;
-    width:100px;
+    width: 100px;
 }
 
 /*CHOOSE*/
@@ -100,32 +103,34 @@ input[type=submit], #botão_entrar {
     transform: translate(-40%, -50%);
     width: 70%;
 }
-.escolha input[type=button]{
+
+.escolha input[type=button] {
     color: white;
     font-size: 20px;
     background: 0;
-    padding-top:30px;
+    padding-top: 30px;
     padding-bottom: 30px;
     border-radius: 15px;
-    width:30%;
+    width: 30%;
 
 }
 
-#administradorbutton{
+#administradorbutton {
     margin-left: 20%;
 }
 
 /*CRIAR PRATO*/
-#form_prato{
-    width:20%;
+#form_prato {
+    width: 20%;
     color: white;
     position: fixed;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 input[type=text], input[type=number] {
-    width:100%;
+    width: 100%;
     padding: 10px;
     margin: 5px 0 20px 0;
     border: none;
@@ -136,24 +141,30 @@ input[type=text], input[type=number] {
 input[type=submit] {
     color: white;
     background: 0;
-    padding:10px;
+    padding: 10px;
     border-radius: 15px;
-    width:100px;
+    width: 100px;
 }
 
 
-.homepage_geral{
+.homepage_geral {
     color: white;
     font-size: 20px;
-    margin-top:10%;
+    margin-top: 10%;
     text-align: center;
 }
 
-#form_restaurante{
+#form_restaurante {
     color: white;
 
 }
-#form_restaurante>input{
+
+#form_restaurante > input {
     width: 50vw;
 }
 
+/*HOMEPAGE ADMINISTRADOR*/
+.listaMeusRestaurantes {
+    color: white;
+    font-size: 1.5em;
+}

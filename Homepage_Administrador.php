@@ -1,7 +1,8 @@
 <?php
-include('phpHomepage_Administrador.php');
+include_once "acess_bd.php";
+session_start();
+//include('phpHomepage_Administrador.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -20,23 +21,30 @@ include('phpHomepage_Administrador.php');
     <a href="CriarRestaurante.php">Criar Restaurante</a>
 
     <?php
-    if ( isset($_SESSION['sucess']) && $_SESSION['sucess'] ) {?>
+    if (isset($_SESSION['success']) && $_SESSION['success']) { ?>
 
-        <?php if(isset($name_error)){?>
-            <span><?php echo $name_error;?></span>
-        <?php }?>
+        <?php if (isset($name_error)) { ?>
+            <span><?php echo $name_error; ?></span>
+        <?php } ?>
 
-    <ul>
-        <li>
-            <div>
-                <?php echo $_POST['nome_restaurante']; ?>
-            </div>
-            <div>
-                <?php echo $_POST['localizacao_restaurante']; ?>
-            </div>
-        </li>
-    </ul>
-    <?php } ?>
+        <?php
+        $administrador_usergeral_username = $_SESSION['username'];
+        $query1 = "SELECT * FROM restaurante WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
+        $result1 = pg_query($connection, $query1);
+        if (pg_affected_rows($result1) > 0) { ?>
+            <ul class="listaMeusRestaurantes">
+                <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
+                    $arr = pg_fetch_array($result1);
+                    ?>
+                    <li> <?php echo $arr['nome']; ?></li>
+                <?php } ?>
+            </ul>
+        <?php } else {
+            $name_error = "Não tem restaurantes para mostrar";
+            echo $name_error;
+        }
+    } ?>
+
 </main>
 
 </body>
