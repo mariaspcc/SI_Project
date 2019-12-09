@@ -5,7 +5,6 @@ include_once "acess_bd.php";
 //buscar dados
 if(isset($_POST['login'])) {
     session_start();
-
     $username = $_POST['username'];
     $password = $_POST['password'];
 

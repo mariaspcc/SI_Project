@@ -26,10 +26,12 @@ if (!isLoggedIn()) {
 
 <main>
     <?php
-    $username = $_POST['username'];
+   /* $username = $_POST['username'];
     $query= "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";
-    $result = pg_query($connection, $query);
-    if (isset($_SESSION['success']) && $_SESSION['success'] && pg_affected_rows($result) == 1) { ?>
+    $result = pg_query($connection, $query);*/
+    include_once "CheckCliente.php";
+
+    if (isset($_SESSION['success']) && $_SESSION['success']/* && pg_affected_rows($result) == 1*/) { ?>
 
     <?php if (isset($name_error)) { ?>
     <span><?php echo $name_error; ?></span>

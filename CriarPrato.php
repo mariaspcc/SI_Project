@@ -2,30 +2,27 @@
 session_start();
 include_once "acess_bd.php";
 if (isset($_POST['register_prato'])) {
-$comprado = "false";
-$nome_prato = $_POST['nome_prato'];
-$tipo_prato = $_POST['tipo_prato'];
-$preco = $_POST['preco_prato'];
-$descricao = $_POST['descricao_prato'];
-$restaurante_nome = $_POST['restaurante'];
-$administrador_usergeral_username = $_SESSION['username'];
-$username = $_POST['username'];
-$checkadministrador = "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";
-$resultadministrador = pg_query($connection, $checkadministrador);
+    $comprado = "false";
+    $nome_prato = $_POST['nome_prato'];
+    $tipo_prato = $_POST['tipo_prato'];
+    $preco = $_POST['preco_prato'];
+    $descricao = $_POST['descricao_prato'];
+    $restaurante_nome = $_POST['restaurante'];
+    $administrador_usergeral_username = $_SESSION['username'];
 
 
-$query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome)";
-$result1 = pg_query($connection, $query1);
-if (pg_affected_rows($result1) > 0) {
-$name_error = "Já foi criado um prato com esse nome";
-} else {
-echo $restaurante_nome;
-$query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$administrador_usergeral_username')";
-$result1 = pg_query($connection, $query);
+    $query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome)";
+    $result1 = pg_query($connection, $query1);
+    if (pg_affected_rows($result1) > 0) {
+        $name_error = "Já foi criado um prato com esse nome";
+    } else {
+        echo $restaurante_nome;
+        $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$administrador_usergeral_username')";
+        $result1 = pg_query($connection, $query);
 //echo "SAVED";
 //exit();
-header('location: Homepage_Administrador.php');
-}
+        header('location: Homepage_Administrador.php');
+    }
 
 }
 ?>
@@ -47,10 +44,10 @@ header('location: Homepage_Administrador.php');
     <p> CRIAR PRATO </p>
 
     <?php
-    $username = $_POST['username'];
-    $checkadministrador = "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";
-    $resultadministrador = pg_query($connection, $checkadministrador);
-    if (isset($_SESSION['success']) && $_SESSION['success'] && pg_affected_rows($resultadministrador) == 0) { ?>
+    if (isset($_SESSION['success']) && $_SESSION['success']) {
+        include_once "CheckAdministrador.php";
+        ?>
+
         <form action="CriarPrato.php" method="POST" id="form_prato">
             <label> <br>Nome do Prato
                 <input type="text" name="nome_prato" required>
@@ -62,7 +59,7 @@ header('location: Homepage_Administrador.php');
             <label> <br>Restaurante
                 <select name="restaurante">
                     <?php
-                    $query2 = "SELECT nome FROM restaurante WHERE username='$username'";
+                    $query2 = "SELECT nome FROM restaurante WHERE username='$administrador_usergeral_username'";
                     $result2 = pg_query($connection, $query2);
                     if (pg_affected_rows($result2) > 0) {
                         for ($i = 0; $i < pg_affected_rows($result2); $i++) {
