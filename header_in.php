@@ -3,6 +3,9 @@
     <div id="logo">
         <p>LDMEats</p>
     </div>
+<div>
+    <input id="pesquisa" type="text" placeholder="Pesquisa">
+</div>
     <div  id="botaoheader">
         <?php
         if ( isset($_SESSION['success']) && $_SESSION['success'] ) {?>
