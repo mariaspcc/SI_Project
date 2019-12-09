@@ -33,7 +33,7 @@ if (!isLoggedIn()) {
     <?php } ?>
 
     <?php
-    $query1 = "SELECT * FROM restaurante WHERE nome";
+    $query1 = "SELECT nome FROM restaurante";
     $result1 = pg_query($connection, $query1);
  ?>
 

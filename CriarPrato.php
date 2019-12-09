@@ -15,12 +15,14 @@ if (isset($_POST['register_prato'])) {
     if (pg_affected_rows($result1) > 0) {
         $name_error = "Já foi criado um prato com esse nome";
     } else {
+        echo $restaurante_nome;
         $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$administrador_usergeral_username')";
         $result1 = pg_query($connection, $query);
         //echo "SAVED";
         //exit();
-        header('location: Homepage_Administrador.php');
+       // header('location: Homepage_Administrador.php');
     }
+
 }
 ?>
 
@@ -57,10 +59,10 @@ if (isset($_POST['register_prato'])) {
                         for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                             $arr = pg_fetch_array($result2);
                             ?>
-                            <option value="rest"><?php echo $arr['nome']; ?></option> //NÃO ESTÁ A FUNCIONAR
+                            <option><?php echo $arr['nome']; ?></option>
                         <?php }
                     } else { ?>
-                        <a href="CriarRestaurante.php">Criar Restaurante</a>
+                        <a href="CriarRestaurante.php">Criar Restaurante</a>//NÃO ESTÁ A FUNCIONAR
                     <?php } ?>
                 </select>
             </label>
