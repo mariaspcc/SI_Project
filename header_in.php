@@ -4,7 +4,7 @@
         <p>LDMEats</p>
     </div>
 <div>
-    <input id="pesquisa" type="text" placeholder="Pesquisa">
+    <input id="pesquisa" type="search" placeholder="Pesquisa">
 </div>
     <div  id="botaoheader">
         <?php
