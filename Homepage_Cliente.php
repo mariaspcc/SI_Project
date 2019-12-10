@@ -26,67 +26,90 @@ if (!isLoggedIn()) {
 
 <main>
     <?php
-   /* $username = $_POST['username'];
-    $query= "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";
-    $result = pg_query($connection, $query);*/
+    /* $username = $_POST['username'];
+     $query= "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";
+     $result = pg_query($connection, $query);*/
     include_once "CheckCliente.php";
 
     if (isset($_SESSION['success']) && $_SESSION['success']/* && pg_affected_rows($result) == 1*/) { ?>
 
-    <?php if (isset($name_error)) { ?>
-    <span><?php echo $name_error; ?></span>
-    <?php } ?>
-
-    <?php
-    $query1 = "SELECT nome FROM restaurante";
-    $result1 = pg_query($connection, $query1);
-
-    $query2 = "SELECT nome FROM prato";
-    $result2 = pg_query($connection, $query2);
-
-    ?>
-
-    <p>PRATOS</p>
-    <select><br>por
-        <optgroup label="Preço">
-            <option value="p_crescente">Crescente</option>
-            <option value="p_decrescente">Decrescente</option>
-        </optgroup>
-        <optgroup label="Alabética">
-            <option value="a_crescente">Crescente</option>
-            <option value="a_decrescente">Decrescente</option>
-        </optgroup>
-    </select>
-    <?php if (pg_affected_rows($result2) > 0) { ?>
-    <ul class="listaRestaurantes">
-        <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
-            $arrayPratos = pg_fetch_array($result2);
-            ?>
-            <li> <?php echo $arrayPratos['nome']; ?></li>
+        <?php if (isset($name_error)) { ?>
+            <span><?php echo $name_error; ?></span>
         <?php } ?>
-    </ul>
+
+        <?php
+        $query1 = "SELECT nome FROM restaurante";
+        $result1 = pg_query($connection, $query1);
+
+        $query2 = "SELECT nome FROM prato";
+        $result2 = pg_query($connection, $query2);
+
+        //ORDENAR PRATOS
+        $value = $_POST['value'];
+        if (isset($_POST['ordenar'])) {
+            if ($value === "p_crescente") {
+                $query2 = "SELECT * FROM prato ORDER BY preco ASC";
+                $result2 = pg_query($connection, $query2);
+            } else if ($value === "p_crescente") {
+                $query2 = "SELECT * FROM prato ORDER BY preco DESC";
+                $result2 = pg_query($connection, $query2);
+            } else if ($value === "a_crescente") {
+                $query2 = "SELECT * FROM prato ORDER BY nome ASC";
+                $result2 = pg_query($connection, $query2);
+            } else if ($value === "a_decrescente") {
+                $query2 = "SELECT * FROM prato ORDER BY nome DESC";
+                $result2 = pg_query($connection, $query2);
+            }
+        }
+        ?>
+
+        ?>
+
+        <p>PRATOS</p>
+        <form action="Homepage_Cliente.php" method="POST" id="ordenar">
+            <select><br>por
+                <optgroup label="Preço">
+                    <option value="p_crescente">Crescente</option>
+                    <option value="p_decrescente">Decrescente</option>
+                </optgroup>
+                <optgroup label="Alabética">
+                    <option value="a_crescente">Crescente</option>
+                    <option value="a_decrescente">Decrescente</option>
+                </optgroup>
+            </select>
+        </form>
+
+        <?php if (pg_affected_rows($result2) > 0) { ?>
+            <ul class="listaRestaurantes">
+                <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
+                    $arrayPratos = pg_fetch_array($result2);
+                    ?>
+                    <li> <?php echo $arrayPratos['nome']; ?></li>
+                <?php } ?>
+            </ul>
+        <?php } else {
+            $name_error = "Não existem pratos para mostrar";
+            echo $name_error;
+        } ?>
+        <?php ?>
+        <br>
+        <br>
+        <p>RESTAURANTES</p>
+        <?php if (pg_affected_rows($result1) > 0) { ?>
+            <ul class="listaRestaurantes">
+                <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
+                    $arr = pg_fetch_array($result1);
+                    ?>
+                    <li> <?php echo $arr['nome']; ?></li>
+                <?php } ?>
+            </ul>
+        <?php } else {
+            $name_error = "Não existem restaurantes para mostrar";
+            echo $name_error;
+        } ?>
     <?php } else {
-        $name_error = "Não existem pratos para mostrar";
-        echo $name_error;
+        header('location: login.php');
     } ?>
-    <?php ?>
-    <br>
-    <br>
-    <p>RESTAURANTES</p>
-    <?php if (pg_affected_rows($result1) > 0) { ?>
-    <ul class="listaRestaurantes">
-        <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
-            $arr = pg_fetch_array($result1);
-            ?>
-            <li> <?php echo $arr['nome']; ?></li>
-        <?php } ?>
-    </ul>
-    <?php } else {
-        $name_error = "Não existem restaurantes para mostrar";
-        echo $name_error;
-    } ?>
-    <?php } else{
-        header('location: login.php');    }?>
 
 </main>
 </body>
