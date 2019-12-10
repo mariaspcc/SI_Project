@@ -57,7 +57,7 @@ if (!isLoggedIn()) {
                 $query2 = "SELECT * FROM prato ORDER BY nome ASC";
                 $result2 = pg_query($connection, $query2);
             } else if ($value === "a_decrescente") {
-                $query2 = "SELECT * FROM prato ORDER BY nome DESC";
+                $query2 = "SELECT nome FROM prato ORDER BY nome DESC";
                 $result2 = pg_query($connection, $query2);
             }
         }
