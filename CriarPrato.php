@@ -59,7 +59,8 @@ if (isset($_POST['register_prato'])) {
             <label> <br>Restaurante
                 <select name="restaurante">
                     <?php
-                    $query2 = "SELECT nome FROM restaurante WHERE username='$administrador_usergeral_username'";
+                    $username = $_SESSION['username'];
+                    $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
                     $result2 = pg_query($connection, $query2);
                     if (pg_affected_rows($result2) > 0) {
                         for ($i = 0; $i < pg_affected_rows($result2); $i++) {
