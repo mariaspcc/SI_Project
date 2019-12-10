@@ -41,23 +41,24 @@ if (!isLoggedIn()) {
         $query1 = "SELECT nome FROM restaurante";
         $result1 = pg_query($connection, $query1);
 
-        $query2 = "SELECT nome FROM prato";
-        $result2 = pg_query($connection, $query2);
-
         //ORDENAR PRATOS
-        $value = $_POST['value'];
         if (isset($_POST['ordenar'])) {
-            if ($value === "p_crescente") {
+            $valor = $_POST['name'];
+            if ($valor === "p_crescente") {
                 $query2 = "SELECT * FROM prato ORDER BY preco ASC";
                 $result2 = pg_query($connection, $query2);
-            } else if ($value === "p_crescente") {
+            } else if ($valor === "p_crescente") {
                 $query2 = "SELECT * FROM prato ORDER BY preco DESC";
                 $result2 = pg_query($connection, $query2);
-            } else if ($value === "a_crescente") {
+            } else if ($valor === "a_crescente") {
                 $query2 = "SELECT * FROM prato ORDER BY nome ASC";
                 $result2 = pg_query($connection, $query2);
-            } else if ($value === "a_decrescente") {
-                $query2 = "SELECT nome FROM prato ORDER BY nome DESC";
+            } else if ($valor === "a_decrescente") {
+                $query2 = "SELECT * FROM prato ORDER BY nome DESC";
+                $result2 = pg_query($connection, $query2);
+            }
+            else {
+                $query2 = "SELECT nome FROM prato";
                 $result2 = pg_query($connection, $query2);
             }
         }
@@ -69,14 +70,15 @@ if (!isLoggedIn()) {
         <form action="Homepage_Cliente.php" method="POST" id="ordenar">
             <select><br>por
                 <optgroup label="Preço">
-                    <option value="p_crescente">Crescente</option>
-                    <option value="p_decrescente">Decrescente</option>
+                    <option value="p_crescente" name="p_crescente">Crescente</option>
+                    <option value="p_decrescente" name="p_decrescente">Decrescente</option>
                 </optgroup>
                 <optgroup label="Alabética">
-                    <option value="a_crescente">Crescente</option>
-                    <option value="a_decrescente">Decrescente</option>
+                    <option value="a_crescente" name="a_crescente">Crescente</option>
+                    <option value="a_decrescente" name="a_decrescente">Decrescente</option>
                 </optgroup>
             </select>
+            <input type="submit" name="ordenar">
         </form>
 
         <?php if (pg_affected_rows($result2) > 0) { ?>
