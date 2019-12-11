@@ -21,9 +21,9 @@ if (isset($_POST['register_prato'])) {
         echo $restaurante_nome;
         $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$username')";
         $result1 = pg_query($connection, $query);
+        header('location:Homepage_Administrador.php');
 //echo "SAVED";
 //exit();
-        //header('location: Homepage_Administrador.php');
     }
 
 }

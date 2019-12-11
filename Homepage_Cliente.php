@@ -41,38 +41,10 @@ if (!isLoggedIn()) {
         $query1 = "SELECT nome FROM restaurante";
         $result1 = pg_query($connection, $query1);
 
-        $query2 = "SELECT * FROM prato ORDER BY preco ASC";
-        $result2 = pg_query($connection, $query2);
-
-        //ORDENAR PRATOS
-        if (isset($_POST['ordenar'])) {
-            $valor = $_POST['ordem'];
-            $pesquisa = $_POST['search'];
-
-            if (isset($_POST['search'])) {
-                $query2 = "SELECT nome FROM prato WHERE `nome` LIKE %$pesquisa%";
-                $result2 = pg_query($connection, $query2);
-
-                if ($valor === "p_crescente") {
-                    $query2 = "SELECT * FROM prato ORDER BY preco ASC";
-                    $result2 = pg_query($connection, $query2);
-                } else if ($valor === "p_crescente") {
-                    $query2 = "SELECT * FROM prato ORDER BY preco DESC";
-                    $result2 = pg_query($connection, $query2);
-                } else if ($valor === "a_crescente") {
-                    $query2 = "SELECT * FROM prato ORDER BY nome ASC";
-                    $result2 = pg_query($connection, $query2);
-                } else if ($valor === "a_decrescente") {
-                    $query2 = "SELECT * FROM prato ORDER BY nome DESC";
-                    $result2 = pg_query($connection, $query2);
-                }
-            }
-        }
-
-/*
-        while ($row = pg_fetch_assoc($result3)) {
-            echo "<div id='link' onClick='addText(\"".$row['nome']."\");'>" . $row['nome'] . "</div>";
-        }*/
+        /*
+                while ($row = pg_fetch_assoc($result3)) {
+                    echo "<div id='link' onClick='addText(\"".$row['nome']."\");'>" . $row['nome'] . "</div>";
+                }*/
         ?>
 
         <p>PRATOS</p>
@@ -80,7 +52,7 @@ if (!isLoggedIn()) {
         <form action="Homepage_Cliente.php" method="POST" id="ordenar">
             <input id="search" name="search" type="text" placeholder="Type here">
             <input id="submit" type="submit" value="Search">
-<br>
+            <br>
             <select name="ordem">por
                 <optgroup label="Preço">
                     <option value="p_crescente">Crescente</option>
@@ -95,13 +67,36 @@ if (!isLoggedIn()) {
         </form>
 
         <?php
+//ORDENAR PRATOS
+        if (isset($_POST['search'])) {
+            $pesquisa = $_POST['search'];
+            $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'";
+        } else {
+            $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
+        }
+        if (isset($_POST['ordenar'])) {
+            $valor = $_POST['ordem'];
+            if ($valor === "p_crescente") {
+                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
+            } else if ($valor === "p_crescente") {
+                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
+            } else if ($valor === "a_crescente") {
+                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
+            } else if ($valor === "a_decrescente") {
+                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
+            }
+        }
+        $result2 = pg_query($connection, $query2);
 
         if (pg_affected_rows($result2) > 0) { ?>
-            <ul class="listaRestaurantes">
+            <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
                     ?>
-                    <li> <?php echo $arrayPratos['nome']; ?></li>
+                    <li> <h1><?php echo $arrayPratos['nome'];?></h1>
+                        <h2><?php echo $arrayPratos['restaurante_nome'];?></h2>
+                        <h3><?php echo $arrayPratos['preco'];?> €</h3>
+                    </li>
                 <?php } ?>
             </ul>
         <?php } else {
@@ -111,19 +106,6 @@ if (!isLoggedIn()) {
         <?php ?>
         <br>
         <br>
-        <p>RESTAURANTES</p>
-        <?php if (pg_affected_rows($result1) > 0) { ?>
-            <ul class="listaRestaurantes">
-                <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
-                    $arr = pg_fetch_array($result1);
-                    ?>
-                    <li> <?php echo $arr['nome']; ?></li>
-                <?php } ?>
-            </ul>
-        <?php } else {
-            $name_error = "Não existem restaurantes para mostrar";
-            echo $name_error;
-        } ?>
     <?php } else {
         header('location: login.php');
     } ?>
