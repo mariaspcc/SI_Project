@@ -41,28 +41,47 @@ if (!isLoggedIn()) {
         $query1 = "SELECT nome FROM restaurante";
         $result1 = pg_query($connection, $query1);
 
+        $query2 = "SELECT * FROM prato ORDER BY preco ASC";
+        $result2 = pg_query($connection, $query2);
+
         //ORDENAR PRATOS
         if (isset($_POST['ordenar'])) {
             $valor = $_POST['ordem'];
-            if ($valor === "p_crescente") {
-                $query2 = "SELECT * FROM prato ORDER BY preco ASC";
+            $pesquisa = $_POST['search'];
+
+            if (isset($_POST['search'])) {
+                $query2 = "SELECT nome FROM prato WHERE `nome` LIKE %$pesquisa%";
                 $result2 = pg_query($connection, $query2);
-            } else if ($valor === "p_crescente") {
-                $query2 = "SELECT * FROM prato ORDER BY preco DESC";
-                $result2 = pg_query($connection, $query2);
-            } else if ($valor === "a_crescente") {
-                $query2 = "SELECT * FROM prato ORDER BY nome ASC";
-                $result2 = pg_query($connection, $query2);
-            } else if ($valor === "a_decrescente") {
-                $query2 = "SELECT * FROM prato ORDER BY nome DESC";
-                $result2 = pg_query($connection, $query2);
+
+                if ($valor === "p_crescente") {
+                    $query2 = "SELECT * FROM prato ORDER BY preco ASC";
+                    $result2 = pg_query($connection, $query2);
+                } else if ($valor === "p_crescente") {
+                    $query2 = "SELECT * FROM prato ORDER BY preco DESC";
+                    $result2 = pg_query($connection, $query2);
+                } else if ($valor === "a_crescente") {
+                    $query2 = "SELECT * FROM prato ORDER BY nome ASC";
+                    $result2 = pg_query($connection, $query2);
+                } else if ($valor === "a_decrescente") {
+                    $query2 = "SELECT * FROM prato ORDER BY nome DESC";
+                    $result2 = pg_query($connection, $query2);
+                }
             }
         }
+
+/*
+        while ($row = pg_fetch_assoc($result3)) {
+            echo "<div id='link' onClick='addText(\"".$row['nome']."\");'>" . $row['nome'] . "</div>";
+        }*/
         ?>
 
         <p>PRATOS</p>
+
         <form action="Homepage_Cliente.php" method="POST" id="ordenar">
-            <select name="ordem"><br>por
+            <input id="search" name="search" type="text" placeholder="Type here">
+            <input id="submit" type="submit" value="Search">
+<br>
+            <select name="ordem">por
                 <optgroup label="Preço">
                     <option value="p_crescente">Crescente</option>
                     <option value="p_decrescente">Decrescente</option>
