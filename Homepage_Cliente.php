@@ -97,13 +97,17 @@ if (!isLoggedIn()) {
         <?php
 
         if (pg_affected_rows($result2) > 0) { ?>
-            <ul class="listaRestaurantes">
+
+                    <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
                     ?>
-                    <li> <?php echo $arrayPratos['nome']; ?></li>
+                    <a href="DetalhePrato.php?p=<?php echo $p; ?>">
+                        <li> <?php echo $arrayPratos['nome'];?> </li>
+                    </a>
                 <?php } ?>
             </ul>
+
         <?php } else {
             $name_error = "Não existem pratos para mostrar";
             echo $name_error;
