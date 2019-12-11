@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once "acess_bd.php";
+if (isset($_SESSION['success']) && $_SESSION['success']) {
+    $username = $_SESSION['username'];
+}
 if (isset($_POST['register_prato'])) {
     $comprado = "false";
     $nome_prato = $_POST['nome_prato'];
@@ -8,7 +11,6 @@ if (isset($_POST['register_prato'])) {
     $preco = $_POST['preco_prato'];
     $descricao = $_POST['descricao_prato'];
     $restaurante_nome = $_POST['restaurante'];
-    $administrador_usergeral_username = $_SESSION['username'];
 
 
     $query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome)";
@@ -17,11 +19,11 @@ if (isset($_POST['register_prato'])) {
         $name_error = "Já foi criado um prato com esse nome";
     } else {
         echo $restaurante_nome;
-        $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$administrador_usergeral_username')";
+        $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$username')";
         $result1 = pg_query($connection, $query);
 //echo "SAVED";
 //exit();
-        header('location: Homepage_Administrador.php');
+        //header('location: Homepage_Administrador.php');
     }
 
 }
@@ -46,6 +48,7 @@ if (isset($_POST['register_prato'])) {
     <?php
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         include_once "CheckAdministrador.php";
+
         ?>
 
         <form action="CriarPrato.php" method="POST" id="form_prato">
@@ -59,7 +62,7 @@ if (isset($_POST['register_prato'])) {
             <label> <br>Restaurante
                 <select name="restaurante">
                     <?php
-                    $username = $_SESSION['username'];
+
                     $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
                     $result2 = pg_query($connection, $query2);
                     if (pg_affected_rows($result2) > 0) {
