@@ -89,6 +89,7 @@ if (!isLoggedIn()) {
         $result2 = pg_query($connection, $query2);
 
         if (pg_affected_rows($result2) > 0) { ?>
+
             <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
@@ -99,6 +100,7 @@ if (!isLoggedIn()) {
                     </li>
                 <?php } ?>
             </ul>
+
         <?php } else {
             $name_error = "Não existem pratos para mostrar";
             echo $name_error;
