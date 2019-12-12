@@ -96,7 +96,7 @@ if (!isLoggedIn()) {
                     $y=$arrayPratos['nome'];
                     ?>
                     <li>
-                        <a href="DetalhePrato.php?variavel=<?php $y ?>">
+                        <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
                         <h1><?php echo $arrayPratos['nome']; ?></h1>
                         </a>
                         <h2><?php echo $arrayPratos['restaurante_nome'];?></h2>

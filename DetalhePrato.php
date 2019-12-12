@@ -18,13 +18,12 @@ session_start();
 
 <main>
     <form action="Encomenda_Pendente.php" method="POST" id="adicionar_prato">
-    <?php
-    if (isset($_SESSION['success']) && $_SESSION['success']) {
+        <?php
+        if (isset($_SESSION['success']) && $_SESSION['success']) {
 
-        if(isset($_GET["variavel"])) {
-            $nome=$_GET["variavel"];
+            $nome = $_GET["variavel"];
 
-            $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE (nome='$nome')";
+            $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$nome'= nome";
             $result2 = pg_query($connection, $query2);
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                 $arr = pg_fetch_array($result2);
@@ -61,12 +60,11 @@ session_start();
 
             <?php
         }
-    }
-    ?>
+        ?>
 
-    <label> <br>Quantidade
-        <input type="number" name="quantidade_prato" required></label>
-    <br>
+        <label> <br>Quantidade
+            <input type="number" name="quantidade_prato" required></label>
+        <br>
 
         <input type="submit" class="botao" value="Adicionar prato à encomenda">
     </form>
