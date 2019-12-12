@@ -94,9 +94,10 @@ if (!isLoggedIn()) {
                     $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
                 }
             }
-            else {
-                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
-            }
+        }
+        //inicialmente aparecerão a lista de todos os pratos ordenados por ordem crescente de preço
+        else {
+            $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
         }
         $result2 = pg_query($connection, $query2);
 
