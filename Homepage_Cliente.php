@@ -51,7 +51,6 @@ if (!isLoggedIn()) {
 
         <form action="Homepage_Cliente.php" method="POST" id="ordenar">
             <input id="search" name="search" type="text" placeholder="Type here">
-            <input id="submit" type="submit" value="Search">
             <br>
             <select name="ordem">por
                 <optgroup label="Preço">
@@ -67,23 +66,36 @@ if (!isLoggedIn()) {
         </form>
 
         <?php
-//ORDENAR PRATOS
-        if (isset($_POST['search'])) {
-            $pesquisa = $_POST['search'];
-            $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'";
-        } else {
-            $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
-        }
+        //ORDENAR PRATOS
         if (isset($_POST['ordenar'])) {
             $valor = $_POST['ordem'];
-            if ($valor === "p_crescente") {
+            $pesquisa = $_POST['search'];
+            //se escrever algo na search bar vai ordenar essa procura
+            if($pesquisa = $_POST['search']){
+                if ($valor === "p_crescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco ASC";
+                } else if ($valor === "p_decrescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco DESC";
+                } else if ($valor === "a_crescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY nome ASC";
+                } else if ($valor === "a_decrescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'ORDER BY nome DESC";
+                }
+            }
+            //se não escrever nada na search bar ($pesquisa fica vazia) e ordena todos os pratos
+            else if ($pesquisa === '') {
+                if ($valor === "p_crescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
+                } else if ($valor === "p_decrescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
+                } else if ($valor === "a_crescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
+                } else if ($valor === "a_decrescente") {
+                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
+                }
+            }
+            else {
                 $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
-            } else if ($valor === "p_decrescente") {
-                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
-            } else if ($valor === "a_crescente") {
-                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
-            } else if ($valor === "a_decrescente") {
-                $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
             }
         }
         $result2 = pg_query($connection, $query2);
@@ -93,14 +105,14 @@ if (!isLoggedIn()) {
             <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
-                    $y=$arrayPratos['nome'];
+                    $y = $arrayPratos['nome'];
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
-                        <p><?php echo $arrayPratos['nome']; ?></p>
+                            <p><?php echo $arrayPratos['nome']; ?></p>
                         </a>
-                        <h5><?php echo $arrayPratos['restaurante_nome'];?></h5>
-                        <h5><?php echo $arrayPratos['preco'];?> €</h5>
+                        <h5><?php echo $arrayPratos['restaurante_nome']; ?></h5>
+                        <h5><?php echo $arrayPratos['preco']; ?> €</h5>
                         <input type="submit" class="botao" value="Adicionar à encomenda">
                     </li>
                     <br>
