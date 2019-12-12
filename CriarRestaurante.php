@@ -40,7 +40,7 @@ if (isset($_POST['register_restaurante'])) {
     <div>
         <p> CRIAR RESTAURANTE</p>
         <?php if (($_SESSION['success']) && isset($_SESSION['success'])) {?>
-        <form action="CriarRestaurante.php" method="POST" id="form_restaurante">
+        <form action="phpCriarRestaurante.php" method="POST" id="form_restaurante">
             <label> <br>Nome
                 <input type="text" name="nome_restaurante" required>
             </label>

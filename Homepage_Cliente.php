@@ -97,11 +97,13 @@ if (!isLoggedIn()) {
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
-                        <h2><?php echo $arrayPratos['nome']; ?></h2>
+                        <p><?php echo $arrayPratos['nome']; ?></p>
                         </a>
-                        <h3><?php echo $arrayPratos['restaurante_nome'];?></h3>
-                        <h4><?php echo $arrayPratos['preco'];?> €</h4>
+                        <h5><?php echo $arrayPratos['restaurante_nome'];?></h5>
+                        <h5><?php echo $arrayPratos['preco'];?> €</h5>
+                        <input type="submit" class="botao" value="Adicionar à encomenda">
                     </li>
+                    <br>
                 <?php } ?>
             </ul>
 

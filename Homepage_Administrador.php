@@ -58,21 +58,20 @@ include('CheckAdministrador.php');
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
-                            <h1><?php echo $arrayPratosAdministrador['nome']; ?></h1>
+                            <p><?php echo $arrayPratosAdministrador['nome']; ?></p>
                         </a>
-                        <h2><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h2>
-                        <h3><?php echo $arrayPratosAdministrador['preco']; ?> €</h3>
-
+                        <h6><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h6>
+                        <h6><?php echo $arrayPratosAdministrador['preco']; ?> €</h6>
+                        <input type="submit" class="botao" value="Editar Prato">
                     </li>
+                    <br>
                 <?php } ?>
             </ul>
         <?php } else {
             $prato_error = "Não tem pratos para mostrar";
             echo $prato_error;
         }
-        ?>
-        <input type="submit" class="botao" value="Editar Prato">
-        <?php
+
     } ?>
 
 </main>
