@@ -69,14 +69,17 @@ session_start();
         ?>
 
         <label> <br>Quantidade
-            <input type="number" name="quantidade_prato" required></label>
+            <input type="number" min="0" name="quantidade_prato" required></label>
         <br>
 
         <input type="submit" class="botao" value="Adicionar prato à encomenda">
         <?php }
         else if (pg_affected_rows($result1) == 1 && pg_affected_rows($result2) == 0 ) {?>
             <input type="submit" class="botao" value="Editar Prato">
-        <?php }?>
+        <?php }
+
+
+        ?>
 
 
     </form>
