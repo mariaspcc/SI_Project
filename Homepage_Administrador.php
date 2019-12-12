@@ -2,6 +2,7 @@
 include_once "acess_bd.php";
 session_start();
 //include('phpHomepage_Administrador.php');
+include('CheckAdministrador.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -33,7 +34,7 @@ session_start();
         $query1 = "SELECT * FROM restaurante WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
         $result1 = pg_query($connection, $query1);
         $query2 = "SELECT * FROM prato WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
-        $result2 = pg_query($connection, $query2);?>
+        $result2 = pg_query($connection, $query2); ?>
         <h1>Os meus Restaurantes</h1>
         <?php if (pg_affected_rows($result1) > 0) { ?>
             <ul class="listaMeusRestaurantes">
@@ -46,21 +47,32 @@ session_start();
         <?php } else {
             $name_error = "Não tem restaurantes para mostrar";
             echo $name_error;
-        }?>
+        } ?>
 
         <h1>Os meus Pratos</h1>
         <?php if (pg_affected_rows($result2) > 0) { ?>
             <ul class="listaMeusRestaurantes">
                 <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
-                    $arr2 = pg_fetch_array($result2);
+                    $arrayPratosAdministrador = pg_fetch_array($result2);
+                    $y=$arrayPratosAdministrador['nome'];
                     ?>
-                    <li> <?php echo $arr2['nome']; ?></li>
+                    <li>
+                        <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
+                            <h1><?php echo $arrayPratosAdministrador['nome']; ?></h1>
+                        </a>
+                        <h2><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h2>
+                        <h3><?php echo $arrayPratosAdministrador['preco']; ?> €</h3>
+
+                    </li>
                 <?php } ?>
             </ul>
         <?php } else {
             $prato_error = "Não tem pratos para mostrar";
             echo $prato_error;
         }
+        ?>
+        <input type="submit" class="botao" value="Editar Prato">
+        <?php
     } ?>
 
 </main>

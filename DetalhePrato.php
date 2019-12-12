@@ -26,40 +26,46 @@ session_start();
             $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$nome'= nome";
             $result2 = pg_query($connection, $query2);
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
-                $arr = pg_fetch_array($result2);
+                $arrayDetalhe = pg_fetch_array($result2);
             }
             ?>
             <h1>
                 <?php
-                echo $arr[0];
+                echo $arrayDetalhe[0];
                 ?>
             </h1>
             <h3>
                 <?php
-                echo $arr[1];
+                echo $arrayDetalhe[1];
                 ?>
             </h3>
 
             <h3>
                 <?php
-                echo $arr[2];
+                echo $arrayDetalhe[2];
                 ?>
             </h3>
 
             <p>
                 <?php
-                echo $arr[3];
+                echo $arrayDetalhe[3];
                 ?>
             </p>
             <h2>
                 <?php
-                echo $arr[4];
+                echo $arrayDetalhe[4];
                 ?>
                 €
             </h2>
 
             <?php
         }
+        $username= $_SESSION['username'];
+        $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
+        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
+        $result1 = pg_query($connection, $administrador);
+        $result2 = pg_query($connection, $cliente);
+        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1 ) {
         ?>
 
         <label> <br>Quantidade
@@ -67,6 +73,12 @@ session_start();
         <br>
 
         <input type="submit" class="botao" value="Adicionar prato à encomenda">
+        <?php }
+        else if (pg_affected_rows($result1) == 1 && pg_affected_rows($result2) == 0 ) {?>
+            <input type="submit" class="botao" value="Editar Prato">
+        <?php }?>
+
+
     </form>
 </main>
 
