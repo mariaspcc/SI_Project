@@ -2,12 +2,6 @@
 include_once "acess_bd.php";
 session_start();
 
-/*FUNCIONA - ATIVAR NA ENTREGA*/
-/*include('login.php');
-if (!isLoggedIn()) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: login.php');
-}*/
 ?>
 
 <!DOCTYPE html>

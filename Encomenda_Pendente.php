@@ -9,7 +9,7 @@ $quantidade = $_POST(['quantidade_prato']);
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Detalhe prato</title>
+    <title>Encomenda_Pendente</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
