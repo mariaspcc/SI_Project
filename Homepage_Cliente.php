@@ -78,7 +78,7 @@ if (!isLoggedIn()) {
             $valor = $_POST['ordem'];
             if ($valor === "p_crescente") {
                 $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
-            } else if ($valor === "p_crescente") {
+            } else if ($valor === "p_decrescente") {
                 $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
             } else if ($valor === "a_crescente") {
                 $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
@@ -97,10 +97,10 @@ if (!isLoggedIn()) {
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
-                        <h1><?php echo $arrayPratos['nome']; ?></h1>
+                        <h2><?php echo $arrayPratos['nome']; ?></h2>
                         </a>
-                        <h2><?php echo $arrayPratos['restaurante_nome'];?></h2>
-                        <h3><?php echo $arrayPratos['preco'];?> €</h3>
+                        <h3><?php echo $arrayPratos['restaurante_nome'];?></h3>
+                        <h4><?php echo $arrayPratos['preco'];?> €</h4>
                     </li>
                 <?php } ?>
             </ul>
