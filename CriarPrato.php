@@ -86,7 +86,7 @@ if (isset($_POST['register_prato'])) {
             </label>
             <br>
             <label> <br>Preço
-                <input type="number" name="preco_prato" required></label>
+                <input type="number" min="1" name="preco_prato" required></label>
             <br>
             <label> <br>Descrição
                 <input type="text" name="descricao_prato" required>

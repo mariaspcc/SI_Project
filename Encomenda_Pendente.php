@@ -22,7 +22,7 @@ $quantidade = $_POST(['quantidade_prato']);
 <main>
 
 <label> <br>Quantidade
-            <input type="number" min="0" name="quantidade_prato" required></label>
+            <input type="number" min="1" name="quantidade_prato" required></label>
         <br>
 </label>
 
