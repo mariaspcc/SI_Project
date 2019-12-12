@@ -36,8 +36,8 @@
                 <input type="password" name="a_password" required></label>
             <br>
             <input type="submit" name="register">
-            <p>Já tem uma conta? Faça login <a href="login.php">aqui</a>.</p>
         </form>
+        <p>Já tem uma conta? Faça login <a href="login.php">aqui</a>.</p>
     </div>
 </main>
 
