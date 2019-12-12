@@ -93,8 +93,12 @@ if (!isLoggedIn()) {
             <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
+                    $y=$arrayPratos['nome'];
                     ?>
-                    <li> <h1><?php echo $arrayPratos['nome'];?></h1>
+                    <li>
+                        <a href="DetalhePrato.php?variavel=<?php $y ?>">
+                        <h1><?php echo $arrayPratos['nome']; ?></h1>
+                        </a>
                         <h2><?php echo $arrayPratos['restaurante_nome'];?></h2>
                         <h3><?php echo $arrayPratos['preco'];?> €</h3>
                     </li>

@@ -21,8 +21,9 @@ session_start();
     <?php
     if (isset($_SESSION['success']) && $_SESSION['success']) {
 
-        if(isset($_GET["p"])) {
-            $nome=$_GET["p"];
+        if(isset($_GET["variavel"])) {
+            $nome=$_GET["variavel"];
+
             $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE (nome='$nome')";
             $result2 = pg_query($connection, $query2);
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
