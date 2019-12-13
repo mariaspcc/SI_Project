@@ -139,10 +139,11 @@ session_start();
                         <?php }
                         if ($nao_existe === false) {
                             ?>
-
+                            <br>
                             <a href="Homepage_Cliente.php?variavel=<?php echo $y ?>">
                                 <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
                             </a>
+                            <br>
                             <?php
                             if (isset($_GET["variavel"])) {
                                 $id = $_GET["variavel"];
@@ -156,7 +157,7 @@ session_start();
                     <br>
                 <?php } ?>
             </ul>
-
+            <br>
         <?php } else {
             $name_error = "Não existem pratos para mostrar";
             echo $name_error;

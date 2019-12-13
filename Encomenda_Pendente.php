@@ -114,12 +114,19 @@ session_start();
         }
     }
 
+    $query10="select c.saldo-sum(d.quantidade*p.preco) from cliente AS C, encomenda as E, prato as P, detalhe AS D where
+    c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id 
+    group by c. usergeral_username";
+    $result10 = pg_query($connection, $query10);
+    $saldo_restante=pg_fetch_result($result10, 0, 0);
+    echo "saldo restante:".$saldo_restante;
+
     $username = $_SESSION['username'];
     $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
     $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
     $result1 = pg_query($connection, $administrador);
     $result2 = pg_query($connection, $cliente);
-    if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+    if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1 && $saldo_restante>=0 ) {
         ?>
         <a href="Homepage_Cliente.php">
             <input type="submit" class="botao" value="Continuar a comprar">
@@ -129,7 +136,12 @@ session_start();
         </form>
     <?php
     }
+    else if( $saldo_restante<0){
+        $name_error="Não tem saldo suficiente para continuar a encomenda.";
+        echo $name_error;
+    }
     ?>
+
 
 
 </main>
