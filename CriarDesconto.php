@@ -15,43 +15,68 @@ include_once "acess_bd.php";
 <body>
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
-<?php include('header_in.php'); ?>
+<?php include('header_in.php');
+if (isset($_SESSION['success']) && $_SESSION['success']) {
+?>
 <main>
     <p> CRIAR DESCONTO </p>
-        <form action="CriarDesconto.php" method="POST" id="form_desconto">
-            <label> <br>Valor
-                <input type="number" min="1" name="valor" required></label>
-            </label>
-            <br>
-            <label> <br>Restaurante
+    <form action="CriarDesconto.php" method="POST" id="form_desconto">
+        <label> <br>Valor
+            <input type="number" min="1" name="valor" required></label>
+        </label>
+        <br>
+        <label> <br>Restaurante
+            <?php
+            $username = $_SESSION['username'];
+            $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
+            $result2 = pg_query($connection, $query2);
+            if (pg_affected_rows($result2) > 0) { ?>
                 <select name="restaurante">
                     <?php
-                    $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
-                    $result2 = pg_query($connection, $query2);
-                    if (pg_affected_rows($result2) > 0) {
-                        for ($i = 0; $i < pg_affected_rows($result2); $i++) {
-                            $arr = pg_fetch_array($result2);
-                            ?>
-                            <option><?php echo $arr['nome']; ?></option>
-                        <?php }
-                    } else { ?>
-                        <a href="CriarRestaurante.php">Criar Restaurante</a>//NÃO ESTÁ A FUNCIONAR
-                    <?php } ?>
+                    for ($i = 0; $i < pg_affected_rows($result2); $i++) {
+                        $arr = pg_fetch_array($result2);
+                        ?>
+                        <option><?php echo $arr['nome']; ?></option>
+                    <?php }
+                    ?>
                 </select>
-            </label>
+            <?php } else { ?>
+                <br>
+                <a href="CriarRestaurante.php">Criar Restaurante</a>
+            <?php } ?>
+        </label>
+        <br>
+        <label> <br>Validade
             <br>
-            <label> <br>Preço
-                <input type="number" min="1" name="preco_prato" required></label>
-            <br>
-            <label> <br>Descrição
-                <input type="text" name="descricao_prato" required>
-            </label>
-            <br>
-            <input type="submit" name="register_prato" value="Guardar">
-        </form>
-        <?php
+            <input type="datetime-local" name="validade" required></label>
+        <br>
+        <label> <br> Número de Clientes
+            <input type="number" min="1" name="numero" required>
+        </label>
+        <br>
+        <label> <br> Valor Mínimo gasto
+            <input type="number" min="1" name="minimo" required>
+        </label>
+        <br>
+        <input type="submit" name="create_desconto" value="Guardar">
+    </form>
+    <?php
+
+    if (isset($_POST['create_desconto'])) {
+        $valor = $_POST['valor'];
+        $restaurante = $_POST['restaurante'];
+        $validade = $_POST['validade'];
+        $numero = $_POST['numero'];
+        $minimo = $_POST['minimo'];
+        $query = "INSERT INTO desconto (valor,duracao,numero_pessoas,minimo,restaurante_nome,administrador_usergeral_username) VALUES ('$valor','$validade','$numero','$minimo','$restaurante','$username')";
+        $result1 = pg_query($connection, $query);
+
+
+
     }
-    pg_close($connection);
+
+
+    }
     ?>
 </main>
 </body>
