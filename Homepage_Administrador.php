@@ -63,12 +63,12 @@ session_start();
                         </a>
                         <h6><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h6>
                         <h6><?php echo $arrayPratosAdministrador['preco']; ?> €</h6>
-                        <input type="submit" class="botao" value="Editar Prato" name="editar">
                     </li>
                     <br>
                 <?php } ?>
             </ul>
-        <?php } else {
+        <?php
+        } else {
             $prato_error = "Não tem pratos para mostrar";
             echo $prato_error;
         }
