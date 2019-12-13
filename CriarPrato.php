@@ -60,21 +60,23 @@ if (isset($_POST['register_prato'])) {
             <?php } ?>
             <br>
             <label> <br>Restaurante
+                <?php
+                $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
+                $result2 = pg_query($connection, $query2);
+                if (pg_affected_rows($result2) > 0) {?>
                 <select name="restaurante">
                     <?php
-
-                    $query2 = "SELECT nome FROM restaurante WHERE administrador_usergeral_username ='$username'";
-                    $result2 = pg_query($connection, $query2);
-                    if (pg_affected_rows($result2) > 0) {
                         for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                             $arr = pg_fetch_array($result2);
                             ?>
                             <option><?php echo $arr['nome']; ?></option>
                         <?php }
-                    } else { ?>
-                        <a href="CriarRestaurante.php">Criar Restaurante</a>//NÃO ESTÁ A FUNCIONAR
-                    <?php } ?>
+                   ?>
                 </select>
+                <?php } else{ ?>
+                    <br>
+                <a href="CriarRestaurante.php">Criar Restaurante</a>
+                <?php } ?>
             </label>
             <br>
             <label> <br>Tipo de prato
