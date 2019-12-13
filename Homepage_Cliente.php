@@ -102,7 +102,6 @@ session_start();
                 for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
                     $y = $arrayPratos['id'];
-                    echo "resultado:".$y;
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">
