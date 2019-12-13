@@ -23,7 +23,7 @@ session_start();
         $username = $_SESSION['username'];
         $arrayDetalhe = $_SESSION['detalhe'];
         ?>
-        <form action="DetalhePrato.php" method="POST" id="form_prato">
+        <form action="EditarPrato.php" method="POST" id="form_prato">
             <label> <br>Nome do Prato
                 <input type="text" name="nome_prato" required value="<?php echo $arrayDetalhe[0]; ?>">
             </label>
@@ -78,11 +78,13 @@ session_start();
             $preco = $_POST['preco_prato'];
             $descricao = $_POST['descricao_prato'];
             $restaurante_nome = $_POST['restaurante'];
-            $pratoid="SELECT id FROM prato WHERE nome = '$nome_prato'";
+            $pratoid = "SELECT id FROM prato WHERE nome = '$arrayDetalhe[0]'";
             $resultid = pg_query($connection, $pratoid);
-            $id=pg_fetch_all($resultid);
-            $pratoupdate = "UPDATE prato SET nome = '$nome_prato', tipo = '$tipo_prato', descricao='$descricao', preco='$preco', comprado='$comprado', restaurante_nome='$restaurante_nome', administrador_usergeral_username='$username' WHERE id='$id'";
+            $id = pg_fetch_result($resultid, 0);
+            $pratoupdate = "UPDATE prato SET nome = '$nome_prato', tipo = '$tipo_prato', descricao ='$descricao', preco ='$preco', comprado ='$comprado', restaurante_nome ='$restaurante_nome', administrador_usergeral_username ='$username' WHERE id ='$id'";
             $result = pg_query($connection, $pratoupdate);
+            header('location:Homepage_Administrador.php');
+
 
         }
     }?>
