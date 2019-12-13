@@ -13,7 +13,7 @@ if (isset($_POST['register_prato'])) {
     $restaurante_nome = $_POST['restaurante'];
 
 
-    $query1 = "SELECT * FROM prato WHERE ('$nome_prato' = nome)";
+    $query1 = "SELECT  FROM prato WHERE ('$nome_prato' = nome)";
     $result1 = pg_query($connection, $query1);
     if (pg_affected_rows($result1) > 0) {
         $name_error = "Já foi criado um prato com esse nome";

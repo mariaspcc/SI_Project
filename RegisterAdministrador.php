@@ -22,13 +22,13 @@
     <div class="formulario">
         <p> REGISTAR </p>
         <p>ADMINISTRADOR</p>
-        <?php if(isset($name_error)){?>
-            <span><?php echo $name_error;?></span>
-        <?php }?>
         <form action="RegisterAdministrador.php" method="POST" id="register_form">
             <label> <br>Username
                 <div class="erro">
                     <input type="text" name="a_username" required>
+                    <?php if(isset($name_error)){?>
+                        <span><?php echo $name_error;?></span>
+                    <?php }?>
                 </div>
             </label>
             <br>
