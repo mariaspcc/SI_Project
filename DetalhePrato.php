@@ -14,10 +14,13 @@ session_start();
 <body>
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
-<?php include('header_in.php'); ?>
+<?php include('header_in.php');
+
+
+?>
 
 <main>
-    <form action="Encomenda_Pendente.php" method="POST" id="adicionar_prato">
+    <form action="" method="POST" id="adicionar_prato">
         <?php
         if (isset($_SESSION['success']) && $_SESSION['success']) {
 
@@ -27,6 +30,7 @@ session_start();
             $result2 = pg_query($connection, $query2);
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                 $arrayDetalhe = pg_fetch_array($result2);
+                $_SESSION['detalhe']= $arrayDetalhe;
             }
             ?>
             <h1>
@@ -60,19 +64,25 @@ session_start();
 
             <?php
         }
-        $username= $_SESSION['username'];
+        $username = $_SESSION['username'];
         $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
         $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
         $result1 = pg_query($connection, $administrador);
         $result2 = pg_query($connection, $cliente);
-        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1 ) {
-        ?>
+        $pratocomprado="SELECT * FROM prato WHERE '$username' = administrador_usergeral_username AND  '$nome' = nome  AND comprado = false";
+        $result3 = pg_query($connection, $pratocomprado);
+        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+            ?>
 
-        <input type="submit" class="botao" value="Adicionar prato à encomenda">
+            <input type="submit" class="botao" value="Adicionar prato à encomenda" name="enco">
+        <?php } else if (pg_affected_rows($result1) == 1 && pg_affected_rows($result2) == 0 && pg_affected_rows($result3) == 1) { ?>
+            <input type="submit" class="botao" value="Editar Prato" name="editar">
         <?php }
-        else if (pg_affected_rows($result1) == 1 && pg_affected_rows($result2) == 0 ) {?>
-            <input type="submit" class="botao" value="Editar Prato">
-        <?php }
+        if (isset($_POST['enco'])) {
+            header('location:Encomenda_Pendente.php');
+        } else if (isset($_POST['editar'])) {
+            header('location:EditarPrato.php');
+        }
 
         ?>
 

@@ -2,7 +2,7 @@
 include_once "acess_bd.php";
 session_start();
 //include('phpHomepage_Administrador.php');
-include('CheckAdministrador.php');
+//include('CheckAdministrador.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -55,6 +55,7 @@ include('CheckAdministrador.php');
                 <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
                     $arrayPratosAdministrador = pg_fetch_array($result2);
                     $y=$arrayPratosAdministrador['nome'];
+
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
@@ -62,7 +63,7 @@ include('CheckAdministrador.php');
                         </a>
                         <h6><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h6>
                         <h6><?php echo $arrayPratosAdministrador['preco']; ?> €</h6>
-                        <input type="submit" class="botao" value="Editar Prato">
+                        <input type="submit" class="botao" value="Editar Prato" name="editar">
                     </li>
                     <br>
                 <?php } ?>
