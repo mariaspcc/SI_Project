@@ -71,11 +71,12 @@ session_start();
                 ?>
                 €
             </h2>
+            <?php $id3 = pg_fetch_result($result6, $i, 2); ?>
             <label> <br>Quantidade
-                <input type="number" min="1" name="quantidade_prato" required></label>
+                <input type="number" min="1" name="<?php echo $id3 ?>" required></label>
             <br>
             </label>
-            <?php $id3 = pg_fetch_result($result6, $i, 2); ?>
+
             <a href="Encomenda_Pendente.php?variavel2=<?php echo $id3 ?>">
                 <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
             </a>

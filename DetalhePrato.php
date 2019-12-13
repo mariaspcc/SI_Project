@@ -24,10 +24,12 @@ session_start();
         <?php
         if (isset($_SESSION['success']) && $_SESSION['success']) {
 
-            $nome = $_GET["variavel"];
+            $id = $_GET["variavel"];
 
-            $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$nome'= nome";
+            $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$id'= id";
             $result2 = pg_query($connection, $query2);
+            echo "linhas:".pg_affected_rows($result2);
+
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                 $arrayDetalhe = pg_fetch_array($result2);
                 $_SESSION['detalhe']= $arrayDetalhe;
