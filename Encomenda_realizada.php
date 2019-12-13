@@ -18,7 +18,28 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <?php $_SESSION['encomenda_id'] = 0;
+    <?php
+    //variavel sessão fica a 0 quando encomenda anterior termina, para quando escolher um novo prato iniciar uma encomenda nova
+    $_SESSION['encomenda_id'] = 0;
+
+    //seleciona o id do prato da tabela detalhe tudo junto por id de prato
+    $query10="SELECT prato_id FROM detalhe GROUP BY prato_id";
+    $result10 = pg_query($connection, $query10);
+
+    //caso a tabela encomendas e detalhes seja esvaziada, todas as variaveis ficam a false pois nao há encomendas
+    //coloca boolean comprado a falso sempre
+    $query12="UPDATE prato SET comprado='false'";
+    $result12 = pg_query($connection, $query12);
+
+    //percorre todos os pratos id da tabela e faz o update do id do prato comprado, pratos estes q estão na tabela detalhe
+    for ($i = 0; $i < pg_affected_rows($result10); $i++) {
+        $prato_id=pg_fetch_result($result10, $i, 0);
+
+        $query11="UPDATE prato SET comprado='true' WHERE id='$prato_id'";
+        $result11 = pg_query($connection, $query11);
+    }
+
+
     ?>
     <p>Encomenda realizada com sucesso</p>
     <a href="Homepage_Cliente.php">

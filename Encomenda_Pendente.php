@@ -1,8 +1,6 @@
 <?php
 include_once "acess_bd.php";
 session_start();
-
-//$quantidade = $_POST(['quantidade_prato']);
 ?>
 
 <!DOCTYPE html>
@@ -91,10 +89,15 @@ session_start();
             </h2>
             <!--variavel $id3 contem id do prato selecionado -->
             <?php $id2 = pg_fetch_result($result6, $i, 2); ?>
+
             <label> <br>Quantidade
-                <input type="number" min="1" name="<?php echo $id2 ?>" required></label>
-            <br>
+                <input type="number" min="1" name="qnt[<?php $id2 ?>]" value="1" required>
+                <?php
+                //$query8="UPDATE detalhe SET quantidade=value WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+                //$result8 = pg_query($connection, $query8);
+                ?>
             </label>
+            <br>
 
             <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
                 <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
@@ -105,7 +108,7 @@ session_start();
                 $id2 = $_GET["variavel2"];
                 $query7 = "DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
                 $result7 = pg_query($connection, $query7);
-
+                //atualiza página
                 header('location: Encomenda_Pendente.php');
             }
         }
@@ -124,7 +127,8 @@ session_start();
         <form action="Encomenda_realizada.php" method="POST">
             <input type="submit" class="botao" value="Encomendar">
         </form>
-    <?php }
+    <?php
+    }
     ?>
 
 
