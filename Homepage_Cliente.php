@@ -61,7 +61,7 @@ session_start();
             $valor = $_POST['ordem'];
             $pesquisa = $_POST['search'];
             //se escrever algo na search bar vai ordenar essa procura
-            if($pesquisa = $_POST['search']){
+            if ($pesquisa = $_POST['search']) {
                 if ($valor === "p_crescente") {
                     $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco ASC";
                 } else if ($valor === "p_decrescente") {
@@ -71,8 +71,7 @@ session_start();
                 } else if ($valor === "a_decrescente") {
                     $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'ORDER BY nome DESC";
                 }
-            }
-            //se não escrever nada na search bar ($pesquisa fica vazia) e ordena todos os pratos
+            } //se não escrever nada na search bar ($pesquisa fica vazia) e ordena todos os pratos
             else if ($pesquisa === '') {
                 if ($valor === "p_crescente") {
                     $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
@@ -84,8 +83,7 @@ session_start();
                     $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
                 }
             }
-        }
-        //inicialmente aparecerão a lista de todos os pratos ordenados por ordem crescente de preço
+        } //inicialmente aparecerão a lista de todos os pratos ordenados por ordem crescente de preço
         else {
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
         }
@@ -112,41 +110,42 @@ session_start();
                         <?php
 
                         //por defeito nao existe prato na encomenda logo = true
-                        $nao_existe=true;
+                        $nao_existe = true;
 
                         //verifica se ela existe
-                        if(isset($_SESSION['encomenda_id'])){
+                        if (isset($_SESSION['encomenda_id'])) {
                             //verifica se é maior q 0
-                            if(($_SESSION['encomenda_id'])>0){
+                            if (($_SESSION['encomenda_id']) > 0) {
                                 $id_encomenda = $_SESSION['encomenda_id'];
-                                $query3="SELECT prato_id, encomenda_id FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$y'";
+                                $query3 = "SELECT prato_id, encomenda_id FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$y'";
                                 $result3 = pg_query($connection, $query3);
-                                if(pg_num_rows($result3)>0){
+                                if (pg_num_rows($result3) > 0) {
                                     //existe
-                                    $nao_existe=false;
+                                    $nao_existe = false;
                                     echo "Este prato já foi adicionado à sua encomenda!";
 
                                 }
                             }
                         }
 
-                        if($nao_existe===true){ ?>
-                        <a href="Encomenda_Pendente.php?variavel=<?php echo $y ?>">
-                        <input type="submit" class="botao" value="Adicionar à encomenda">
-                        </a>
-                    <?php }
-                        if($nao_existe===false){
+                        if ($nao_existe === true) { ?>
+                            <br>
+                            <a href="Encomenda_Pendente.php?variavel=<?php echo $y ?>">
+                                <input type="submit" class="botao" value="Adicionar à encomenda">
+                            </a>
+                        <?php }
+                        if ($nao_existe === false) {
                             ?>
 
                             <a href="Homepage_Cliente.php?variavel=<?php echo $y ?>">
-                            <input type="submit" name="retirar_prato" value="Retirar prato da encomenda" >
+                                <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
                             </a>
-                        <?php
+                            <?php
                             if (isset($_GET["variavel"])) {
                                 $id = $_GET["variavel"];
                                 $query4 = "DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id'";
                                 $result4 = pg_query($connection, $query4);
-                                $nao_existe=true;
+                                $nao_existe = true;
                                 header('location: Homepage_Cliente.php');
                             }
                         } ?>
