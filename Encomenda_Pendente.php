@@ -89,14 +89,14 @@ session_start();
                 ?>
                 €
             </h2>
-            <!--variavel = ao id do prato selecionado -->
-            <?php $id3 = pg_fetch_result($result6, $i, 2); ?>
+            <!--variavel $id3 contem id do prato selecionado -->
+            <?php $id2 = pg_fetch_result($result6, $i, 2); ?>
             <label> <br>Quantidade
-                <input type="number" min="1" name="<?php echo $id3 ?>" required></label>
+                <input type="number" min="1" name="<?php echo $id2 ?>" required></label>
             <br>
             </label>
 
-            <a href="Encomenda_Pendente.php?variavel2=<?php echo $id3 ?>">
+            <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
                 <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
             </a>
             <?php
