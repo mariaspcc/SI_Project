@@ -124,6 +124,7 @@ session_start();
                                     //existe
                                     $nao_existe=false;
                                     echo "Este prato já foi adicionado à sua encomenda!";
+
                                 }
                             }
                         }
@@ -132,7 +133,14 @@ session_start();
                         <a href="Encomenda_Pendente.php?variavel=<?php echo $y ?>">
                         <input type="submit" class="botao" value="Adicionar à encomenda">
                         </a>
-                    <?php } ?>
+                    <?php }
+                        if($nao_existe===false){
+                            ?>
+                        <a href="Homepage_Cliente.php">
+                            <?php echo "aqui"?>
+                            <input type="submit" class="botao" value="Eliminar prato da encomenda">
+                        </a>
+                        <?php } ?>
                     </li>
                     <br>
                 <?php } ?>
