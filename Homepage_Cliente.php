@@ -102,6 +102,7 @@ session_start();
                 for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
                     $y = $arrayPratos['id'];
+                    echo "resultado:".$y;
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">
@@ -110,6 +111,7 @@ session_start();
                         <h5><?php echo $arrayPratos['restaurante_nome']; ?></h5>
                         <h5><?php echo $arrayPratos['preco']; ?> €</h5>
                         <?php
+
                         //por defeito nao existe prato na encomenda logo = true
                         $nao_existe=true;
 
@@ -136,11 +138,19 @@ session_start();
                     <?php }
                         if($nao_existe===false){
                             ?>
-                        <a href="Homepage_Cliente.php">
-                            <?php echo "aqui"?>
-                            <input type="submit" class="botao" value="Eliminar prato da encomenda">
-                        </a>
-                        <?php } ?>
+
+                            <a href="Homepage_Cliente.php?variavel=<?php echo $y ?>">
+                            <input type="submit" name="retirar_prato" value="Retirar prato da encomenda" >
+                            </a>
+                        <?php
+                            if (isset($_GET["variavel"])) {
+                                $id = $_GET["variavel"];
+                                $query4 = "DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id'";
+                                $result4 = pg_query($connection, $query4);
+                                $nao_existe=true;
+                                header('location: Homepage_Cliente.php');
+                            }
+                        } ?>
                     </li>
                     <br>
                 <?php } ?>
