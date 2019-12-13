@@ -35,10 +35,6 @@ session_start();
         $query1 = "SELECT nome FROM restaurante";
         $result1 = pg_query($connection, $query1);
 
-        /*
-                while ($row = pg_fetch_assoc($result3)) {
-                    echo "<div id='link' onClick='addText(\"".$row['nome']."\");'>" . $row['nome'] . "</div>";
-                }*/
         ?>
 
         <p>PRATOS</p>
@@ -98,7 +94,12 @@ session_start();
         if (pg_affected_rows($result2) > 0) { ?>
 
             <ul class="listaPratos">
-                <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
+                <?php
+                if (!isset($_SESSION['encomenda_id'])) {
+                    $_SESSION['encomenda_id'] = 0;
+                }
+
+                for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
                     $y = $arrayPratos['id'];
                     ?>
@@ -108,9 +109,30 @@ session_start();
                         </a>
                         <h5><?php echo $arrayPratos['restaurante_nome']; ?></h5>
                         <h5><?php echo $arrayPratos['preco']; ?> €</h5>
+                        <?php
+                        //por defeito nao existe prato na encomenda logo = true
+                        $nao_existe=true;
+
+                        //verifica se ela existe
+                        if(isset($_SESSION['encomenda_id'])){
+                            //verifica se é maior q 0
+                            if(($_SESSION['encomenda_id'])>0){
+                                $id_encomenda = $_SESSION['encomenda_id'];
+                                $query3="SELECT prato_id, encomenda_id FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$y'";
+                                $result3 = pg_query($connection, $query3);
+                                if(pg_num_rows($result3)>0){
+                                    //existe
+                                    $nao_existe=false;
+                                    echo "Este prato já foi adicionado à sua encomenda!";
+                                }
+                            }
+                        }
+
+                        if($nao_existe===true){ ?>
                         <a href="Encomenda_Pendente.php?variavel=<?php echo $y ?>">
                         <input type="submit" class="botao" value="Adicionar à encomenda">
                         </a>
+                    <?php } ?>
                     </li>
                     <br>
                 <?php } ?>

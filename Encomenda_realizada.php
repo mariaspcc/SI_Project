@@ -18,9 +18,12 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <?php
+    <?php $_SESSION['encomenda_id'] = 0;
     ?>
     <p>Encomenda realizada com sucesso</p>
+    <a href="Homepage_Cliente.php">
+        <input type="submit" class="botao" value="Regressar para a Homepage">
+    </a>
 
 </main>
 

@@ -21,13 +21,11 @@ session_start();
 
 <main>
     <?php
-    if (!isset($_SESSION['encomenda_id'])) {
-        $_SESSION['encomenda_id'] = 0;
-    }
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];
-        //verifica se a variável existe
+
+        //trás a variavel da página Homepage_cliente e verifica se a variável existe
         if (isset($_GET["variavel"])) {
             $id = $_GET["variavel"];
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato WHERE id = '$id'";
@@ -38,22 +36,20 @@ session_start();
                 $result3 = pg_query($connection, $query3);
                 $valor = pg_fetch_result($result3, 0, 0);
 
-
                 if (($_SESSION['encomenda_id'] <> $valor) || ($_SESSION['encomenda_id'] === 0)) {
                     $id_enc = $valor + 1;
                     $query4 = "INSERT INTO encomenda(id,cliente_usergeral_username) VALUES ($id_enc,'$cliente_usergeral_username')";
                     $result4 = pg_query($connection, $query4);
                     $_SESSION['encomenda_id'] = $id_enc;
                 }
+
                 $id_encomenda = $_SESSION['encomenda_id'];
-                $query5="INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id',$id_encomenda)";
+                $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id',$id_encomenda)";
                 $result5 = pg_query($connection, $query5);
-                $query6="SELECT nome, preco FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = '$id_encomenda'";
+                $query6 = "SELECT nome, preco FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = '$id_encomenda'";
                 $result6 = pg_query($connection, $query6);
             }
         }
-
-        //$result2 = pg_query($connection, $query2);
 
         for ($i = 0; $i < pg_affected_rows($result6); $i++) {
             $arrayDetalhe = pg_fetch_array($result6);
@@ -93,9 +89,11 @@ session_start();
     $result2 = pg_query($connection, $cliente);
     if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
         ?>
+        <a href="Homepage_Cliente.php">
+            <input type="submit" class="botao" value="Continuar a comprar">
+        </a>
         <form action="Encomenda_realizada.php" method="POST">
             <input type="submit" class="botao" value="Encomendar">
-            <?php $_SESSION['encomenda_id']=0; ?>
         </form>
     <?php }
     ?>
