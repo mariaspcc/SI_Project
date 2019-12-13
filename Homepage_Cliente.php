@@ -103,12 +103,14 @@ session_start();
                     $y = $arrayPratos['nome'];
                     ?>
                     <li>
-                        <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
+                        <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">
                             <p><?php echo $arrayPratos['nome']; ?></p>
                         </a>
                         <h5><?php echo $arrayPratos['restaurante_nome']; ?></h5>
                         <h5><?php echo $arrayPratos['preco']; ?> €</h5>
+                        <a href="Encomenda_Pendente.php?variavel=<?php echo $y ?>">
                         <input type="submit" class="botao" value="Adicionar à encomenda">
+                        </a>
                     </li>
                     <br>
                 <?php } ?>
