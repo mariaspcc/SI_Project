@@ -98,8 +98,11 @@ session_start();
                 }
 
                 for ($p = 0; $p < pg_affected_rows($result2); $p++) {
+                    //seleciona a linha
                     $arrayPratos = pg_fetch_array($result2);
                     $y = $arrayPratos['id'];
+
+
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">

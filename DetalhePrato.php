@@ -28,7 +28,6 @@ session_start();
 
             $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$id'= id";
             $result2 = pg_query($connection, $query2);
-            echo "linhas:".pg_affected_rows($result2);
 
             for ($i = 0; $i < pg_affected_rows($result2); $i++) {
                 $arrayDetalhe = pg_fetch_array($result2);
@@ -71,7 +70,7 @@ session_start();
         $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
         $result1 = pg_query($connection, $administrador);
         $result2 = pg_query($connection, $cliente);
-        $pratocomprado="SELECT * FROM prato WHERE '$username' = administrador_usergeral_username AND  '$nome' = nome  AND comprado = false";
+        $pratocomprado="SELECT * FROM prato WHERE '$username' = administrador_usergeral_username AND  '$id' = id  AND comprado = false";
         $result3 = pg_query($connection, $pratocomprado);
         if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
             ?>

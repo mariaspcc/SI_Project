@@ -54,7 +54,7 @@ session_start();
             <ul class="listaMeusRestaurantes">
                 <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
                     $arrayPratosAdministrador = pg_fetch_array($result2);
-                    $y=$arrayPratosAdministrador['nome'];
+                    $y=$arrayPratosAdministrador['id'];
 
                     ?>
                     <li>
