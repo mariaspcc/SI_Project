@@ -19,9 +19,6 @@ session_start();
 
 <main>
     <?php
-    $list = join("','",$_SESSION['lista']);
-    $query2 = "SELECT nome, preco FROM prato WHERE nome IN ('$list')";
-    //insert
     ?>
     <p>Encomenda realizada com sucesso</p>
 

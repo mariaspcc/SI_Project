@@ -91,7 +91,7 @@ session_start();
         }
         //inicialmente aparecerão a lista de todos os pratos ordenados por ordem crescente de preço
         else {
-            $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
+            $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
         }
         $result2 = pg_query($connection, $query2);
 
@@ -100,7 +100,7 @@ session_start();
             <ul class="listaPratos">
                 <?php for ($p = 0; $p < pg_affected_rows($result2); $p++) {
                     $arrayPratos = pg_fetch_array($result2);
-                    $y = $arrayPratos['nome'];
+                    $y = $arrayPratos['id'];
                     ?>
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">
