@@ -136,11 +136,17 @@ session_start();
                     <?php }
                         if($nao_existe===false){
                             ?>
-                        <a href="Homepage_Cliente.php">
-                            <?php echo "aqui"?>
-                            <input type="submit" class="botao" value="Eliminar prato da encomenda">
-                        </a>
-                        <?php } ?>
+
+                        <form action="Homepage_Cliente.php" method="POST" name="retirar_prato">
+                            <input type="submit" class="botao" value="Retirar prato da encomenda" >
+                        </form>
+                        <?php if(isset($_POST['retirar_prato'])) {
+                            echo "aqui";
+                            $query4="DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$y'";
+                            $result4 = pg_query($connection, $query4);
+                            echo $id_encomenda,$y;
+                            }
+                        } ?>
                     </li>
                     <br>
                 <?php } ?>
