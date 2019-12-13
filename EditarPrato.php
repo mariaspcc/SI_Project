@@ -69,9 +69,10 @@ session_start();
             </label>
             <br>
             <input type="submit" name="edit_prato" value="Guardar Alterações">
+            <input type="submit" name="eliminar_prato" value="Apagar Prato">
         </form>
         <?php
-        if (isset($_POST['edit_prato'])) {
+        if (isset($_POST['edit_prato']) || isset($_POST['eliminar_prato']) ) {
             $comprado = "false";
             $nome_prato = $_POST['nome_prato'];
             $tipo_prato = $_POST['tipo_prato'];
@@ -81,11 +82,16 @@ session_start();
             $pratoid = "SELECT id FROM prato WHERE nome = '$arrayDetalhe[0]'";
             $resultid = pg_query($connection, $pratoid);
             $id = pg_fetch_result($resultid, 0);
-            $pratoupdate = "UPDATE prato SET nome = '$nome_prato', tipo = '$tipo_prato', descricao ='$descricao', preco ='$preco', comprado ='$comprado', restaurante_nome ='$restaurante_nome', administrador_usergeral_username ='$username' WHERE id ='$id'";
-            $result = pg_query($connection, $pratoupdate);
-            header('location:Homepage_Administrador.php');
+            if (isset($_POST['edit_prato'])) {
+                $pratoupdate = "UPDATE prato SET nome = '$nome_prato', tipo = '$tipo_prato', descricao ='$descricao', preco ='$preco', comprado ='$comprado', restaurante_nome ='$restaurante_nome', administrador_usergeral_username ='$username' WHERE id ='$id'";
+                $result = pg_query($connection, $pratoupdate);
+                header('location:Homepage_Administrador.php');
+            } else if (isset($_POST['eliminar_prato'])) {
+                $pratoupdate = "DELETE FROM prato WHERE id ='$id'";
+                $result = pg_query($connection, $pratoupdate);
+                header('location:Homepage_Administrador.php');
 
-
+            }
         }
     }?>
 
