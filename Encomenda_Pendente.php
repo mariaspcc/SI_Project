@@ -106,21 +106,30 @@ session_start();
         <?php $id2 = pg_fetch_result($result6, $i, 2);
 
         ?>
+        <label>
+            <br>Quantidade
+            <form name="form" action="" method="POST">
+            <input type="number" min="1" name="quantidade" required>
+                <button type="submit" name="aplicar">Aplicar</button>
+            </form>
 
-        <label> <br>Quantidade
-            <input type="number" min="1" name="quantidade" value="<?php echo $qnt; ?>" required>
-            <?php
-            echo $qnt;
+        <?php
+        if(isset($_POST['aplicar'])) {
+            $qnt = $_POST['quantidade'];
+            echo "quantidade:".$qnt;
             $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
             $resultqnt = pg_query($connection, $queryqnt);
-
-            ?>
+        }
+        ?>
         </label>
-
         <br>
+
         <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
             <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
         </a>
+        <br>
+        <br>
+        <br>
         <?php
         //variavel contem o id do prato (de uma encomenda especifica) para apagá-lo dessa encomenda
         if (isset($_GET["variavel2"])) {
@@ -132,13 +141,19 @@ session_start();
         }
     }
 
-
     //saldo inicial (predefinido)
     $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
     $result11 = pg_query($connection, $query11);
     $saldo_restante = pg_fetch_result($result11, 0, 0);
 
-
+    $query12="select sum(d.quantidade*p.preco) from encomenda as E, prato as P, detalhe AS D
+    where e.id= d.encomenda_id and d.prato_id= p.id AND d.encomenda_id=$id_encomenda
+    group by e.id";
+    $result12 = pg_query($connection, $query12);
+    echo "Valor total da encomenda: ".pg_fetch_result($result12, 0, 0);
+?>
+    <br>
+    <?php
     //saldo após encomendas (restante)
     $query10 = "select c.saldo-sum(d.quantidade*p.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D 
@@ -150,35 +165,37 @@ session_start();
     if (pg_affected_rows($result10) > 0) {
         $saldo_restante = pg_fetch_result($result10, 0, 0);
     }
-    echo "saldo restante:" . $saldo_restante;
+    echo "saldo restante: " . $saldo_restante;
 
 
-        if ($saldo_restante >= 0) {
+    if ($saldo_restante >= 0) {
 
-            $username = $_SESSION['username'];
-            $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
-            $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
-            $result1 = pg_query($connection, $administrador);
-            $result2 = pg_query($connection, $cliente);
+        $username = $_SESSION['username'];
+        $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
+        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
+        $result1 = pg_query($connection, $administrador);
+        $result2 = pg_query($connection, $cliente);
 
-            if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
-                ?>
-                <a href="Homepage_Cliente.php">
-                    <input type="submit" class="botao" value="Continuar a comprar" name="comp">
-                </a>
-                <form action="Encomenda_realizada.php" method="POST">
-                    <input type="submit" class="botao" value="Encomendar" name="enco">
-                </form>
-                <?php
-            }
+        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+            ?>
+            <br>
+            <br>
+            <a href="Homepage_Cliente.php">
+                <input type="submit" class="botao" value="Continuar a comprar" name="comp">
+            </a>
+            <form action="Encomenda_realizada.php" method="POST">
+                <input type="submit" class="botao" value="Encomendar" name="enco">
+            </form>
+            <?php
         }
-        if(pg_fetch_result($result10, 0, 0)<0) {
-            echo "Não tem saldo suficiente para continuar a encomenda.";
+    }
+    if (pg_fetch_result($result10, 0, 0) < 0) {
+        echo "Não tem saldo suficiente para continuar a encomenda.";
 
-        }
+    }
 
 
-    if(pg_affected_rows($result6)===0) {
+    if (pg_affected_rows($result6) === 0) {
         echo "O seu carrinho está vazio";
     }
     ?>
