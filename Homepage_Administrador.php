@@ -21,6 +21,7 @@ session_start();
 <main>
     <a href="CriarRestaurante.php">Criar Restaurante</a>
     <a href="CriarPrato.php">Criar Prato</a>
+    <a href="CriarDesconto.php">Criar Desconto</a>
 
     <?php
     if (isset($_SESSION['success']) && $_SESSION['success']) { ?>

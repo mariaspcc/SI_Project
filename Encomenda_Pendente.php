@@ -68,7 +68,7 @@ session_start();
                     $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
                     $result5 = pg_query($connection, $query5);
                 }
-            }
+            //}
         }
         //id da encomenda atual
         $id_encomenda = $_SESSION['encomenda_id'];

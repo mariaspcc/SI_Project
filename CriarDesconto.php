@@ -7,7 +7,7 @@ include_once "acess_bd.php";
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>CriarPrato</title>
+    <title>Criar Desconto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,7 +22,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
     <p> CRIAR DESCONTO </p>
     <form action="CriarDesconto.php" method="POST" id="form_desconto">
         <label> <br>Valor
-            <input type="number" min="1" name="valor" required></label>
+            <input type="number" min="1" name="valor">
         </label>
         <br>
         <label> <br>Restaurante
@@ -48,14 +48,14 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         <br>
         <label> <br>Validade
             <br>
-            <input type="datetime-local" name="validade" required></label>
+            <input type="datetime-local" name="validade" ></label>
         <br>
         <label> <br> Número de Clientes
-            <input type="number" min="1" name="numero" required>
+            <input type="number" min="1" name="numero">
         </label>
         <br>
         <label> <br> Valor Mínimo gasto
-            <input type="number" min="1" name="minimo" required>
+            <input type="number" min="1" name="minimo">
         </label>
         <br>
         <input type="submit" name="create_desconto" value="Guardar">
@@ -71,20 +71,6 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $query = "INSERT INTO desconto (valor,duracao,numero_pessoas,minimo,restaurante_nome,administrador_usergeral_username) VALUES ('$valor','$validade','$numero','$minimo','$restaurante','$username')";
         $result1 = pg_query($connection, $query);
     }
-
-    $query2="select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
-    from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
-    where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
-    and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username'
-    group by P.restaurante_nome, C.usergeral_username";
-    $result2 = pg_query($connection, $query2);
-
-    for ($i = 0; $i < pg_affected_rows($result2); $i++) {
-
-    echo pg_fetch_result($result2, $i, 0);
-        echo pg_fetch_result($result2, $i, 1);
-        echo pg_fetch_result($result2, $i, 2);?> <br><?php
-
     }
 
     $valor = $_POST['valor'];
@@ -93,10 +79,27 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
     $numero = $_POST['numero'];
     $minimo = $_POST['minimo'];
 
-   // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
+    $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
+    from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
+    where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
+    and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username' and R.nome='$restaurante'
+    group by P.restaurante_nome, C.usergeral_username
+    ORDER BY sum(D.quantidade*P.preco) DESC";
+    $result2 = pg_query($connection, $query2);
+
+    if($numero > pg_affected_rows($result2)){
+        $numero=pg_affected_rows($result2);
+    }
+    for ($i = 0; $i < $numero; $i++) {
+
+        echo pg_fetch_result($result2, $i, 0);
+        echo pg_fetch_result($result2, $i, 1);
+        echo pg_fetch_result($result2, $i, 2); ?> <br><?php
+
+    // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
 
     //}
-
+    }
     ?>
 </main>
 </body>
