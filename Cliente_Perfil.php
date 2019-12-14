@@ -25,12 +25,24 @@ session_start();
         <a href="Homepage_Cliente.php"> Regressa à Homepage </a>
         <br><br>
         <?php
+        //saldo inicial (predefinido)
+        $query3 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
+        $result3 = pg_query($connection, $query3);
+        $saldo_ini = pg_fetch_result($result3, 0, 0);
+
         $query2 = "select c.saldo-sum(d.quantidade*p.preco) 
         from cliente AS C, encomenda as E, prato as P, detalhe AS D 
         where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id and e.terminada=TRUE
+        and e.cliente_usergeral_username ='$cliente_usergeral_username'
         group by c. usergeral_username";
+
         $result2 = pg_query($connection, $query2);
-        echo "Saldo atual: ".pg_fetch_result($result2, 0, 0);
+        if(pg_affected_rows($result2)===0){
+            echo "Saldo atual: ".$saldo_ini;
+        }
+        else {
+            echo "Saldo atual: " . pg_fetch_result($result2, 0, 0);
+        }
         ?>
         <br><br>
         <p> AS MINHAS ENCOMENDAS</p>
