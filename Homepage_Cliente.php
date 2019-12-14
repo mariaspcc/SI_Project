@@ -19,6 +19,7 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
+    <a href="Encomenda_Pendente.php"> Carrinho </a>
     <?php
     /* $username = $_POST['username'];
      $query= "SELECT username FROM usergeral WHERE username='$username' AND administrador = true";

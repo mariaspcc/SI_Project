@@ -72,21 +72,22 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $result1 = pg_query($connection, $query);
     }
 
-    $query2="select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
+    $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
     where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
     and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username'
-    group by P.restaurante_nome, C.usergeral_username";
+    group by P.restaurante_nome, C.usergeral_username ORDER BY  sum(D.quantidade*P.preco) DESC";
     $result2 = pg_query($connection, $query2);
 
     for ($i = 0; $i < pg_affected_rows($result2); $i++) {
 
-    echo pg_fetch_result($result2, $i, 0);
+        echo pg_fetch_result($result2, $i, 0);
         echo pg_fetch_result($result2, $i, 1);
-        echo pg_fetch_result($result2, $i, 2);?> <br><?php
+        echo pg_fetch_result($result2, $i, 2); ?> <br><?php
 
     }
-
+    }
+    /*
     $valor = $_POST['valor'];
     $restaurante = $_POST['restaurante'];
     $validade = $_POST['validade'];
@@ -95,7 +96,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
 
    // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
 
-    //}
+    }*/
 
     ?>
 </main>
