@@ -70,13 +70,25 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $minimo = $_POST['minimo'];
         $query = "INSERT INTO desconto (valor,duracao,numero_pessoas,minimo,restaurante_nome,administrador_usergeral_username) VALUES ('$valor','$validade','$numero','$minimo','$restaurante','$username')";
         $result1 = pg_query($connection, $query);
+    }
 
+    $query2="select P.restaurante_nome, C. usergeral_username, sum(d.quantidade*p.preco) 
+    from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
+    where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
+    and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username'
+    group by P.restaurante_nome, C.usergeral_username";
+    $result2 = pg_query($connection, $query2);
 
+    for ($i = 0; $i < pg_affected_rows($result2); $i++) {
+
+    echo pg_fetch_result($result2, $i, 0);
+        echo pg_fetch_result($result2, $i, 1);
+        echo pg_fetch_result($result2, $i, 2);?> <br><?php
 
     }
 
-
     }
+
     ?>
 </main>
 </body>
