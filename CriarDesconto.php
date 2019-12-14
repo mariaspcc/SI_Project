@@ -67,6 +67,8 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $result1 = pg_query($connection, $query);
         echo "Desconto gerado com sucesso!" ?> <a href="Homepage_Administrador.php">Voltar para a página
             principal</a> <?php
+
+
         $queryIdDesconto = "SELECT id FROM desconto WHERE administrador_usergeral_username = '$username' and valor='$valor' and duracao='$validade' and num_pessoas='$numero' and restaurante_nome='$restaurante' ORDER BY id DESC ";
         $resultIdDesconto = pg_query($connection, $queryIdDesconto);
 
@@ -80,16 +82,17 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         group by P.restaurante_nome, C.usergeral_username
         ORDER BY sum(D.quantidade*P.preco) DESC limit '$numero'";
         $resultPessoas = pg_query($connection, $queryPessoas);
-        }
 
 
+        if (pg_affected_rows($resultIdDescontoInfo) < pg_affected_rows($resultIdDesconto)) {
+            for ($t = 0; $t < pg_affected_rows($resultPessoas); $t++) {
 
-    for ($t = 0; $t < pg_affected_rows($resultPessoas); $t++) {
-        if(pg_affected_rows($resultIdDescontoInfo) < pg_affected_rows($resultIdDesconto)){
-            $arrpessoas = pg_fetch_array($resultPessoas);
-            $reiddesconto=pg_fetch_result($resultIdDesconto,0,0);
-            $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto','$arrpessoas[$t]')";
-            $result = pg_query($connection, $inserirIdDesconto);
+                $arrpessoas = pg_fetch_array($resultPessoas);
+                $reiddesconto = pg_fetch_result($resultIdDesconto, 0, 0);
+                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto[$t]','$arrpessoas[$t]')";
+                $result = pg_query($connection, $inserirIdDesconto);
+
+            }
 
         }
 
