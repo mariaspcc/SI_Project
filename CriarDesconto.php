@@ -72,7 +72,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $result1 = pg_query($connection, $query);
     }
 
-    $query2="select P.restaurante_nome, C. usergeral_username, sum(d.quantidade*p.preco) 
+    $query2="select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
     where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
     and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username'
@@ -87,7 +87,15 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
 
     }
 
-    }
+    $valor = $_POST['valor'];
+    $restaurante = $_POST['restaurante'];
+    $validade = $_POST['validade'];
+    $numero = $_POST['numero'];
+    $minimo = $_POST['minimo'];
+
+   // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
+
+    //}
 
     ?>
 </main>

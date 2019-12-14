@@ -32,7 +32,7 @@ session_start();
             $result2 = pg_query($connection, $query2);
 
             //ciclo que lê as linhas do $result2 (percorre tabela prato)
-            while ($res = pg_fetch_array($result2)) {
+            //while ($res = pg_fetch_array($result2)) {
                 //determina a ultima encomenda feita (id maior que existe na tabela encomenda)
                 $query3 = "SELECT max(id) FROM encomenda";
                 //resultado vai ser apenas um parametro da tabela
@@ -59,7 +59,7 @@ session_start();
                 $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
                 $result5 = pg_query($connection, $query5);
 
-            }
+           // }
         }
         //id da encomenda atual
         $id_encomenda = $_SESSION['encomenda_id'];
@@ -71,8 +71,6 @@ session_start();
 
         //ciclo for para escrever os dados dos pratos
         for ($i = 0; $i < pg_affected_rows($result6); $i++) {
-            $arrayDetalhe = pg_fetch_array($result6);
-            //$apagar = $i;
             ?>
             <!--escreve o nome do prato selecionado-->
             <h1>

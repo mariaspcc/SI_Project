@@ -63,24 +63,24 @@ session_start();
             //se escrever algo na search bar vai ordenar essa procura
             if ($pesquisa = $_POST['search']) {
                 if ($valor === "p_crescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco ASC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco ASC";
                 } else if ($valor === "p_decrescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco DESC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY preco DESC";
                 } else if ($valor === "a_crescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY nome ASC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%' ORDER BY nome ASC";
                 } else if ($valor === "a_decrescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'ORDER BY nome DESC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato  WHERE nome LIKE '%$pesquisa%' OR restaurante_nome  LIKE '%$pesquisa%'ORDER BY nome DESC";
                 }
             } //se não escrever nada na search bar ($pesquisa fica vazia) e ordena todos os pratos
             else if ($pesquisa === '') {
                 if ($valor === "p_crescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY preco ASC";
                 } else if ($valor === "p_decrescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY preco DESC";
                 } else if ($valor === "a_crescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY nome ASC";
                 } else if ($valor === "a_decrescente") {
-                    $query2 = "SELECT nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
+                    $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato ORDER BY nome DESC";
                 }
             }
         } //inicialmente aparecerão a lista de todos os pratos ordenados por ordem crescente de preço
