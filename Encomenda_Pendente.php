@@ -33,42 +33,6 @@ session_start();
 
             //ciclo que lê as linhas do $result2 (percorre tabela prato)
             //while ($res = pg_fetch_array($result2)) {
-                //determina a ultima encomenda feita (id maior que existe na tabela encomenda)
-                $query3 = "SELECT max(id) FROM encomenda";
-                //resultado vai ser apenas um parametro da tabela
-                $result3 = pg_query($connection, $query3);
-                //vai buscar esse valor com o index(0,0)
-                $valor = pg_fetch_result($result3, 0, 0);
-
-                //$_SESSION guarda o numero da encomenda em curso
-                //se este for diferente ao id da ultima encomenda ou se ainda não existir encomendas feitas
-                if (($_SESSION['encomenda_id'] <> $valor) || ($_SESSION['encomenda_id'] === 0)) {
-                    //atribuimos uma variavel que soma ao id maximo ($valor) + 1
-                    // (ex: nao existe ainda nenhuma 0+1= 1º encomenda || ultima encomenda feita tem id=3 cria nova com id = 4)
-                    $id_enc = $valor + 1;
-                    //insere na tabela encomenda o id da encomenda e o username do cliente
-                    $query4 = "INSERT INTO encomenda(id,cliente_usergeral_username) VALUES ($id_enc,'$cliente_usergeral_username')";
-                    $result4 = pg_query($connection, $query4);
-                    //guarda o id da encomenda que acabou de ser criada
-                    $_SESSION['encomenda_id'] = $id_enc;
-                }
-                //id da encomenda atual
-                $id_encomenda = $_SESSION['encomenda_id'];
-                $adiciona=true;
-
-           // }
-
-                $query5_1 = "SELECT prato_id, encomenda_id FROM detalhe WHERE prato_id='$id' AND encomenda_id='$id_encomenda'";
-                $result5_1 = pg_query($connection, $query5_1);
-                if (pg_num_rows($result5_1) > 0) {
-                    $adiciona=false;
-                }
-                //insere na tabela detalhe a quantidade do prato, o id do prato e o id da respetiva encomenda
-                if($adiciona===true) {
-                    $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
-                    $result5 = pg_query($connection, $query5);
-                }
-            //}
             //determina a ultima encomenda feita (id maior que existe na tabela encomenda)
             $query3 = "SELECT max(id) FROM encomenda";
             //resultado vai ser apenas um parametro da tabela
@@ -83,7 +47,7 @@ session_start();
                 // (ex: nao existe ainda nenhuma 0+1= 1º encomenda || ultima encomenda feita tem id=3 cria nova com id = 4)
                 $id_enc = $valor + 1;
                 //insere na tabela encomenda o id da encomenda e o username do cliente
-                $query4 = "INSERT INTO encomenda(id,cliente_usergeral_username) VALUES ($id_enc,'$cliente_usergeral_username')";
+                $query4 = "INSERT INTO encomenda(id,terminada,cliente_usergeral_username) VALUES ($id_enc,'FALSE','$cliente_usergeral_username')";
                 $result4 = pg_query($connection, $query4);
                 //guarda o id da encomenda que acabou de ser criada
                 $_SESSION['encomenda_id'] = $id_enc;
@@ -104,6 +68,14 @@ session_start();
                 $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
                 $result5 = pg_query($connection, $query5);
             }
+            //}
+            //determina a ultima encomenda feita (id maior que existe na tabela encomenda)
+            $query3 = "SELECT max(id) FROM encomenda";
+            //resultado vai ser apenas um parametro da tabela
+            $result3 = pg_query($connection, $query3);
+            //vai buscar esse valor com o index(0,0)
+            $valor = pg_fetch_result($result3, 0, 0);
+
         }
     }
     //id da encomenda atual
@@ -134,25 +106,30 @@ session_start();
         <?php $id2 = pg_fetch_result($result6, $i, 2);
 
         ?>
+        <label>
+            <br>Quantidade
+            <form name="form" action="" method="POST">
+            <input type="number" min="1" name="quantidade" required>
+                <button type="submit" name="aplicar">Aplicar</button>
+            </form>
 
-        <label> <br>Quantidade
-            <input type="number" min="1" name="quantidade" value="1" required>
-            <?php
-             /*$quantidade = $_GET['quantidade'];
-                $queryqnt = "UPDATE quantidade SET quantidade='$quantidade' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-                $resultqnt = pg_query($connection, $queryqnt);
-            
-*/
-            //$query8="UPDATE detalhe SET quantidade=value WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-            //$result8 = pg_query($connection, $query8);
-            ?>
+        <?php
+        if(isset($_POST['aplicar'])) {
+            $qnt = $_POST['quantidade'];
+            echo "quantidade:".$qnt;
+            $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+            $resultqnt = pg_query($connection, $queryqnt);
+        }
+        ?>
         </label>
-
         <br>
 
         <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
             <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
         </a>
+        <br>
+        <br>
+        <br>
         <?php
         //variavel contem o id do prato (de uma encomenda especifica) para apagá-lo dessa encomenda
         if (isset($_GET["variavel2"])) {
@@ -162,46 +139,68 @@ session_start();
             //atualiza página
             header('location: Encomenda_Pendente.php');
         }
-
     }
 
-    $query10 = "select c.saldo-sum(d.quantidade*p.preco) from cliente AS C, encomenda as E, prato as P, detalhe AS D where
-    c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id 
-    group by c. usergeral_username";
+    //saldo inicial (predefinido)
+    $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
+    $result11 = pg_query($connection, $query11);
+    $saldo_restante = pg_fetch_result($result11, 0, 0);
 
-    $querysaldo = "SELECT prato_id FROM detalhe";
-    $resultsaldo = pg_query($connection, $querysaldo);
-    if (pg_affected_rows($resultsaldo) > 0) {
-        $result10 = pg_query($connection, $query10);
-        $saldo_restante = pg_fetch_result($result10, 0, 0);
-        echo "saldo restante:" . $saldo_restante;
-
-
-    $username = $_SESSION['username'];
-    $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
-    $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
-    $result1 = pg_query($connection, $administrador);
-    $result2 = pg_query($connection, $cliente);
-    if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1 && $saldo_restante >= 0) {
-        ?>
-        <a href="Homepage_Cliente.php">
-            <input type="submit" class="botao" value="Continuar a comprar" name="comp">
-        </a>
-        <form action="Encomenda_realizada.php" method="POST">
-            <input type="submit" class="botao" value="Encomendar" name="enco">
-        </form>
-        <?php
-    } else if ($saldo_restante < 0) {
-        $name_error = "Não tem saldo suficiente para continuar a encomenda.";
-        echo $name_error;
-    }}
-    else {
-        echo "o seu carrinho está vazio";
-        ?>
-        <a href="Homepage_Cliente.php">Voltar à página principal</a>
+    $query12="select sum(d.quantidade*p.preco) from encomenda as E, prato as P, detalhe AS D
+    where e.id= d.encomenda_id and d.prato_id= p.id AND d.encomenda_id=$id_encomenda
+    group by e.id";
+    $result12 = pg_query($connection, $query12);
+    echo "Valor total da encomenda: ".pg_fetch_result($result12, 0, 0);
+?>
+    <br>
     <?php
+    //saldo após encomendas (restante)
+    $query10 = "select c.saldo-sum(d.quantidade*p.preco) 
+    from cliente AS C, encomenda as E, prato as P, detalhe AS D 
+    where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id
+    group by c. usergeral_username";
+    $result10 = pg_query($connection, $query10);
+
+    //entra no if se o cliente já tiver alguma encomenda feita
+    if (pg_affected_rows($result10) > 0) {
+        $saldo_restante = pg_fetch_result($result10, 0, 0);
+    }
+    echo "saldo restante: " . $saldo_restante;
+
+
+    if ($saldo_restante >= 0) {
+
+        $username = $_SESSION['username'];
+        $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
+        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
+        $result1 = pg_query($connection, $administrador);
+        $result2 = pg_query($connection, $cliente);
+
+        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+            ?>
+            <br>
+            <br>
+            <a href="Homepage_Cliente.php">
+                <input type="submit" class="botao" value="Continuar a comprar" name="comp">
+            </a>
+            <form action="Encomenda_realizada.php" method="POST">
+                <input type="submit" class="botao" value="Encomendar" name="enco">
+            </form>
+            <?php
+        }
+    }
+    if (pg_fetch_result($result10, 0, 0) < 0) {
+        echo "Não tem saldo suficiente para continuar a encomenda.";
+
     }
 
+
+    if (pg_affected_rows($result6) === 0) {
+        echo "O seu carrinho está vazio";
+    }
+    ?>
+    <a href="Homepage_Cliente.php">Voltar à página principal</a>
+    <?php
 
     ?>
 

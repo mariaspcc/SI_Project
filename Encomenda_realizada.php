@@ -19,8 +19,9 @@ session_start();
 
 <main>
     <?php
-    //variavel sessão fica a 0 quando encomenda anterior termina, para quando escolher um novo prato iniciar uma encomenda nova
-    $_SESSION['encomenda_id'] = 0;
+    $id_encomenda_atual=$_SESSION['encomenda_id'];
+    $query11="UPDATE encomenda SET terminada='true' WHERE id='$id_encomenda_atual'";
+    $result11 = pg_query($connection, $query11);
 
     //seleciona o id do prato da tabela detalhe tudo junto por id de prato
     $query10="SELECT prato_id FROM detalhe GROUP BY prato_id";
@@ -39,6 +40,8 @@ session_start();
         $result11 = pg_query($connection, $query11);
     }
 
+    //variavel sessão fica a 0 quando encomenda anterior termina, para quando escolher um novo prato iniciar uma encomenda nova
+    $_SESSION['encomenda_id'] = 0;
 
     ?>
     <p>Encomenda realizada com sucesso</p>

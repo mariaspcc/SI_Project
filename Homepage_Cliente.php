@@ -1,7 +1,6 @@
 <?php
 include_once "acess_bd.php";
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +18,7 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
+    <a href="Cliente_Perfil.php"> Perfil </a>
     <a href="Encomenda_Pendente.php"> Carrinho </a>
     <?php
     /* $username = $_POST['username'];
