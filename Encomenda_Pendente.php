@@ -52,14 +52,23 @@ session_start();
                     //guarda o id da encomenda que acabou de ser criada
                     $_SESSION['encomenda_id'] = $id_enc;
                 }
-
                 //id da encomenda atual
                 $id_encomenda = $_SESSION['encomenda_id'];
-                //insere na tabela detalhe a quantidade do prato, o id do prato e o id da respetiva encomenda
-                $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
-                $result5 = pg_query($connection, $query5);
+                $adiciona=true;
 
            // }
+
+                $query5_1 = "SELECT prato_id, encomenda_id FROM detalhe WHERE prato_id='$id' AND encomenda_id='$id_encomenda'";
+                $result5_1 = pg_query($connection, $query5_1);
+                if (pg_num_rows($result5_1) > 0) {
+                    $adiciona=false;
+                }
+                //insere na tabela detalhe a quantidade do prato, o id do prato e o id da respetiva encomenda
+                if($adiciona===true) {
+                    $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id) VALUES (1,'$id','$id_encomenda')";
+                    $result5 = pg_query($connection, $query5);
+                }
+            }
         }
         //id da encomenda atual
         $id_encomenda = $_SESSION['encomenda_id'];
