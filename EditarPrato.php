@@ -6,7 +6,7 @@ session_start();
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Encomenda_Pendente</title>
+    <title>Editar Prato</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 </head>
