@@ -88,8 +88,8 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
             for ($t = 0; $t < pg_affected_rows($resultPessoas); $t++) {
 
                 $arrpessoas = pg_fetch_array($resultPessoas);
-                $reiddesconto = pg_fetch_result($resultIdDesconto, 0, 0);
-                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto[$t]','$arrpessoas[$t]')";
+                $reiddesconto=pg_fetch_result($resultIdDesconto,0,0);
+                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto','$arrpessoas[$t]')";
                 $result = pg_query($connection, $inserirIdDesconto);
 
             }
