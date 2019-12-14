@@ -71,7 +71,6 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $query = "INSERT INTO desconto (valor,duracao,numero_pessoas,minimo,restaurante_nome,administrador_usergeral_username) VALUES ('$valor','$validade','$numero','$minimo','$restaurante','$username')";
         $result1 = pg_query($connection, $query);
     }
-    }
 
     $valor = $_POST['valor'];
     $restaurante = $_POST['restaurante'];
@@ -97,6 +96,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         echo pg_fetch_result($result2, $i, 2); ?> <br><?php
 
     // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
+    }
 
     //}
     }
