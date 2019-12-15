@@ -65,112 +65,54 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $restaurante = $_POST['restaurante'];
         $validade = $_POST['validade'];
         $numero = $_POST['numero'];
-        $query = "INSERT INTO desconto (valor,duracao,num_pessoas,restaurante_nome,administrador_usergeral_username) VALUES ('$valor','$validade','$numero','$restaurante','$username')";
+        $query = "INSERT INTO desconto (valor,duracao,num_pessoas,restaurante_nome,administrador_usergeral_username) VALUES 
+                ('$valor','$validade','$numero','$restaurante','$username')";
         $result1 = pg_query($connection, $query);
         echo "Desconto gerado com sucesso!" ?> <a href="Homepage_Administrador.php">Voltar para a página
             principal</a> <?php
 
+        $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
+    from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
+    where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
+    and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username' and R.nome='$restaurante'
+    group by P.restaurante_nome, C.usergeral_username
+    ORDER BY sum(D.quantidade*P.preco) DESC";
+        $result2 = pg_query($connection, $query2);
 
-        $queryIdDesconto = "SELECT id FROM desconto WHERE administrador_usergeral_username = '$username' and valor='$valor' and duracao='$validade' and num_pessoas='$numero' and restaurante_nome='$restaurante' ORDER BY id DESC ";
-        $resultIdDesconto = pg_query($connection, $queryIdDesconto);
-
-        $queryIdDescontoInfo = "SELECT desconto_id FROM desconto_info";
-        $resultIdDescontoInfo = pg_query($connection, $queryIdDescontoInfo);
-
-        $queryPessoas = "select C. usergeral_username
-        from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R
-        where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id
-        and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username' and R.nome='$restaurante'
-        group by P.restaurante_nome, C.usergeral_username
-        ORDER BY sum(D.quantidade*P.preco) DESC limit '$numero'";
-        $resultPessoas = pg_query($connection, $queryPessoas);
-
-
-        if (pg_affected_rows($resultIdDescontoInfo) < pg_affected_rows($resultIdDesconto)) {
-            for ($t = 0; $t < pg_affected_rows($resultPessoas); $t++) {
-
-                $arrpessoas = pg_fetch_array($resultPessoas);
-                $reiddesconto=pg_fetch_result($resultIdDesconto,0,0);
-                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto','$arrpessoas[$t];')";
-                $result = pg_query($connection, $inserirIdDesconto);
-            }
-
+        //numero de pessoas que quero q afete o desconto
+        if ($numero > pg_affected_rows($result2)) {
+            $numero = pg_affected_rows($result2);
         }
+        $today = date("Y-m-d H:i:s");
+        $query3 = "SELECT desconto.id from desconto where desconto.administrador_usergeral_username='$username' 
+                    and Desconto.restaurante_nome='$restaurante' and desconto.duracao>='$today'
+                    Order by desconto.id desc";
+        $desconto_id_calc = pg_query($connection, $query3);
 
+        if (pg_affected_rows($desconto_id_calc) > 0) {
+            $desconto_id_calc = pg_fetch_result($desconto_id_calc, 0, 0);
 
-        /*for ($j = 0; $j < pg_affected_rows($resultIdDesconto); $j++) {
-            $arrid = pg_fetch_array($resultIdDesconto);
-            for ($i = 0; $i < pg_affected_rows($resultIdDescontoInfo); $i++) {
-                $arridinfo = pg_fetch_array($resultIdDescontoInfo);
-                if ($arrid[$j] <> $arridinfo[$i]) {
-                    for ($t = 0; $t < pg_affected_rows($resultPessoas); $t++) {
-                        $arrpessoas = pg_fetch_array($resultPessoas);
-                        $usado = false;
-                        $a = $arrid[$j][$i][$t];
-                        $b = $arrpessoas[$j][$i][$t];
-                        $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES ('$usado','$a','$b')";
-                        $resultinserirIdDesconto = pg_query($connection, $inserirIdDesconto);
+        } else {
+            $desconto_id_calc = 0;
+        }
+        if ($desconto_id_calc > 0) {
+            for ($i = 0; $i < $numero; $i++) {
+                //restaurante escolhido
+                echo pg_fetch_result($result2, $i, 0);
+                //nome do vencedor
+                echo pg_fetch_result($result2, $i, 1);
+                //dinheiro gasto no respetivo restaurante
+                echo pg_fetch_result($result2, $i, 2);
 
-                    }
-                }
+                //id do cliente vencedor
+                $nome_cliente = pg_fetch_result($result2, $i, 1);
+
+                $query4 = "INSERT INTO desconto_info(usado, desconto_id, cliente_usergeral_username) 
+            VALUES (FALSE, '$desconto_id_calc','$nome_cliente')";
+                $result4 = pg_query($connection, $query4);
             }
-        }*/
+        }
     }
-
-
-    /*  $queryIdDesc = "SELECT id FROM desconto WHERE valor = '$valor' and duracao = '$validade' and num_pessoas = '$numero' and min_gasto = '$minimo' and restaurante_nome = '$restaurante' and administrador_usergeral_username = '$username'";
-
-      $resultPessoas = pg_query($connection, $queryPessoas);
-
-
-      /*
-
-      $queryInfo = "SELECT T. id, C. usergeral_username
-                  FROM desconto AS T, cliente AS C, encomenda AS E, prato AS P, detalhe AS D, restaurante AS R
-                  WHERE C.usergeral_username= E.cliente_usergeral_username AND E.id= D.encomenda_id AND D.prato_id= P.id
-                  AND R.nome= P.restaurante_nome AND R.administrador_usergeral_username='$username' AND R.nome='$restaurante'
-                  GROUP BY T.id, P.restaurante_nome, C.usergeral_username HAVING sum(D.quantidade*P.preco)>='$minimo'
-                  ORDER BY sum(D.quantidade*P.preco) DESC limit '$numero'";
-
-
-      $queryInfo = "SELECT id FROM desconto WHERE valor = '$valor' and duracao = '$validade' and num_pessoas = '$numero' and min_gasto = '$minimo' and restaurante_nome = '$restaurante' and administrador_usergeral_username = '$username'";
-      $resultInfo = pg_query($connection, $queryInfo);
-
-      $queryInfo = "SELECT desconto_id FROM desconto_info";
-      $resultInfo = pg_query($connection, $queryInfo);
-
-      if (pg_affected_rows($resultInfo) == 1) {
-
-      }
-  }
-  /*
-      $valor = $_POST['valor'];
-      $restaurante = $_POST['restaurante'];
-      $validade = $_POST['validade'];
-      $numero = $_POST['numero'];
-      $minimo = $_POST['minimo'];
-
-      $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco)
-      from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R
-      where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id
-      and R.nome= P.restaurante_nome and R.administrador_usergeral_username='$username' and R.nome='$restaurante'
-      group by P.restaurante_nome, C.usergeral_username having sum(D.quantidade*P.preco)>='$minimo'
-      ORDER BY sum(D.quantidade*P.preco) DESC limit '$numero'";
-      $result2 = pg_query($connection, $query2);
-
-      /*if($numero > pg_affected_rows($result2)){
-          $numero=pg_affected_rows($result2);
-      }
-      for ($i = 0; $i < $numero; $i++) {
-
-          echo pg_fetch_result($result2, $i, 0);
-          echo pg_fetch_result($result2, $i, 1);
-          echo pg_fetch_result($result2, $i, 2); ?> <br><?php
-
-      // if(pg_fetch_result($result2, $i, 2)>=$minimo && $restaurante==pg_fetch_result($result2, $i, 0)){
-      }
-
-      //}*/
     }
     ?>
 </main>
