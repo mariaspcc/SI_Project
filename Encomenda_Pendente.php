@@ -160,10 +160,7 @@ session_start();
             $resultmostrar2= pg_query($connection, $querymostrar2);
             $mostrar=pg_fetch_result($resultmostrar,0,0);
         }
-        else{
-                           $mostrar=1;
 
-        }
 
         //saldo inicial (predefinido)
         $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";

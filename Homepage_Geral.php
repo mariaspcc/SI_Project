@@ -16,13 +16,11 @@
         <p>Bem-vindo ao LDMEats.</p>
         <p>Nesta plataforma poderá encomendar a sua comida de uma forma mais rápida e segura.
         <p>Se ainda não tem conta, registe-se!</p>
-        <div>
             <label>
                 <a href="Choose.php">
                     <input type='button' value='Registar' name='B_admin' id="registar">
                 </a>
             </label>
-        </div>
     </div>
 
 </main>

@@ -3,9 +3,10 @@ main {
     color: white;
 }
 
-.criar{
-    margin:2%;
+.criar {
+    margin: 2%;
 }
+
 .criarrestaurante, .criarprato, .criardesconto {
     width: 20%;
     display: inline-block;
@@ -17,11 +18,12 @@ main {
     height: auto;
 
 }
-.criar a{
-   text-decoration: none;
+
+.criar a {
+    text-decoration: none;
 }
 
-.criarrestaurante p , .criarprato p , .criardesconto p {
+.criarrestaurante p, .criarprato p, .criardesconto p {
     display: block;
     margin: 0;
     text-decoration: none;
@@ -94,11 +96,20 @@ p {
 /*HOMEPAGE_GERAL*/
 .homepage_geral {
     color: white;
-    font-size: 20px;
-    margin-top: 10%;
-    text-align: center;
+    font-size: 1em;
+    margin: 10%;
+    margin-top: 14%;
 
 }
+.homepage_geral p {
+
+    color: white;
+    font-size: 1.3em;
+    text-align: left;
+    font-weight: lighter;
+}
+
+
 
 #registar {
     color: white;
@@ -107,12 +118,15 @@ p {
     border-radius: 15px;
     width: 20%;
     font-size: 1em;
+    margin:0;
 }
 
 #registar:hover {
     cursor: pointer;
     background: white;
-
+    opacity: 60%;
+    font-size: 1em;
+    color: black;
 }
 
 
@@ -200,13 +214,6 @@ input[type=submit] {
     width: 100px;
 }
 
-
-.homepage_geral {
-    color: white;
-    font-size: 20px;
-    margin-top: 10%;
-    text-align: center;
-}
 
 #form_restaurante {
     color: white;
