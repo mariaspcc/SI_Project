@@ -16,7 +16,9 @@ include('phpLogin.php')
 <nav
 <div class="barra">
     <div id="logo">
+        <a href="Homepage_Geral.php">
         <p>LDMEats</p>
+        </a>
     </div>
 </div>
 </nav>

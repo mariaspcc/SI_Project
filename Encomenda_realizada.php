@@ -20,6 +20,8 @@ session_start();
 <main>
     <?php
     if (isset($_SESSION['success']) && $_SESSION['success']) {
+
+        include_once "CheckCliente.php";
     $cliente_usergeral_username = $_SESSION['username'];
 
 
@@ -42,6 +44,8 @@ session_start();
 
         }
     }
+
+
 
 
     $id_encomenda_atual=$_SESSION['encomenda_id'];

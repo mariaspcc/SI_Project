@@ -3,6 +3,33 @@ main {
     color: white;
 }
 
+.criar{
+    margin:2%;
+}
+.criarrestaurante, .criarprato, .criardesconto {
+    width: 20%;
+    display: inline-block;
+}
+
+.restauranteicon, .pratoicon, .descontoicon {
+    border-radius: 20%;
+    width: 40%;
+    height: auto;
+
+}
+.criar a{
+   text-decoration: none;
+}
+
+.criarrestaurante p , .criarprato p , .criardesconto p {
+    display: block;
+    margin: 0;
+    text-decoration: none;
+    font-size: 1.4em;
+
+}
+
+
 #botaoheader {
     display: inline;
     float: right;
@@ -14,12 +41,17 @@ main {
     display: inline-block;
 }
 
-#logo > p {
+#logo p {
     margin: 0;
     width: 50%;
 }
 
-#pesquisa{
+#logo a {
+    text-decoration: none;
+}
+
+
+#pesquisa {
     width: 20%;
 }
 
@@ -65,7 +97,24 @@ p {
     font-size: 20px;
     margin-top: 10%;
     text-align: center;
+
 }
+
+#registar {
+    color: white;
+    background: 0;
+    padding: 10px;
+    border-radius: 15px;
+    width: 20%;
+    font-size: 1em;
+}
+
+#registar:hover {
+    cursor: pointer;
+    background: white;
+
+}
+
 
 /*REGISTAR E LOGIN*/
 .formulario {
@@ -173,6 +222,7 @@ input[type=submit] {
     color: white;
     font-size: 1.5em;
 }
-#ordenar>#search{
+
+#ordenar > #search {
     width: 50%;
 }

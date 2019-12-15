@@ -27,7 +27,9 @@ session_start();
         //variável da página Homepage_cliente e verifica se esta existe
         if (isset($_GET["variavel"])) {
             //declaração/atribuição da variável
+
             $id = $_GET["variavel"];
+          
 
             //seleciona atributos da tabela prato onde a variavel id é igual ao id do prato selecionado
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato WHERE id = '$id'";
@@ -158,21 +160,22 @@ session_start();
             $id2 = pg_fetch_result($result6, $i, 2);
             $nome_p = pg_fetch_result($result6, $i, 0);
             $qnt2 = pg_fetch_result($result6, $i, 3);
+
+
+            $querymostrar="SELECT quantidade FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+            $resultmostrar= pg_query($connection, $querymostrar);
+            $mostrar=pg_fetch_result($resultmostrar,0,0);
+
             ?>
             <label>
                 <br>Quantidade
                 <form name="form" action="" method="POST">
-                    <input type="number" min="1" name="quantidade" value="1" required>
+                    <input type="number" min="1" name="quantidade" value="<?php echo $mostrar ?>" required>
                     <button type="submit" name="aplicar" id=>Aplicar</button>
                 </form>
             </label>
             <?php
-            /*if (isset($_POST['aplicar'])) {
-                $qnt = $_POST['quantidade'];
-                echo "quantidade:" . $qnt;
-                $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-                $resultqnt = pg_query($connection, $queryqnt);
-            }*/
+
             ?>
             <br>
 
@@ -191,6 +194,23 @@ session_start();
                 //atualiza página
                 header('location: Encomenda_Pendente.php');
             }
+
+        }
+        if (isset($_POST['aplicar'])) {
+            /* $qnt = $_POST['quantidade'];
+             echo "quantidade:" . $qnt;
+             $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+             $resultqnt = pg_query($connection, $queryqnt);*/
+            $quantidade= $_POST['quantidade'];
+            $queryqnt = "UPDATE detalhe SET quantidade = '$quantidade' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+            $resultqnt = pg_query($connection, $queryqnt);
+
+            $querymostrar2="SELECT quantidade FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+            $resultmostrar2= pg_query($connection, $querymostrar2);
+            $mostrar=pg_fetch_result($resultmostrar,0,0);
+        }
+        else{
+                           $mostrar=1;
 
         }
 

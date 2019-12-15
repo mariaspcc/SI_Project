@@ -1,7 +1,6 @@
 <?php
 include_once "acess_bd.php";
 session_start();
-//include('phpHomepage_Administrador.php');
 //include('CheckAdministrador.php');
 ?>
 <!DOCTYPE html>
@@ -19,9 +18,27 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <a href="CriarRestaurante.php">Criar Restaurante</a>
-    <a href="CriarPrato.php">Criar Prato</a>
-    <a href="CriarDesconto.php">Criar Desconto</a>
+    <div class="criar">
+        <h3>CRIAR ...</h3>
+        <div class="criarrestaurante">
+            <a href="CriarRestaurante.php">
+                <img class="restauranteicon" src="images/restaurante.png" alt="">
+                <p>Restaurante </p>
+            </a>
+        </div>
+        <div class="criarprato">
+            <a href="CriarPrato.php">
+                <img class="pratoicon" src="images/prato.png" alt="">
+                <p>Prato</p>
+            </a>
+        </div>
+        <div class="criardesconto">
+            <a href="CriarDesconto.php">
+                <img class="descontoicon" src="images/DESCONTOS.png" alt="">
+                <p>Desconto</p>
+            </a>
+        </div>
+    </div>
 
     <?php
     include_once "CheckAdministrador.php";
@@ -59,7 +76,7 @@ session_start();
             <ul class="listaMeusRestaurantes">
                 <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
                     $arrayPratosAdministrador = pg_fetch_array($result2);
-                    $y=$arrayPratosAdministrador['id'];
+                    $y = $arrayPratosAdministrador['id'];
 
                     ?>
                     <li>
@@ -72,7 +89,7 @@ session_start();
                     <br>
                 <?php } ?>
             </ul>
-        <?php
+            <?php
         } else {
             $prato_error = "Não tem pratos para mostrar";
             echo $prato_error;

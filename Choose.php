@@ -7,15 +7,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<?php include('header_in.php'); ?>
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
-<nav
-<div class="barra">
-    <div id="logo">
-        <p>LDMEats</p>
-    </div>
-</div>
-</nav>
+
 <main>
     <div class="escolha">
         <form action='PhpRegisterAdministrador.php' method='POST'>
