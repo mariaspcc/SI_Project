@@ -151,7 +151,11 @@ session_start();
     where e.id= d.encomenda_id and d.prato_id= p.id AND d.encomenda_id=$id_encomenda
     group by e.id";
     $result12 = pg_query($connection, $query12);
-    echo "Valor total da encomenda: ".pg_fetch_result($result12, 0, 0);
+    if(pg_affected_rows($result12)===0){
+        echo "Valor total da encomenda: 0";
+    } else {
+        echo "Valor total da encomenda: " . pg_fetch_result($result12, 0, 0);
+    }
 ?>
     <br>
     <?php
@@ -184,22 +188,26 @@ session_start();
             <a href="Homepage_Cliente.php">
                 <input type="submit" class="botao" value="Continuar a comprar" name="comp">
             </a>
+            <br>
+            <?php if(pg_affected_rows($result12)>0){?>
             <form action="Encomenda_realizada.php" method="POST">
                 <input type="submit" class="botao" value="Encomendar" name="enco">
             </form>
             <?php
+            }
         }
     }
+    if(pg_affected_rows($result10)>0){
     if (pg_fetch_result($result10, 0, 0) < 0) {
         echo "Não tem saldo suficiente para continuar a encomenda.";
 
-    }
-
+    }}
 
     if (pg_affected_rows($result6) === 0) {
         echo "O seu carrinho está vazio";
     }
     ?>
+    <br>
     <a href="Homepage_Cliente.php">Voltar à página principal</a>
     <?php
 
