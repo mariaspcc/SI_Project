@@ -18,9 +18,8 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    include_once "CheckCliente.php";
-    <?php
-    include('header_in.php');
+    <?php include_once "CheckCliente.php";
+
 
     $id_encomenda_atual=$_SESSION['encomenda_id'];
     $query11="UPDATE encomenda SET terminada='true' WHERE id='$id_encomenda_atual'";
