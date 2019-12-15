@@ -196,10 +196,11 @@ session_start();
             }
         }
     }
+    if(pg_affected_rows($result10)>0){
     if (pg_fetch_result($result10, 0, 0) < 0) {
         echo "Não tem saldo suficiente para continuar a encomenda.";
 
-    }
+    }}
 
     if (pg_affected_rows($result6) === 0) {
         echo "O seu carrinho está vazio";
