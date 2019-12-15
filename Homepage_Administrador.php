@@ -35,7 +35,7 @@ session_start();
         <div class="criardesconto">
             <a href="CriarDesconto.php">
                 <img class="descontoicon" src="images/DESCONTOS.png" alt="">
-                <p>Prato</p>
+                <p>Desconto</p>
             </a>
         </div>
     </div>
