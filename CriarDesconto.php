@@ -16,6 +16,8 @@ include_once "acess_bd.php";
 <img id="fundo" alt="fundo" src="images/img_fundo.jpg" height="640" width="960"/>
 <div class="fundo_quadrado"></div>
 <?php include('header_in.php');
+include_once "CheckAdministrador.php";
+
 if (isset($_SESSION['success']) && $_SESSION['success']) {
 ?>
 <main>
@@ -89,9 +91,8 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
 
                 $arrpessoas = pg_fetch_array($resultPessoas);
                 $reiddesconto=pg_fetch_result($resultIdDesconto,0,0);
-                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto','$arrpessoas[$t]')";
+                $inserirIdDesconto = "INSERT INTO desconto_info (usado,desconto_id,cliente_usergeral_username) VALUES (false ,'$reiddesconto','$arrpessoas[$t];')";
                 $result = pg_query($connection, $inserirIdDesconto);
-
             }
 
         }

@@ -19,6 +19,8 @@ session_start();
     <p> EDITAR PRATO </p>
 
     <?php
+    include_once "CheckAdministrador.php";
+
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $username = $_SESSION['username'];
         $arrayDetalhe = $_SESSION['detalhe'];

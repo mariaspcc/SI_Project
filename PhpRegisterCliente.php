@@ -23,6 +23,9 @@ if(isset($_POST['register'])) {
         $result2 = pg_query($connection, $query2);
         echo "SAVED";
         //exit();
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['success'] = "Entrou!";
         header('location: Homepage_Cliente.php');
     }
 }

@@ -19,6 +19,7 @@ session_start();
 
 <main>
     <?php
+    include_once "CheckCliente.php";
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];

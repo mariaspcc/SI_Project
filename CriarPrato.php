@@ -46,6 +46,8 @@ if (isset($_POST['register_prato'])) {
     <p> CRIAR PRATO </p>
 
     <?php
+    include_once "CheckAdministrador.php";
+
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         include_once "CheckAdministrador.php";
 

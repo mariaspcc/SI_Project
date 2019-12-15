@@ -23,9 +23,6 @@ include('phpLogin.php')
 <main>
     <div class="formulario">
         <p> ENTRAR</p>
-        <?php if(isset($name_error)){?>
-            <span><?php echo $name_error;?></span>
-        <?php }?>
         <form action="login.php" method="POST" >
             <label> <br>Username
                 <div class="erro">
@@ -35,6 +32,9 @@ include('phpLogin.php')
             <label> <br>Password</br>
                 <input type="password" name="password" required></label>
             <br>
+                <?php if(isset($name_error)){?>
+                    <span><?php echo $name_error;?></span>
+                <?php }?>
             <input type="submit" value="Entrar" name="login" id="botão_entrar" >
             <br>
             <p>Não tem conta? Crie <a href="Choose.php">aqui</a>.</p>

@@ -1,6 +1,7 @@
 <?php
 include_once "acess_bd.php";
 
+
 //buscar dados
 if(isset($_POST['register'])) {
     $username = $_POST['a_username'];
@@ -19,9 +20,12 @@ if(isset($_POST['register'])) {
         $result = pg_query($connection, $query);
         $query2 = "INSERT INTO administrador (usergeral_username) VALUES ('$username')";
         $result2 = pg_query($connection, $query2);
-
+        $_SESSION['username']=$username;
         //echo "SAVED";
         //exit();
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['success'] = "Entrou!";
         header('location: Homepage_Administrador.php');
     }
 }

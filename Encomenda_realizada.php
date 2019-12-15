@@ -18,7 +18,10 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
+    include_once "CheckCliente.php";
     <?php
+    include('header_in.php');
+
     $id_encomenda_atual=$_SESSION['encomenda_id'];
     $query11="UPDATE encomenda SET terminada='true' WHERE id='$id_encomenda_atual'";
     $result11 = pg_query($connection, $query11);
