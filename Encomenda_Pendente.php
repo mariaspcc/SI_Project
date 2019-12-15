@@ -83,7 +83,7 @@ session_start();
     //buscar dados relativos ao prato inseridos na encomenda
     //verifica se o id do prato na tabela prato é igual ao prato.id da tabela detalhe
     // e se a encomenda_id da tabela detalhe é igual à variavel id_encomenda
-    $query6 = "SELECT nome, preco, id FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = $id_encomenda";
+    $query6 = "SELECT nome, preco, id, quantidade FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = $id_encomenda";
     $result6 = pg_query($connection, $query6);
 
     //ciclo for para escrever os dados dos pratos
@@ -104,24 +104,24 @@ session_start();
         </h2>
         <!--variavel $id3 contem id do prato selecionado -->
         <?php $id2 = pg_fetch_result($result6, $i, 2);
-
+        $nome_p=pg_fetch_result($result6, $i, 0);
+        $qnt2 = pg_fetch_result($result6, $i, 3);
         ?>
         <label>
             <br>Quantidade
             <form name="form" action="" method="POST">
-            <input type="number" min="1" name="quantidade" required>
-                <button type="submit" name="aplicar">Aplicar</button>
+            <input type="number" min="1" name="quantidade" value="1" required>
+                <button type="submit" name="aplicar" id=>Aplicar</button>
             </form>
-
-        <?php
-        if(isset($_POST['aplicar'])) {
-            $qnt = $_POST['quantidade'];
-            echo "quantidade:".$qnt;
-            $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-            $resultqnt = pg_query($connection, $queryqnt);
-        }
-        ?>
         </label>
+        <?php
+            /*if (isset($_POST['aplicar'])) {
+                $qnt = $_POST['quantidade'];
+                echo "quantidade:" . $qnt;
+                $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+                $resultqnt = pg_query($connection, $queryqnt);
+            }*/
+        ?>
         <br>
 
         <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
@@ -162,6 +162,7 @@ session_start();
     $query10 = "select c.saldo-sum(d.quantidade*p.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D 
     where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id
+    and c.usergeral_username='$cliente_usergeral_username'
     group by c. usergeral_username";
     $result10 = pg_query($connection, $query10);
 
