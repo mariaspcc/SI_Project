@@ -18,7 +18,34 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <?php include_once "CheckCliente.php";
+    <?php
+    if (isset($_SESSION['success']) && $_SESSION['success']) {
+
+        include_once "CheckCliente.php";
+    $cliente_usergeral_username = $_SESSION['username'];
+
+
+    if(isset($_POST['enco'])) {
+        $today = date("Y-m-d H:i:s");
+        $desconto = "select min(DI.desconto_id), D.restaurante_nome
+                        from desconto as D, desconto_info as DI 
+                        where DI.cliente_usergeral_username='$cliente_usergeral_username'
+                        and D.id=DI.desconto_id and DI.usado=FALSE and D.duracao>'$today'
+                        group by D.restaurante_nome";
+        $result_desconto = pg_query($connection, $desconto);
+
+        for ($q = 0; $q < pg_affected_rows($result_desconto); $q++) {
+            $id_desconto = pg_fetch_result($result_desconto, $q, 0);
+
+            $query_update="UPDATE desconto_info SET usado=TRUE
+            WHERE cliente_usergeral_username='$cliente_usergeral_username'
+            and desconto_id='$id_desconto'";
+            $result_update = pg_query($connection, $query_update);
+
+        }
+    }
+
+
 
 
     $id_encomenda_atual=$_SESSION['encomenda_id'];
@@ -50,7 +77,7 @@ session_start();
     <a href="Homepage_Cliente.php">
         <input type="submit" class="botao" value="Regressar para a Homepage">
     </a>
-
+<?php }?>
 </main>
 
 </body>

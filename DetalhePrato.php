@@ -24,7 +24,7 @@ session_start();
         <?php
         if (isset($_SESSION['success']) && $_SESSION['success']) {
 
-            $id = $_GET["variavel"];
+            $id =$_GET["variavel"];
 
             $query2 = "SELECT nome, tipo,restaurante_nome, descricao, preco FROM prato WHERE '$id'= id";
             $result2 = pg_query($connection, $query2);

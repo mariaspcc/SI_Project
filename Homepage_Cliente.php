@@ -106,6 +106,7 @@ session_start();
                 $result_desconto = pg_query($connection, $desconto);
 
                 for ($p = 0; $p < pg_affected_rows($result2); $p++) {
+
                     $id_desconto=0;
                     //vai ver se o prato tem desconto
                     for($q=0; $q < pg_affected_rows($result_desconto); $q++) {
@@ -122,22 +123,21 @@ session_start();
                     if($id_desconto>0) {
                         $query_desc_rest = "select valor from desconto where desconto.id='$id_desconto'";
                         $result_valor_desc = pg_query($connection, $query_desc_rest);
+                        $valor=pg_fetch_result($result_valor_desc, 0, 0);
+
 
                         $preco_prato = pg_fetch_result($result2, $p, 3);
-                        $resultado_desconto=$preco_prato - ($result_valor_desc/100*$preco_prato);
+                        $resultado_desconto=$preco_prato - ($valor/100*$preco_prato);
 
                     }
-                    $arrayPratos['desc']=$resultado_desconto;
-                    $y = $arrayPratos['desc'];
 
                     //seleciona a linha
                     $arrayPratos = pg_fetch_array($result2);
                     $y = $arrayPratos['id'];
 
-
                     ?>
                     <li>
-                        <a href="DetalhePrato.php?variavel=<?php echo $y; ?>">
+                        <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
                             <p><?php echo $arrayPratos['nome']; ?></p>
                         </a>
                         <h5><?php echo $arrayPratos['restaurante_nome']; ?></h5>
