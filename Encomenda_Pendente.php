@@ -27,7 +27,13 @@ session_start();
         //variável da página Homepage_cliente e verifica se esta existe
         if (isset($_GET["variavel"])) {
             //declaração/atribuição da variável
-            $id = $_GET["variavel"];
+            $aux = $_GET["variavel"];
+            $id=$aux[0];
+            $valor=$aux[1];
+
+            echo "id:".$id;
+            echo "valor:".$valor;
+
             //seleciona atributos da tabela prato onde a variavel id é igual ao id do prato selecionado
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato WHERE id = '$id'";
             $result2 = pg_query($connection, $query2);
@@ -78,140 +84,140 @@ session_start();
             $valor = pg_fetch_result($result3, 0, 0);
 
         }
-    }
-    //id da encomenda atual
-    $id_encomenda = $_SESSION['encomenda_id'];
-    //buscar dados relativos ao prato inseridos na encomenda
-    //verifica se o id do prato na tabela prato é igual ao prato.id da tabela detalhe
-    // e se a encomenda_id da tabela detalhe é igual à variavel id_encomenda
-    $query6 = "SELECT nome, preco, id, quantidade FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = $id_encomenda";
-    $result6 = pg_query($connection, $query6);
+        //id da encomenda atual
+        $id_encomenda = $_SESSION['encomenda_id'];
+        //buscar dados relativos ao prato inseridos na encomenda
+        //verifica se o id do prato na tabela prato é igual ao prato.id da tabela detalhe
+        // e se a encomenda_id da tabela detalhe é igual à variavel id_encomenda
+        $query6 = "SELECT nome, preco, id, quantidade FROM  prato, detalhe WHERE prato.id = detalhe.prato_id AND detalhe.encomenda_id = $id_encomenda";
+        $result6 = pg_query($connection, $query6);
 
-    //ciclo for para escrever os dados dos pratos
-    for ($i = 0; $i < pg_affected_rows($result6); $i++) {
-        ?>
-        <!--escreve o nome do prato selecionado-->
-        <h1>
-            <?php
-            echo pg_fetch_result($result6, $i, 0);
+        //ciclo for para escrever os dados dos pratos
+        for ($i = 0; $i < pg_affected_rows($result6); $i++) {
             ?>
-        </h1>
-        <!--escreve o preço do prato selecionado -->
-        <h2>
-            <?php
-            echo pg_fetch_result($result6, $i, 1);
+            <!--escreve o nome do prato selecionado-->
+            <h1>
+                <?php
+                echo pg_fetch_result($result6, $i, 0);
+                ?>
+            </h1>
+            <!--escreve o preço do prato selecionado -->
+            <h2>
+                <?php
+                echo pg_fetch_result($result6, $i, 1);
+                ?>
+                €
+            </h2>
+            <!--variavel $id3 contem id do prato selecionado -->
+            <?php $id2 = pg_fetch_result($result6, $i, 2);
+            $nome_p = pg_fetch_result($result6, $i, 0);
+            $qnt2 = pg_fetch_result($result6, $i, 3);
             ?>
-            €
-        </h2>
-        <!--variavel $id3 contem id do prato selecionado -->
-        <?php $id2 = pg_fetch_result($result6, $i, 2);
-        $nome_p=pg_fetch_result($result6, $i, 0);
-        $qnt2 = pg_fetch_result($result6, $i, 3);
-        ?>
-        <label>
-            <br>Quantidade
-            <form name="form" action="" method="POST">
-            <input type="number" min="1" name="quantidade" value="1" required>
-                <button type="submit" name="aplicar" id=>Aplicar</button>
-            </form>
-        </label>
-        <?php
+            <label>
+                <br>Quantidade
+                <form name="form" action="" method="POST">
+                    <input type="number" min="1" name="quantidade" value="1" required>
+                    <button type="submit" name="aplicar" id=>Aplicar</button>
+                </form>
+            </label>
+            <?php
             /*if (isset($_POST['aplicar'])) {
                 $qnt = $_POST['quantidade'];
                 echo "quantidade:" . $qnt;
                 $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
                 $resultqnt = pg_query($connection, $queryqnt);
             }*/
-        ?>
-        <br>
+            ?>
+            <br>
 
-        <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
-            <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
-        </a>
-        <br>
-        <br>
-        <br>
-        <?php
-        //variavel contem o id do prato (de uma encomenda especifica) para apagá-lo dessa encomenda
-        if (isset($_GET["variavel2"])) {
-            $id2 = $_GET["variavel2"];
-            $query7 = "DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-            $result7 = pg_query($connection, $query7);
-            //atualiza página
-            header('location: Encomenda_Pendente.php');
+            <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
+                <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
+            </a>
+            <br>
+            <br>
+            <br>
+            <?php
+            //variavel contem o id do prato (de uma encomenda especifica) para apagá-lo dessa encomenda
+            if (isset($_GET["variavel2"])) {
+                $id2 = $_GET["variavel2"];
+                $query7 = "DELETE FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
+                $result7 = pg_query($connection, $query7);
+                //atualiza página
+                header('location: Encomenda_Pendente.php');
+            }
         }
-    }
 
-    //saldo inicial (predefinido)
-    $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
-    $result11 = pg_query($connection, $query11);
-    $saldo_restante = pg_fetch_result($result11, 0, 0);
+        //saldo inicial (predefinido)
+        $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
+        $result11 = pg_query($connection, $query11);
+        $saldo_restante = pg_fetch_result($result11, 0, 0);
 
-    $query12="select sum(d.quantidade*p.preco) from encomenda as E, prato as P, detalhe AS D
+        $query12 = "select sum(d.quantidade*p.preco) from encomenda as E, prato as P, detalhe AS D
     where e.id= d.encomenda_id and d.prato_id= p.id AND d.encomenda_id=$id_encomenda
     group by e.id";
-    $result12 = pg_query($connection, $query12);
-    if(pg_affected_rows($result12)===0){
-        echo "Valor total da encomenda: 0";
-    } else {
-        echo "Valor total da encomenda: " . pg_fetch_result($result12, 0, 0);
-    }
-?>
-    <br>
-    <?php
-    //saldo após encomendas (restante)
-    $query10 = "select c.saldo-sum(d.quantidade*p.preco) 
+        $result12 = pg_query($connection, $query12);
+        if (pg_affected_rows($result12) === 0) {
+            echo "Valor total da encomenda: 0";
+        } else {
+            echo "Valor total da encomenda: " . pg_fetch_result($result12, 0, 0);
+        }
+        ?>
+        <br>
+        <?php
+        //saldo após encomendas (restante)
+        $query10 = "select c.saldo-sum(d.quantidade*p.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D 
     where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and d.prato_id= p.id
     and c.usergeral_username='$cliente_usergeral_username'
     group by c. usergeral_username";
-    $result10 = pg_query($connection, $query10);
+        $result10 = pg_query($connection, $query10);
 
-    //entra no if se o cliente já tiver alguma encomenda feita
-    if (pg_affected_rows($result10) > 0) {
-        $saldo_restante = pg_fetch_result($result10, 0, 0);
-    }
-    echo "saldo restante: " . $saldo_restante;
+        //entra no if se o cliente já tiver alguma encomenda feita
+        if (pg_affected_rows($result10) > 0) {
+            $saldo_restante = pg_fetch_result($result10, 0, 0);
+        }
+        echo "saldo restante: " . $saldo_restante;
 
 
-    if ($saldo_restante >= 0) {
+        if ($saldo_restante >= 0) {
 
-        $username = $_SESSION['username'];
-        $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
-        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
-        $result1 = pg_query($connection, $administrador);
-        $result2 = pg_query($connection, $cliente);
+            $username = $_SESSION['username'];
+            $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
+            $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
+            $result1 = pg_query($connection, $administrador);
+            $result2 = pg_query($connection, $cliente);
 
-        if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
-            ?>
-            <br>
-            <br>
-            <a href="Homepage_Cliente.php">
-                <input type="submit" class="botao" value="Continuar a comprar" name="comp">
-            </a>
-            <br>
-            <?php if(pg_affected_rows($result12)>0){?>
-            <form action="Encomenda_realizada.php" method="POST">
-                <input type="submit" class="botao" value="Encomendar" name="enco">
-            </form>
-            <?php
+            if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+                ?>
+                <br>
+                <br>
+                <a href="Homepage_Cliente.php">
+                    <input type="submit" class="botao" value="Continuar a comprar" name="comp">
+                </a>
+                <br>
+                <?php if (pg_affected_rows($result12) > 0) { ?>
+                    <form action="Encomenda_realizada.php" method="POST">
+                        <input type="submit" class="botao" value="Encomendar" name="enco">
+                    </form>
+                    <?php
+                }
             }
         }
+        if (pg_affected_rows($result10) > 0) {
+            if (pg_fetch_result($result10, 0, 0) < 0) {
+                echo "Não tem saldo suficiente para continuar a encomenda.";
+
+            }
+        }
+
+        if (pg_affected_rows($result6) === 0) {
+            echo "O seu carrinho está vazio";
+        }
+        ?>
+        <br>
+        <a href="Homepage_Cliente.php">Voltar à página principal</a>
+        <?php
     }
-    if(pg_affected_rows($result10)>0){
-    if (pg_fetch_result($result10, 0, 0) < 0) {
-        echo "Não tem saldo suficiente para continuar a encomenda.";
-
-    }}
-
-    if (pg_affected_rows($result6) === 0) {
-        echo "O seu carrinho está vazio";
-    }
-    ?>
-    <br>
-    <a href="Homepage_Cliente.php">Voltar à página principal</a>
-    <?php
-
     ?>
 
 
