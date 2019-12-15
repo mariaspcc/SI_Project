@@ -24,7 +24,11 @@ session_start();
     <a href="CriarDesconto.php">Criar Desconto</a>
 
     <?php
-    if (isset($_SESSION['success']) && $_SESSION['success']) { ?>
+    include_once "CheckAdministrador.php";
+
+    if (isset($_SESSION['success']) && $_SESSION['success']) {
+        //include_once "CheckAdministrador.php";
+        ?>
 
         <?php if (isset($name_error)) { ?>
             <span><?php echo $name_error; ?></span>

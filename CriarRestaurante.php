@@ -37,6 +37,7 @@ if (isset($_POST['register_restaurante'])) {
 <?php include('header_in.php'); ?>
 
 <main>
+    <?php include_once "CheckAdministrador.php"; ?>
     <div>
         <p> CRIAR RESTAURANTE</p>
         <?php if (($_SESSION['success']) && isset($_SESSION['success'])) {?>
