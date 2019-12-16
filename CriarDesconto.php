@@ -63,12 +63,16 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
     <?php
 
     if (isset($_POST['create_desconto'])) {
-        $valor = $_POST['valor'];
-        $restaurante = $_POST['restaurante'];
+
+        if(!isset($_POST['restaurante'])){
+        echo "Crie um restaurante primeiro";
+    } else {
+        $restaurante = $_POST['restaurante'];}
+            $valor = $_POST['valor'];
         $validade = $_POST['validade'];
         $today = date("Y-m-d H:i:s");
         $numero = $_POST['numero'];
-        if ($validade > $today) {
+        if ($validade > $today && (isset($_POST['restaurante']))) {
             $query = "INSERT INTO desconto (valor,duracao,num_pessoas,restaurante_nome,administrador_usergeral_username) VALUES 
                 ('$valor','$validade','$numero','$restaurante','$username')";
             $result1 = pg_query($connection, $query);
