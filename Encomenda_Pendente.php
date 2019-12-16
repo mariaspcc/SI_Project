@@ -262,7 +262,7 @@ session_start();
                 $result1 = pg_query($connection, $administrador);
                 $result2 = pg_query($connection, $cliente);
 
-                if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
+                if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1 && pg_affected_rows($result6) > 0) {
                     ?>
                     <br>
                     <br>
@@ -290,7 +290,8 @@ session_start();
             }
             ?>
             <br>
-            <a href="Homepage_Cliente.php">Voltar à página principal</a>
+        <br>
+            <a href="Homepage_Cliente.php" style="color:white">Voltar à página principal</a>
             <?php
         }
     ?>

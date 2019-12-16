@@ -23,7 +23,7 @@ session_start();
     <form action="" method="POST" id="adicionar_prato">
         <?php
         if (isset($_SESSION['success']) && $_SESSION['success']) {
-            
+
             if(!isset($_SESSION['encomenda_id'])) {
                 $_SESSION['encomenda_id']=0;
             }
@@ -149,7 +149,7 @@ session_start();
             $nao_existe = false;
             echo "Este prato já foi adicionado à sua encomenda!";
             ?>
-            <a href="Homepage_Cliente.php">
+            <a href="Homepage_Cliente.php" >
                 <input type="submit" class="botao" value="Continuar a comprar" name="comp">
             </a>
             <?php

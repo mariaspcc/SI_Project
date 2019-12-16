@@ -18,8 +18,9 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <a href="Cliente_Perfil.php"> Perfil </a>
-    <a href="Encomenda_Pendente.php"> Carrinho </a>
+    <a href="Cliente_Perfil.php" style="color:white"> Perfil </a>
+    <br>
+    <a href="Encomenda_Pendente.php" style="color:white"> Carrinho </a>
     <?php
     include_once "CheckCliente.php";
 
