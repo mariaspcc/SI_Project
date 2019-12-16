@@ -23,7 +23,10 @@ session_start();
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];
-        $_SESSION['encomenda_id'];
+
+        if(!isset($_SESSION['encomenda_id'])) {
+            $_SESSION['encomenda_id']=0;
+        }
 
         //variável da página Homepage_cliente e verifica se esta existe
         if (isset($_GET["variavel"])) {
@@ -152,8 +155,8 @@ session_start();
 
             <?php
             if ($id_desconto > 0) { ?>
-                <h5><?php echo "Com desconto fica:" . number_format($resultado_desconto,2)." €";
-                    ?> €</h5>
+                <h5><?php echo "Com desconto fica: " . number_format($resultado_desconto,2)." €";
+                    ?> </h5>
                 <?php
             }
 
@@ -171,6 +174,7 @@ session_start();
                 <br>Quantidade
                 <form name="form" action="" method="POST">
                     <input type="number" min="1" name="quantidade" value="<?php echo $mostrar ?>" required>
+                    <br>
                     <button type="submit" name="aplicar" id=>Aplicar</button>
                 </form>
             </label>
@@ -230,7 +234,7 @@ session_start();
             if (pg_affected_rows($result_valor_final) === 0) {
                 echo "Valor total da encomenda: 0";
             } else {
-                echo "Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0);
+                echo "Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0)." €";
             }
             ?>
             <br>
