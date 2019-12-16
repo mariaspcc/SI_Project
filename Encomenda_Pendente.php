@@ -213,7 +213,6 @@ session_start();
         else{
             $mostrar=1;
 
-        }
 
         //saldo inicial (predefinido)
         $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
