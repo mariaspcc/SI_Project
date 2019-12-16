@@ -152,7 +152,7 @@ session_start();
 
             <?php
             if ($id_desconto > 0) { ?>
-                <h5><?php echo "Com desconto fica:" . $resultado_desconto;
+                <h5><?php echo "Com desconto fica:" . number_format($resultado_desconto,2)." €";
                     ?> €</h5>
                 <?php
             }
@@ -247,7 +247,7 @@ session_start();
             if (pg_affected_rows($result10) > 0) {
                 $saldo_restante = pg_fetch_result($result10, 0, 0);
             }
-            echo "saldo restante: " . $saldo_restante;
+            echo "Saldo restante: " . number_format($saldo_restante,2)." €";
 
 
             if ($saldo_restante >= 0) {

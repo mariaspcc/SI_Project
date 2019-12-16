@@ -67,13 +67,14 @@ session_start();
         }
         $username = $_SESSION['username'];
         $administrador = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = true";
-        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
         $result1 = pg_query($connection, $administrador);
+        $cliente = "SELECT * FROM usergeral WHERE '$username' = username AND administrador = false";
         $result2 = pg_query($connection, $cliente);
         $pratocomprado = "SELECT * FROM prato WHERE '$username' = administrador_usergeral_username AND  '$id' = id  AND comprado = false";
         $result3 = pg_query($connection, $pratocomprado);
 
         $aux_cliente = false;
+
         if (pg_affected_rows($result1) == 0 && pg_affected_rows($result2) == 1) {
             $aux_cliente = true;
 
@@ -92,10 +93,12 @@ session_start();
     <?php
     //verifica se ela existe
     //verifica se é maior q 0
-    if (($_SESSION['encomenda_id']) > 0) {
+
+    if (($_SESSION['encomenda_id']) >= 0) {
         $id_encomenda = $_SESSION['encomenda_id'];
         $query3 = "SELECT prato_id, encomenda_id FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id'";
         $result3 = pg_query($connection, $query3);
+
         if (pg_num_rows($result3) > 0) {
             //existe
             $nao_existe = false;
