@@ -20,7 +20,7 @@ include_once "CheckAdministrador.php";
 
 if (isset($_SESSION['success']) && $_SESSION['success']) {
 ?>
-<main>
+<div class="formdesconto">
     <p> CRIAR DESCONTO </p>
     <form action="CriarDesconto.php" method="POST" id="form_desconto">
         <label> <br>Valor
@@ -51,10 +51,11 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         <br>
         <label> <br>Validade
             <br>
-            <input type="datetime-local" name="validade" min="<?php echo date('Y-m-d').'T'.date('H:i'); ?>" value="<?php echo date('Y-m-d').'T'.date('H:i'); ?>" required></label>
+            <input type="datetime-local" name="validade" min="<?php echo date('Y-m-d') . 'T' . date('H:i'); ?>"
+                   value="<?php echo date('Y-m-d') . 'T' . date('H:i'); ?>" required></label>
         <br>
         <label> <br> Número de Clientes
-            <input type="number" min="1" name="numero"  required>
+            <input type="number" min="1" name="numero" required>
         </label>
         <br>
         <input type="submit" name="create_desconto" value="Guardar">
@@ -116,12 +117,12 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
                 }
             }
         }
-    }
-    else {
+    } else {
         echo "Tem que inserir uma validade válida.";
     }
     }
     ?>
+</div>
 </main>
 </body>
 </html>

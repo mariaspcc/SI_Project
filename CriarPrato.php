@@ -43,6 +43,7 @@ if (isset($_POST['register_prato'])) {
 <div class="fundo_quadrado"></div>
 <?php include('header_in.php'); ?>
 <main>
+    <div class="formcriarprato">
     <p> CRIAR PRATO </p>
 
     <?php
@@ -78,7 +79,7 @@ if (isset($_POST['register_prato'])) {
                 <?php } ?>
             </label>
             <br>
-            <label> <br>Tipo de prato
+            <label class="select"> <br>Tipo de prato
                 <select name="tipo_prato">
                     <option value="Carne">Carne</option>
                     <option value="Peixe">Peixe</option>
@@ -95,6 +96,7 @@ if (isset($_POST['register_prato'])) {
             <br>
             <input type="submit" name="register_prato" value="Guardar">
         </form>
+    </div>
         <?php
     }
     pg_close($connection);

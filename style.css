@@ -107,6 +107,8 @@ main {
 #user_atual {
     color: white;
     font-size: 20px;
+    display: contents;
+
 }
 
 #fundo {
@@ -236,16 +238,12 @@ input[type=submit] {
 
 /*CRIAR PRATO*/
 #form_prato {
-    width: 20%;
+    width: 50%;
     color: white;
-    position: fixed;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 input[type=text] {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     margin: 5px 0 20px 0;
     border: none;
@@ -268,7 +266,7 @@ input[type=submit] {
 }
 
 #form_restaurante > input {
-    width: 50vw;
+    width: 10vw;
 }
 
 /*HOMEPAGE ADMINISTRADOR*/
@@ -303,5 +301,29 @@ input[type=number] {
     border: none;
     border-radius: 10px;
     opacity: 75%;
+
+}
+
+.formcriarprato > p, .formcriardesconto > p {
+    margin-top: 3%;
+
+}
+
+#form_desconto {
+    width: 100%;
+    color: white;
+    margin-bottom: 2%;
+}
+
+.formdesconto {
+    color: white;
+    font-family: 'Cabin', sans-serif;
+}
+.formdesconto >p{
+    margin-top:3%;
+}
+
+.formdesconto input {
+    border-radius: 15px;
 
 }
