@@ -32,12 +32,13 @@ session_start();
         if (isset($_GET["variavel"])) {
             //declaração/atribuição da variável
 
+            //ID DO PRATO SELECIONADO
             $id = $_GET["variavel"];
-
 
             //seleciona atributos da tabela prato onde a variavel id é igual ao id do prato selecionado
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato WHERE id = '$id'";
             $result2 = pg_query($connection, $query2);
+            //PREÇO INICIAL DO PRATO
             $preco_inicial_prato = pg_fetch_result($result2, 0, 3);
 
             //ciclo que lê as linhas do $result2 (percorre tabela prato)
@@ -217,17 +218,24 @@ session_start();
         }
 
 
-            //saldo inicial (predefinido)
+            //SALDO INICIAL(predefinido)
+        //Vai buscar o saldo inicial do utilizador
             $query11 = "SELECT saldo FROM cliente WHERE usergeral_username='$cliente_usergeral_username'";
             $result11 = pg_query($connection, $query11);
+            //saldo inicial
             $saldo_restante = pg_fetch_result($result11, 0, 0);
 
 
             //valor final a partir da tabela encomenda
+            //agrupa todos os elementos da mesma encomenda e calcula o saldo total da encomenda
             $query_valor_final = "SELECT sum(valor_final) from detalhe where encomenda_id='$id_encomenda' group by encomenda_id";
             $result_valor_final = pg_query($connection, $query_valor_final);
+
+            //variavel inicializada com 0
             $valor = 0;
+
             if (pg_affected_rows($result_valor_final) > 0) {
+                //primeiro valor da tabela do $result_valor_final é o total da encomenda
                 $valor = pg_fetch_result($result_valor_final, 0, 0);
             }
 
