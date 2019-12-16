@@ -24,7 +24,7 @@ session_start();
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];
         ?>
-   
+
         <br><br>
         <?php
         //saldo inicial (predefinido)

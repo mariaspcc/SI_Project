@@ -170,11 +170,12 @@ session_start();
                         if ($nao_existe === true) {
 
                             ?>
-                            <br>
+
                             <a href="Encomenda_Pendente.php?variavel=<?php echo $y;
                             ?>">
                                 <input type="submit" class="botao" value="Adicionar à encomenda">
                             </a>
+                            <br><br>
                         <?php }
                         if ($nao_existe === false) {
                             ?>
