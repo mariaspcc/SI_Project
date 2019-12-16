@@ -249,7 +249,7 @@ session_start();
                 //primeiro valor da tabela do $result_valor_final é o total da encomenda
                 $valor = pg_fetch_result($result_valor_final, 0, 0);
             }
-            
+
             if (pg_affected_rows($result_valor_final) === 0) {
                 echo "<br><br>"."Valor total da encomenda: 0";
             } else {
