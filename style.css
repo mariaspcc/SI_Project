@@ -7,6 +7,8 @@ main {
     margin: 2%;
 }
 
+
+
 .criarrestaurante, .criarprato, .criardesconto {
     width: 20%;
     display: inline-block;
@@ -325,5 +327,8 @@ input[type=number] {
 
 .formdesconto input {
     border-radius: 15px;
+}
 
+input[type=submit].botao {
+    width: 15%;
 }
