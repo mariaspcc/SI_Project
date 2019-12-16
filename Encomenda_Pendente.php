@@ -23,6 +23,7 @@ session_start();
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];
+        $_SESSION['encomenda_id'] = 0;
 
         //variável da página Homepage_cliente e verifica se esta existe
         if (isset($_GET["variavel"])) {
