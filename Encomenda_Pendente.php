@@ -43,14 +43,15 @@ session_start();
 
             //ciclo que lê as linhas do $result2 (percorre tabela prato)
             //while ($res = pg_fetch_array($result2)) {
-            //determina a ultima encomenda feita (id maior que existe na tabela encomenda)
+
+            //ULTIMA ENCOMENDA FEITA (id maior que existe na tabela encomenda)
             $query3 = "SELECT max(id) FROM encomenda";
             //resultado vai ser apenas um parametro da tabela
             $result3 = pg_query($connection, $query3);
             //vai buscar esse valor com o index(0,0)
             $valor = pg_fetch_result($result3, 0, 0);
 
-            //$_SESSION guarda o numero da encomenda em curso
+            //$_SESSION ['encomenda_id] - ENCOMENDA EM CURSO
             //se este for diferente ao id da ultima encomenda ou se ainda não existir encomendas feitas
             if (($_SESSION['encomenda_id'] <> $valor) || ($_SESSION['encomenda_id'] === 0)) {
                 //atribuimos uma variavel que soma ao id maximo ($valor) + 1
@@ -62,12 +63,12 @@ session_start();
                 //guarda o id da encomenda que acabou de ser criada
                 $_SESSION['encomenda_id'] = $id_enc;
             }
-            //id da encomenda atual
+            //ID ENCOMENDA ATUAL
             $id_encomenda = $_SESSION['encomenda_id'];
             $adiciona = true;
 
             // }
-
+            //não cria nova encomenda se na encomenda atual for adicionado um prato que já pertence à encomenda
             $query5_1 = "SELECT prato_id, encomenda_id FROM detalhe WHERE prato_id='$id' AND encomenda_id='$id_encomenda'";
             $result5_1 = pg_query($connection, $query5_1);
             if (pg_num_rows($result5_1) > 0) {
@@ -90,6 +91,7 @@ session_start();
 
         //id da encomenda atual
         $id_encomenda = $_SESSION['encomenda_id'];
+
         //buscar dados relativos ao prato inseridos na encomenda
         //verifica se o id do prato na tabela prato é igual ao prato.id da tabela detalhe
         // e se a encomenda_id da tabela detalhe é igual à variavel id_encomenda
@@ -97,8 +99,11 @@ session_start();
         $result6 = pg_query($connection, $query6);
 
 
+
         //DESCONTOS
         $today = date("Y-m-d H:i:s");
+
+        //Procura descontos que tenham sido atribuidos ao cliente
         $desconto = "select min(DI.desconto_id), D.restaurante_nome
                         from desconto as D, desconto_info as DI 
                         where DI.cliente_usergeral_username='$cliente_usergeral_username'
@@ -113,21 +118,27 @@ session_start();
             //vai ver se o prato tem desconto
 
             for ($q = 0; $q < pg_affected_rows($result_desconto); $q++) {
-
+                //tabela restaurante nome
                 $restaurante_tabela = pg_fetch_result($result_desconto, $q, 1);
+                //nome do restaurante
                 $restaurante_prato = pg_fetch_result($result6, $i, 4);
+                //se o nome do restaurante existir na tabela desconto
                 if ($restaurante_tabela === $restaurante_prato) {
+                    //vai buscar o id do desconto a q esse restaurante está associado
                     $id_desconto = pg_fetch_result($result_desconto, $q, 0);
                 }
             }
             $result_valor_desc = 0;
             $resultado_desconto = 0;
+
             //se encontrar id desconto seleciona o valor do mesmo
             if ($id_desconto > 0) {
+                //seleciona o valor do desconto (%)
                 $query_desc_rest = "select valor from desconto where desconto.id='$id_desconto'";
                 $result_valor_desc = pg_query($connection, $query_desc_rest);
                 $valor = pg_fetch_result($result_valor_desc, 0, 0);
 
+                //Aplica desconto ao preço do prato
                 $preco_prato = pg_fetch_result($result6, $i, 1);
                 $resultado_desconto = $preco_prato - ($valor / 100 * $preco_prato);
 
@@ -165,7 +176,7 @@ session_start();
             $nome_p = pg_fetch_result($result6, $i, 0);
             $qnt2 = pg_fetch_result($result6, $i, 3);
 
-
+            //seleciona a quantidade de cada prato
             $querymostrar = "SELECT quantidade FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
             $resultmostrar = pg_query($connection, $querymostrar);
             $mostrar = pg_fetch_result($resultmostrar, 0, 0);
@@ -202,16 +213,16 @@ session_start();
 
         }
         if (isset($_POST['aplicar'])) {
-            /* $qnt = $_POST['quantidade'];
-             echo "quantidade:" . $qnt;
-             $queryqnt = "UPDATE detalhe SET quantidade='$qnt' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
-             $resultqnt = pg_query($connection, $queryqnt);*/
+
+            //botao vai buscar o valor inserido na quantidade
             $quantidade = $_POST['quantidade'];
             $queryqnt = "UPDATE detalhe SET quantidade = '$quantidade' WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
             $resultqnt = pg_query($connection, $queryqnt);
 
+            //seleciona a nova quantidade inserida na tabela detalhe
             $querymostrar2 = "SELECT quantidade FROM detalhe WHERE encomenda_id = '$id_encomenda' AND prato_id = '$id2'";
             $resultmostrar2 = pg_query($connection, $querymostrar2);
+
             $mostrar = pg_fetch_result($resultmostrar, 0, 0);
         } else {
             $mostrar = 1;
@@ -238,7 +249,7 @@ session_start();
                 //primeiro valor da tabela do $result_valor_final é o total da encomenda
                 $valor = pg_fetch_result($result_valor_final, 0, 0);
             }
-
+            
             if (pg_affected_rows($result_valor_final) === 0) {
                 echo "<br><br>"."Valor total da encomenda: 0";
             } else {
