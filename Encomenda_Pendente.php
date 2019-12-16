@@ -152,8 +152,8 @@ session_start();
 
             <?php
             if ($id_desconto > 0) { ?>
-                <h5><?php echo "Com desconto fica:" . number_format($resultado_desconto,2)." €";
-                    ?> €</h5>
+                <h5><?php echo "Com desconto fica: " . number_format($resultado_desconto,2)." €";
+                    ?> </h5>
                 <?php
             }
 
@@ -231,7 +231,7 @@ session_start();
             if (pg_affected_rows($result_valor_final) === 0) {
                 echo "Valor total da encomenda: 0";
             } else {
-                echo "Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0);
+                echo "Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0)." €";
             }
             ?>
             <br>
