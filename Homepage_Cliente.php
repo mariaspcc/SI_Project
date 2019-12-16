@@ -18,9 +18,10 @@ session_start();
 <?php include('header_in.php'); ?>
 
 <main>
-    <a href="Cliente_Perfil.php" style="color:white"> Perfil </a>
-    <br>
-    <a href="Encomenda_Pendente.php" style="color:white"> Carrinho </a>
+    <div class="conjunto">
+    <a class="topo" href="Cliente_Perfil.php" style="color:white"> Perfil </a>
+    <a class="topo" href="Encomenda_Pendente.php" style="color:white"> Carrinho </a>
+    </div>
     <?php
     include_once "CheckCliente.php";
 
@@ -36,11 +37,11 @@ session_start();
         $result1 = pg_query($connection, $query1);
 
         ?>
-
+<div class="pratoscliente">
         <p>PRATOS</p>
 
         <form action="Homepage_Cliente.php" method="POST" id="ordenar">
-            <input id="search" name="search" type="text" placeholder="Type here">
+            <input id="search" name="search" type="text" placeholder="Pesquise pratos por nome ou nome do restaurante">
             <br>
             <select name="ordem">por
                 <optgroup label="Preço">
@@ -172,7 +173,7 @@ session_start();
                             ?>
 
                             <a href="Encomenda_Pendente.php?variavel=<?php echo $y;
-                            ?>">
+                                ?>">
                                 <input type="submit" class="botao" value="Adicionar à encomenda">
                             </a>
                             <br><br>
@@ -209,6 +210,7 @@ session_start();
     } else {
         header('location: login.php');
     } ?>
+</div>
 
 </main>
 </body>

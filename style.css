@@ -37,6 +37,27 @@ main {
     margin: 2%;
     margin-top: 4%;
 }
+.topo{
+    text-decoration: none;
+    border-radius: 15px;
+    border: solid 1px white;
+    width: 10%;
+    height: 5%;
+    padding: 2% 1.5% 2% 1.5%;
+    margin-left: 1%;
+}
+.conjunto{
+    margin-top:3% ;
+    margin-bottom: 3%;
+}
+.pratoscliente{
+    margin:2%;
+}
+
+ul {
+    list-style-type: circle;
+
+}
 
 .meusrestaurantes ul {
     list-style-type: circle;
@@ -172,7 +193,7 @@ p {
     margin: 0;
 }
 
-#registar:hover {
+#registar li:hover {
     cursor: pointer;
     background: white;
     opacity: 60%;
@@ -237,6 +258,9 @@ input[type=submit] {
 #administradorbutton {
     margin-left: 20%;
 }
+#clientebutton {
+margin-left: 0%;
+}
 
 /*CRIAR PRATO*/
 #form_prato {
@@ -245,7 +269,7 @@ input[type=submit] {
 }
 
 input[type=text] {
-    width: 50%;
+    width: 100%;
     padding: 10px;
     margin: 5px 0 20px 0;
     border: none;
@@ -253,7 +277,7 @@ input[type=text] {
     opacity: 75%;
 }
 
-input[type=submit] {
+input[type=submit], .botao{
     color: white;
     background: 0;
     padding: 10px;
@@ -264,6 +288,7 @@ input[type=submit] {
 
 #form_restaurante {
     color: white;
+    width: 50%;
 
 }
 
@@ -294,6 +319,14 @@ input[type=submit]:hover {
     background: white;
     opacity: 60%;
     color: black;
+}
+
+#aplicar{
+    color: white;
+    background: 0;
+    padding: 10px;
+    border-radius: 15px;
+    width: 100px;
 }
 
 input[type=number] {
@@ -327,6 +360,12 @@ input[type=number] {
 
 .formdesconto input {
     border-radius: 15px;
+    display: block;
+}
+
+.formdesconto select {
+
+    display: block;
 }
 
 input[type=submit].botao {

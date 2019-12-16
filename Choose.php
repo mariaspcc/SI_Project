@@ -16,7 +16,7 @@
         <form action='PhpRegisterAdministrador.php' method='POST'>
             <label>
                 <a href="RegisterCliente.php">
-                    <input type='button' value='Cliente' name='B_cliente' >
+                    <input id="clientebutton" type='button' value='Cliente' name='B_cliente' >
                 </a>
                 <a href="RegisterAdministrador.php">
                     <input id="administradorbutton" type='button' value='Administrador' name='B_admin'>

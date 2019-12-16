@@ -23,7 +23,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
 <div class="formdesconto">
     <p> CRIAR DESCONTO </p>
     <form action="CriarDesconto.php" method="POST" id="form_desconto">
-        <label> <br>Valor
+        <label> <br>Valor(em %)
             <input type="number" min="1" name="valor" required>
         </label>
         <br>
@@ -72,7 +72,9 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
             $query = "INSERT INTO desconto (valor,duracao,num_pessoas,restaurante_nome,administrador_usergeral_username) VALUES 
                 ('$valor','$validade','$numero','$restaurante','$username')";
             $result1 = pg_query($connection, $query);
-            echo "Desconto gerado com sucesso!" ?> <a href="Homepage_Administrador.php">Voltar para a página
+            echo "Desconto gerado com sucesso!" ?>
+            <br>
+            <a href="Homepage_Administrador.php">Voltar para a página
                 principal</a> <?php
 
             $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
@@ -102,11 +104,11 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
             if ($desconto_id_calc > 0) {
                 for ($i = 0; $i < $numero; $i++) {
                     //restaurante escolhido
-                    echo pg_fetch_result($result2, $i, 0);
+                   // echo pg_fetch_result($result2, $i, 0);
                     //nome do vencedor
-                    echo pg_fetch_result($result2, $i, 1);
+                  //  echo pg_fetch_result($result2, $i, 1);
                     //dinheiro gasto no respetivo restaurante
-                    echo pg_fetch_result($result2, $i, 2);
+                   // echo pg_fetch_result($result2, $i, 2);
 
                     //id do cliente vencedor
                     $nome_cliente = pg_fetch_result($result2, $i, 1);

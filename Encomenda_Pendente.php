@@ -175,7 +175,7 @@ session_start();
                 <form name="form" action="" method="POST">
                     <input type="number" min="1" name="quantidade" value="<?php echo $mostrar ?>" required>
                     <br>
-                    <button type="submit" name="aplicar" id=>Aplicar</button>
+                    <button type="submit" name="aplicar" id="aplicar">Aplicar</button>
                 </form>
             </label>
             <?php

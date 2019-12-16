@@ -42,14 +42,14 @@ if (isset($_POST['register_restaurante'])) {
         <?php if (($_SESSION['success']) && isset($_SESSION['success'])) {?>
         <form action="CriarRestaurante.php" method="POST" id="form_restaurante">
             <label> <br>Nome
-                <input type="text" name="nome_restaurante" required>
+                <input class="restauranteinput" type="text" name="nome_restaurante" required>
             </label>
             <?php if (isset($name_error)) { ?>
                 <span><?php echo $name_error; ?></span>
             <?php } ?>
             <br>
             <label> <br>Localização
-                <input type="text" name="localizacao_restaurante" required></label>
+                <input class="restauranteinput" type="text" name="localizacao_restaurante" required></label>
             <br>
 
             <input type="submit" name="register_restaurante" value="Guardar">
