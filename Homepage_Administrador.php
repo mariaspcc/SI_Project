@@ -57,7 +57,8 @@ session_start();
         $result1 = pg_query($connection, $query1);
         $query2 = "SELECT * FROM prato WHERE ('$administrador_usergeral_username' = administrador_usergeral_username)";
         $result2 = pg_query($connection, $query2); ?>
-        <h1>Os meus Restaurantes</h1>
+        <div class="meusrestaurantes">
+        <h3>OS MEUS RESTAURANTES</h3>
         <?php if (pg_affected_rows($result1) > 0) { ?>
             <ul class="listaMeusRestaurantes">
                 <?php for ($i = 0; $i < pg_affected_rows($result1); $i++) {
@@ -70,21 +71,24 @@ session_start();
             $name_error = "Não tem restaurantes para mostrar";
             echo $name_error;
         } ?>
+        </div>
 
-        <h1>Os meus Pratos</h1>
+    <div class="meuspratos">
+        <h3>OS MEUS PRATOS</h3>
         <?php if (pg_affected_rows($result2) > 0) { ?>
-            <ul class="listaMeusRestaurantes">
+            <ul class="listaMeusPratos">
                 <?php for ($t = 0; $t < pg_affected_rows($result2); $t++) {
                     $arrayPratosAdministrador = pg_fetch_array($result2);
                     $y = $arrayPratosAdministrador['id'];
 
                     ?>
+
                     <li>
                         <a href="DetalhePrato.php?variavel=<?php echo $y ?>">
-                            <p><?php echo $arrayPratosAdministrador['nome']; ?></p>
+                            <p class="NomeDoPrato"><?php echo $arrayPratosAdministrador['nome']; ?></p>
                         </a>
-                        <h6><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h6>
-                        <h6><?php echo $arrayPratosAdministrador['preco']; ?> €</h6>
+                        <h6 class="RestauranteDoPrato"><?php echo $arrayPratosAdministrador['restaurante_nome']; ?></h6>
+                        <p class="PrecoDoPrato"><?php echo $arrayPratosAdministrador['preco']; ?> €</p>
                     </li>
                     <br>
                 <?php } ?>
@@ -93,8 +97,9 @@ session_start();
         } else {
             $prato_error = "Não tem pratos para mostrar";
             echo $prato_error;
-        }
-
+        } ?>
+    </div>
+<?php
     } ?>
 
 </main>
