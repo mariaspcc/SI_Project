@@ -184,7 +184,7 @@ session_start();
             <br>
 
             <a href="Encomenda_Pendente.php?variavel2=<?php echo $id2 ?>">
-                <input type="submit" name="retirar_prato" value="Retirar prato da encomenda">
+                <input type="submit" name="retirar_prato" class="botao" value="Retirar prato da encomenda">
             </a>
             <br>
             <br>
@@ -232,9 +232,9 @@ session_start();
             }
 
             if (pg_affected_rows($result_valor_final) === 0) {
-                echo "Valor total da encomenda: 0";
+                echo "<br><br>"."Valor total da encomenda: 0";
             } else {
-                echo "Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0)." €";
+                echo "<br><br>"."Valor total da encomenda: " . pg_fetch_result($result_valor_final, 0, 0)." €";
             }
             ?>
             <br>
@@ -251,7 +251,7 @@ session_start();
             if (pg_affected_rows($result10) > 0) {
                 $saldo_restante = pg_fetch_result($result10, 0, 0);
             }
-            echo "Saldo restante: " . number_format($saldo_restante,2)." €";
+            echo "<br>"."Saldo restante: " . number_format($saldo_restante,2)." €";
 
 
             if ($saldo_restante >= 0) {
@@ -270,6 +270,7 @@ session_start();
                         <input type="submit" class="botao" value="Continuar a comprar" name="comp">
                     </a>
                     <br>
+                    <br>
                     <?php if (pg_affected_rows($result10) > 0) { ?>
                         <form action="Encomenda_realizada.php" method="POST">
                             <input type="submit" class="botao" value="Encomendar" name="enco">
@@ -286,7 +287,7 @@ session_start();
             }
 
             if (pg_affected_rows($result6) === 0) {
-                echo "O seu carrinho está vazio";
+                echo "<br><br>"."O seu carrinho está vazio";
             }
             ?>
             <br>
