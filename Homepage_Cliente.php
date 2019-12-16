@@ -107,15 +107,20 @@ session_start();
                         group by D.restaurante_nome";
                 $result_desconto = pg_query($connection, $desconto);
 
+                //desenha os pratos
                 for ($p = 0; $p < pg_affected_rows($result2); $p++) {
 
                     $id_desconto=0;
-                    //vai ver se o prato tem desconto
+                    //vai ver se existem descontos q cumpram as condições
                     for($q=0; $q < pg_affected_rows($result_desconto); $q++) {
 
+                        //tabela restaurante nome
                         $restaurante_tabela = pg_fetch_result($result_desconto, $q, 1);
+                        //nome do restaurante
                         $restaurante_prato = pg_fetch_result($result2, $p, 2);
+                        //se o nome do restaurante existir na tabela desconto, há desconto naquele restaurante
                         if( $restaurante_tabela===$restaurante_prato){
+                            //vai buscar o id do desconto a q esse restaurante está associado
                             $id_desconto=pg_fetch_result($result_desconto, $q, 0);
                         }
                     }

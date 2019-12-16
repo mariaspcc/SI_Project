@@ -55,7 +55,7 @@ session_start();
         where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and
         d.prato_id= p.id and e.terminada=TRUE AND e.cliente_usergeral_username ='$cliente_usergeral_username'";
         $result1 = pg_query($connection, $query1);
-        
+
         $total=0;
         $soma2=0;
         $aux1=0;
