@@ -55,6 +55,7 @@ session_start();
         where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and
         d.prato_id= p.id and e.terminada=TRUE AND e.cliente_usergeral_username ='$cliente_usergeral_username'";
         $result1 = pg_query($connection, $query1);
+        
         $total=0;
         $soma2=0;
         $aux1=0;
@@ -82,10 +83,15 @@ session_start();
             echo "&nbsp&nbsp&nbsp&nbsp"."Preço: ".pg_fetch_result($result1, $i, 3);
             ?><br><?php
 
+            //calculo do total gasto em encomendas
+            $saldo_inicial = pg_fetch_result($result3, 0, 0);
+            $saldo_rest=pg_fetch_result($result2, 0, 0);
+            $total_gasto=$saldo_inicial- $saldo_rest;
+
             if($i===pg_affected_rows($result1)-1){
                 echo "&nbsp&nbsp&nbsp&nbsp"."Soma: ".$soma2;
                 ?><br><br><br><?php
-                echo "Total gasto em encomendas: ".$total;
+                echo "Total gasto em encomendas: ".$total_gasto;
             }
         }
     }
