@@ -41,7 +41,7 @@ session_start();
     </div>
 
     <?php
-    include_once "CheckAdministrador.php";
+    include_once ("CheckAdministrador.php");
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         //include_once "CheckAdministrador.php";
