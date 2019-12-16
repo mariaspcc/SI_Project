@@ -75,7 +75,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $numero = 0;
     }
 
-
+    //cria desconto
     if (isset($_POST['create_desconto'])) {
         $valor = $_POST['valor'];
         $restaurante = $_POST['restaurante'];
@@ -83,6 +83,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         $today = date("Y-m-d H:i:s");
         $numero = $_POST['numero'];
 
+        //insere valores na tabela desconto
         $query = "INSERT INTO desconto (valor,duracao,num_pessoas,restaurante_nome,administrador_usergeral_username) VALUES 
                 ('$valor','$validade','$numero','$restaurante','$username')";
         $result1 = pg_query($connection, $query);
@@ -91,6 +92,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         <a href="Homepage_Administrador.php">Voltar para a página
             principal</a> <?php
 
+        //vai buscar o nome do restaurante e o cliente que gastou mais nesse mesmo restaurante
         $query2 = "select P.restaurante_nome, C. usergeral_username, sum(D.quantidade*P.preco) 
     from cliente AS C, encomenda as E, prato as P, detalhe AS D, restaurante AS R 
     where C.usergeral_username= E.cliente_usergeral_username and E.id= D.encomenda_id and D.prato_id= P.id 
@@ -103,20 +105,25 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
         if ($numero > pg_affected_rows($result2)) {
             $numero = pg_affected_rows($result2);
         }
+
         $today = date("Y-m-d H:i:s");
         $today2 = date('Y-m-d') . 'T' . date('H:i');
+
+        //ID DO DESCONTO CRIADO
         $query3 = "SELECT desconto.id from desconto where desconto.administrador_usergeral_username='$username' 
                     and Desconto.restaurante_nome='$restaurante' and desconto.duracao>='$today2'
                     Order by desconto.id desc";
         $desconto_id_calc = pg_query($connection, $query3);
         echo "result:" . pg_affected_rows($desconto_id_calc);
 
+        //procura na tabela desconto se o mesmo existe
         if (pg_affected_rows($desconto_id_calc) > 0) {
             $desconto_id_calc = pg_fetch_result($desconto_id_calc, 0, 0);
 
         } else {
             $desconto_id_calc = 0;
         }
+        //se o desconto do ID criado for maior que 0 (exista)
         if ($desconto_id_calc > 0) {
             for ($i = 0; $i < $numero; $i++) {
                 //restaurante escolhido
@@ -129,6 +136,7 @@ if (isset($_SESSION['success']) && $_SESSION['success']) {
                 //id do cliente vencedor
                 $nome_cliente = pg_fetch_result($result2, $i, 1);
 
+                //insere no desconto_info
                 $query4 = "INSERT INTO desconto_info(usado, desconto_id, cliente_usergeral_username) 
             VALUES (FALSE, '$desconto_id_calc','$nome_cliente')";
                 $result4 = pg_query($connection, $query4);
