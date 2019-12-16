@@ -23,13 +23,14 @@ session_start();
 
     if (isset($_SESSION['success']) && $_SESSION['success']) {
         $cliente_usergeral_username = $_SESSION['username'];
+        $_SESSION['encomenda_id'] = 0;
 
         //variável da página Homepage_cliente e verifica se esta existe
         if (isset($_GET["variavel"])) {
             //declaração/atribuição da variável
 
             $id = $_GET["variavel"];
-          
+
 
             //seleciona atributos da tabela prato onde a variavel id é igual ao id do prato selecionado
             $query2 = "SELECT id, nome, restaurante_nome, preco FROM prato WHERE id = '$id'";
@@ -70,7 +71,7 @@ session_start();
             }
             //insere na tabela detalhe a quantidade do prato, o id do prato e o id da respetiva encomenda
             if ($adiciona === true) {
-                $query5 = "INSERT INTO detalhe (quantidade, prato_id, encomenda_id,valor_final) VALUES (1,'$id','$id_encomenda','$preco_inicial_prato')";
+                $query5 = "INSERT INTO detalhe (quantidade, prato_id, valor_final,encomenda_id) VALUES (1,'$id','$preco_inicial_prato','$id_encomenda')";
                 $result5 = pg_query($connection, $query5);
             }
             //}
@@ -209,6 +210,8 @@ session_start();
             $resultmostrar2= pg_query($connection, $querymostrar2);
             $mostrar=pg_fetch_result($resultmostrar,0,0);
         }
+        else{
+            $mostrar=1;
 
 
         //saldo inicial (predefinido)

@@ -23,6 +23,7 @@ session_start();
 
         include_once "CheckCliente.php";
     $cliente_usergeral_username = $_SESSION['username'];
+        $id_encomenda_atual=$_SESSION['encomenda_id'];
 
 
     if(isset($_POST['enco'])) {
@@ -37,18 +38,35 @@ session_start();
         for ($q = 0; $q < pg_affected_rows($result_desconto); $q++) {
             $id_desconto = pg_fetch_result($result_desconto, $q, 0);
 
-            $query_update="UPDATE desconto_info SET usado=TRUE
-            WHERE cliente_usergeral_username='$cliente_usergeral_username'
-            and desconto_id='$id_desconto'";
-            $result_update = pg_query($connection, $query_update);
+            //restaurantes na encomenda
+            $query_restaurante="select distinct r.nome
+            from cliente as c, encomenda as e, prato as p, detalhe as d, restaurante as r
+            where e.id='$id_encomenda_atual'
+            and e.id=d.encomenda_id and d.prato_id=p.id and p.restaurante_nome=r.nome;";
+            $result_restaurante = pg_query($connection, $query_restaurante);
 
+            //verificar descontos utilizados
+            $desconto_usado=0;
+            for ($i = 0; $i < pg_affected_rows($result_restaurante); $i++) {
+                $id_restaurante = pg_fetch_result($result_desconto, $q, 1);
+                $id_restaurante_enc=pg_fetch_result($result_restaurante, $i, 0);
+                if($id_restaurante=== $id_restaurante_enc){
+                    $desconto_usado=1;
+                }
+            }
+            if($desconto_usado===1) {
+                //update dos descontos utilizados
+                $query_update = "UPDATE desconto_info SET usado=TRUE
+             WHERE cliente_usergeral_username='$cliente_usergeral_username'
+            and desconto_id='$id_desconto'";
+                $result_update = pg_query($connection, $query_update);
+
+            }
         }
     }
 
 
 
-
-    $id_encomenda_atual=$_SESSION['encomenda_id'];
     $query11="UPDATE encomenda SET terminada='true' WHERE id='$id_encomenda_atual'";
     $result11 = pg_query($connection, $query11);
 
