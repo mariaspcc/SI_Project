@@ -16,7 +16,7 @@ if (isset($_POST['register_prato'])) {
     $query1 = "SELECT*FROM prato WHERE ('$nome_prato' = nome and '$restaurante_nome'=restaurante_nome)";
     $result1 = pg_query($connection, $query1);
     if (pg_affected_rows($result1) > 0) {
-        $name_error = "Já foi criado um prato com esse nome";
+        $name_error = "Já foi criado um prato com esse nome no restaurante escolhido";
     } else {
         echo $restaurante_nome;
         $query = "INSERT INTO prato (nome,tipo,descricao,preco,comprado,restaurante_nome,administrador_usergeral_username) VALUES ('$nome_prato','$tipo_prato','$descricao','$preco','$comprado','$restaurante_nome','$username')";
