@@ -160,7 +160,7 @@ input[type=submit], #botão_entrar {
     background: 0;
     padding: 10px;
     border-radius: 15px;
-    width: 100px;
+    width: 100%;
 }
 
 /*CHOOSE*/
@@ -197,7 +197,7 @@ input[type=submit], #botão_entrar {
     transform: translate(-50%, -50%);
 }
 
-input[type=text], input[type=number] {
+input[type=text]{
     width: 100%;
     padding: 10px;
     margin: 5px 0 20px 0;
@@ -232,4 +232,14 @@ input[type=submit] {
 
 #ordenar > #search {
     width: 50%;
+}
+
+input[type=number] {
+ width: 10%;
+
+    padding: 10px;
+    margin: 5px 0 20px 0;
+    border: none;
+    border-radius: 10px;
+    opacity: 75%;
 }
