@@ -33,12 +33,11 @@ session_start();
         $saldo_ini = pg_fetch_result($result3, 0, 0);
 
 
-        $query2= "select c.saldo-sum(d.valor_final) 
+        $query2= "select c.saldo-sum(d.quantidade*d.valor_final) 
         from cliente AS C, encomenda as E, detalhe AS D 
         where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and e.terminada=TRUE
         and e.cliente_usergeral_username ='$cliente_usergeral_username'
         group by c. usergeral_username";
-
 
         $result2 = pg_query($connection, $query2);
 
