@@ -51,7 +51,7 @@ session_start();
         <br><br>
         <p> AS MINHAS ENCOMENDAS</p>
         <?php
-        $query1 = "SELECT e.id, p.nome, d.quantidade, p.preco from cliente AS C, encomenda as E, prato as P, detalhe AS D
+        $query1 = "SELECT e.id, p.nome, d.quantidade, p.preco, d.valor_final from cliente AS C, encomenda as E, prato as P, detalhe AS D
         where c. usergeral_username= e.cliente_usergeral_username and e.id= d.encomenda_id and
         d.prato_id= p.id and e.terminada=TRUE AND e.cliente_usergeral_username ='$cliente_usergeral_username'";
         $result1 = pg_query($connection, $query1);
@@ -63,6 +63,7 @@ session_start();
         for ($i = 0; $i < pg_affected_rows($result1); $i++) {
             //soma de cada linha
             $soma1=pg_fetch_result($result1, $i, 2)*pg_fetch_result($result1, $i, 3);
+            $soma3=pg_fetch_result($result1, $i, 4);
 
             //total=total+soma
             $total+=$soma1;
